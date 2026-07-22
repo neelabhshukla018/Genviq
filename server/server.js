@@ -1,6 +1,23 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
+console.log("========== CLERK ENV CHECK ==========");
+
+console.log(
+  "CLERK_PUBLISHABLE_KEY:",
+  process.env.CLERK_PUBLISHABLE_KEY
+    ? `LOADED (${process.env.CLERK_PUBLISHABLE_KEY.substring(0, 7)}...)`
+    : "❌ MISSING"
+);
+
+console.log(
+  "CLERK_SECRET_KEY:",
+  process.env.CLERK_SECRET_KEY
+    ? "✅ LOADED"
+    : "❌ MISSING"
+);
+
+console.log("=====================================");
 import { clerkMiddleware } from "@clerk/express";
 import chalk from "chalk";
 import aiRouter from "./routes/aiRoutes.js";
@@ -59,3 +76,5 @@ app.listen(PORT, () => {
   );
   console.log(chalk.gray("---------------------------------------------------"));
 });
+
+

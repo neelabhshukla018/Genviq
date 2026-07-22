@@ -1,52 +1,104 @@
-import OpenAI from 'openai';
-import sql from '../configs/db.js';
-import { clerkClient } from '@clerk/express';
-import axios from 'axios';
-import { v2 as cloudinary } from 'cloudinary';
-import fs from 'fs';
-import pdf from 'pdf-parse/lib/pdf-parse.js';
+import OpenAI from "openai";
+import sql from "../configs/db.js";
+import { clerkClient } from "@clerk/express";
+import axios from "axios";
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+import pdf from "pdf-parse/lib/pdf-parse.js";
 
+/* =====================================================
+   AI CONFIGURATION
+===================================================== */
 
 const AI = new OpenAI({
   apiKey: process.env.GEMINI_API_KEY,
-  baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai/',
+  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 });
+
+/* =====================================================
+   CONSTANTS
+===================================================== */
+
+const FREE_USAGE_LIMIT = 10;
+
+/* =====================================================
+   GENERATE ARTICLE
+===================================================== */
 
 export const generateArticle = async (req, res) => {
   try {
-    console.log("Api hit")
-    const { userId } = req.auth();
-    const { prompt, length } = req.body;
-    const plan = req.plan;
-    const free_usage = req.free_usage;
+    console.log("📝 Generate Article API hit");
 
-    if (plan != 'premium' && free_usage >= 10) {
-      return res.json({
+    const { userId } = req.auth();
+
+    const { prompt, length } = req.body;
+
+    const plan = req.plan;
+    const free_usage = req.free_usage ?? 0;
+
+    console.log("User:", userId);
+    console.log("Plan:", plan);
+    console.log("Free usage:", free_usage);
+
+    /* -----------------------------------------
+       FREE PLAN LIMIT
+    ----------------------------------------- */
+
+    if (plan !== "pro" && free_usage >= FREE_USAGE_LIMIT) {
+      return res.status(403).json({
         success: false,
-        message: 'Limit reached. Updgrade to continue.',
+        message:
+          "Free usage limit reached. Upgrade to Genviq Pro to continue.",
       });
     }
 
+    /* -----------------------------------------
+       GENERATE ARTICLE
+    ----------------------------------------- */
 
     const response = await AI.chat.completions.create({
-      model: 'gemini-2.0-flash',
+      model: "gemini-2.5-flash",
+
       messages: [
         {
-          role: 'user',
+          role: "user",
           content: prompt,
         },
       ],
+
       temperature: 0.7,
+
       max_tokens: length,
     });
+
     const content =
-      response.choices?.[0]?.message?.content || 'No content returned.';
+      response.choices?.[0]?.message?.content ||
+      "No content returned.";
 
+    /* -----------------------------------------
+       SAVE CREATION
+    ----------------------------------------- */
 
+    await sql`
+      INSERT INTO creations(
+        user_id,
+        prompt,
+        content,
+        type
+      )
+      VALUES(
+        ${userId},
+        ${prompt},
+        ${content},
+        'article'
+      )
+    `;
 
-    await sql`INSERT INTO creations(user_id,prompt,content,type) VALUES(${userId},${prompt},${content},'article')`;
+    /* -----------------------------------------
+       UPDATE FREE USAGE
+    ----------------------------------------- */
 
-    if (plan !== 'premium') {
+    if (plan !== "pro") {
       await clerkClient.users.updateUserMetadata(userId, {
         privateMetadata: {
           free_usage: free_usage + 1,
@@ -54,161 +106,379 @@ export const generateArticle = async (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       success: true,
       content,
     });
-    
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
+    console.error("❌ Generate Article Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
+
+/* =====================================================
+   GENERATE BLOG TITLE
+===================================================== */
 
 export const generateBlogTitle = async (req, res) => {
   try {
-    console.log("Title")
-    const { userId } = req.auth();
-    const { prompt } = req.body;
-    const plan = req.plan;
-    const free_usage = req.free_usage;
+    console.log("✍️ Generate Blog Title API hit");
 
-    if (plan != 'premium' && free_usage >= 10) {
-      return res.json({
+    const { userId } = req.auth();
+
+    const { prompt } = req.body;
+
+    const plan = req.plan;
+    const free_usage = req.free_usage ?? 0;
+
+    console.log("User:", userId);
+    console.log("Plan:", plan);
+    console.log("Free usage:", free_usage);
+
+    /* -----------------------------------------
+       FREE PLAN LIMIT
+    ----------------------------------------- */
+
+    if (plan !== "pro" && free_usage >= FREE_USAGE_LIMIT) {
+      return res.status(403).json({
         success: false,
-        message: 'Limit reached. Updgrade to continue.',
+        message:
+          "Free usage limit reached. Upgrade to Genviq Pro to continue.",
       });
     }
+
+    /* -----------------------------------------
+       GENERATE TITLE
+    ----------------------------------------- */
+
     const response = await AI.chat.completions.create({
-      model: 'gemini-2.0-flash',
+      model: "gemini-2.5-flash",
+
       messages: [
         {
-          role: 'user',
+          role: "user",
           content: prompt,
         },
       ],
+
       temperature: 0.7,
+
       max_tokens: 100,
     });
-    const content = response.choices[0].message.content;
-    await sql`INSERT INTO creations(user_id,prompt,content,type) VALUES(${userId},${prompt},${content},'blog-title')`;
 
-    if (plan !== 'premium') {
+    const content =
+      response.choices?.[0]?.message?.content ||
+      "No content returned.";
+
+    /* -----------------------------------------
+       SAVE CREATION
+    ----------------------------------------- */
+
+    await sql`
+      INSERT INTO creations(
+        user_id,
+        prompt,
+        content,
+        type
+      )
+      VALUES(
+        ${userId},
+        ${prompt},
+        ${content},
+        'blog-title'
+      )
+    `;
+
+    /* -----------------------------------------
+       UPDATE FREE USAGE
+    ----------------------------------------- */
+
+    if (plan !== "pro") {
       await clerkClient.users.updateUserMetadata(userId, {
         privateMetadata: {
           free_usage: free_usage + 1,
         },
       });
     }
-    res.json({
+
+    console.log("✅ Blog title generated successfully");
+
+    return res.json({
       success: true,
       content,
     });
-    console.log("data sent successfully",content)
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
+    console.error("❌ Generate Blog Title Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
+
+/* =====================================================
+   GENERATE IMAGE
+   GENVIQ PRO ONLY
+===================================================== */
 
 export const generateImage = async (req, res) => {
   try {
-    console.log('Request received');
+    console.log("🎨 Generate Image API hit");
+
     const { userId } = req.auth();
+
     const { prompt, publish } = req.body;
+
     const plan = req.plan;
 
-    if (plan != 'premium') {
-      return res.json({
+    console.log("User:", userId);
+    console.log("Plan:", plan);
+
+    /* -----------------------------------------
+       PRO CHECK
+    ----------------------------------------- */
+
+    if (plan !== "pro") {
+      return res.status(403).json({
         success: false,
-        message: 'This feature is only available for premium subscriptions.',
+        message:
+          "AI Image Generation is available with Genviq Pro.",
       });
     }
+
+    /* -----------------------------------------
+       GENERATE IMAGE
+    ----------------------------------------- */
+
     const formData = new FormData();
-    formData.append('prompt', prompt);
+
+    formData.append("prompt", prompt);
 
     const { data } = await axios.post(
-      'https://clipdrop-api.co/text-to-image/v1',
+      "https://clipdrop-api.co/text-to-image/v1",
+
       formData,
+
       {
-        headers: { 'x-api-key': process.env.CLIPDROP_API_KEY },
-        responseType: 'arraybuffer',
+        headers: {
+          "x-api-key": process.env.CLIPDROP_API_KEY,
+        },
+
+        responseType: "arraybuffer",
       }
     );
 
-    const base64Image = `data:image/png;base64,${Buffer.from(
-      data,
-      'binary'
-    ).toString('base64')}`;
+    /* -----------------------------------------
+       CONVERT IMAGE
+    ----------------------------------------- */
 
-    const { secure_url } = await cloudinary.uploader.upload(base64Image);
+    const base64Image =
+      `data:image/png;base64,${Buffer.from(
+        data,
+        "binary"
+      ).toString("base64")}`;
 
-    await sql`INSERT INTO creations(user_id,prompt,content,type,publish) VALUES(${userId},${prompt},${secure_url},'image',${
-      publish ?? false
-    })`;
+    /* -----------------------------------------
+       UPLOAD TO CLOUDINARY
+    ----------------------------------------- */
 
-    res.json({
+    const { secure_url } =
+      await cloudinary.uploader.upload(base64Image);
+
+    /* -----------------------------------------
+       SAVE CREATION
+    ----------------------------------------- */
+
+    await sql`
+      INSERT INTO creations(
+        user_id,
+        prompt,
+        content,
+        type,
+        publish
+      )
+      VALUES(
+        ${userId},
+        ${prompt},
+        ${secure_url},
+        'image',
+        ${publish ?? false}
+      )
+    `;
+
+    return res.json({
       success: true,
       content: secure_url,
     });
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
+    console.error("❌ Generate Image Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
+
+/* =====================================================
+   REMOVE IMAGE BACKGROUND
+   GENVIQ PRO ONLY
+===================================================== */
 
 export const removeImageBackground = async (req, res) => {
   try {
-    console.log('Request received');
+    console.log("🖼️ Remove Background API hit");
+
     const { userId } = req.auth();
-    const  image  = req.file;
+
+    const image = req.file;
+
     const plan = req.plan;
 
-    console.log(plan)
-    if (plan != 'premium') {
-      return res.json({
+    console.log("User:", userId);
+    console.log("Plan:", plan);
+
+    /* -----------------------------------------
+       PRO CHECK
+    ----------------------------------------- */
+
+    if (plan !== "pro") {
+      return res.status(403).json({
         success: false,
-        message: 'This feature is only available for premium subscriptions.',
+        message:
+          "Background Removal is available with Genviq Pro.",
       });
     }
 
-    const { secure_url } = await cloudinary.uploader.upload(image.path, {
-      transformation: [
-        {
-          effect: 'background_removal',
-          background_removal: 'remove_the_background',
-        },
-      ],
-    });
+    /* -----------------------------------------
+       FILE CHECK
+    ----------------------------------------- */
 
-    await sql`INSERT INTO creations(user_id,prompt,content,type) VALUES(${userId},'Remove Background from the image',${secure_url},'image')`;
+    if (!image) {
+      return res.status(400).json({
+        success: false,
+        message: "Please upload an image.",
+      });
+    }
 
-    res.json({
+    /* -----------------------------------------
+       CLOUDINARY BACKGROUND REMOVAL
+    ----------------------------------------- */
+
+    const { secure_url } =
+      await cloudinary.uploader.upload(image.path, {
+        transformation: [
+          {
+            effect: "background_removal",
+
+            background_removal:
+              "remove_the_background",
+          },
+        ],
+      });
+
+    /* -----------------------------------------
+       SAVE CREATION
+    ----------------------------------------- */
+
+    await sql`
+      INSERT INTO creations(
+        user_id,
+        prompt,
+        content,
+        type
+      )
+      VALUES(
+        ${userId},
+        'Remove Background from the image',
+        ${secure_url},
+        'image'
+      )
+    `;
+
+    return res.json({
       success: true,
       content: secure_url,
     });
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
+    console.error(
+      "❌ Remove Background Error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
+/* =====================================================
+   REMOVE IMAGE OBJECT
+   GENVIQ PRO ONLY
+===================================================== */
+
 export const removeImageObject = async (req, res) => {
   try {
-    console.log('Request received');
+    console.log("🪄 Remove Object API hit");
+
     const { userId } = req.auth();
+
     const { object } = req.body;
-    const image  = req.file;
+
+    const image = req.file;
+
     const plan = req.plan;
 
-    if (plan != 'premium') {
-      return res.json({
+    console.log("User:", userId);
+    console.log("Plan:", plan);
+
+    /* -----------------------------------------
+       PRO CHECK
+    ----------------------------------------- */
+
+    if (plan !== "pro") {
+      return res.status(403).json({
         success: false,
-        message: 'This feature is only available for premium subscriptions.',
+        message:
+          "Object Removal is available with Genviq Pro.",
       });
     }
 
-    const { public_id } = await cloudinary.uploader.upload(image.path);
+    /* -----------------------------------------
+       VALIDATION
+    ----------------------------------------- */
+
+    if (!image) {
+      return res.status(400).json({
+        success: false,
+        message: "Please upload an image.",
+      });
+    }
+
+    if (!object) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Please specify the object you want to remove.",
+      });
+    }
+
+    /* -----------------------------------------
+       UPLOAD ORIGINAL IMAGE
+    ----------------------------------------- */
+
+    const { public_id } =
+      await cloudinary.uploader.upload(image.path);
+
+    /* -----------------------------------------
+       GENERATIVE OBJECT REMOVAL
+    ----------------------------------------- */
 
     const imageUrl = cloudinary.url(public_id, {
       transformation: [
@@ -216,69 +486,190 @@ export const removeImageObject = async (req, res) => {
           effect: `gen_remove:${object}`,
         },
       ],
-      resource_type: 'image',
+
+      resource_type: "image",
     });
 
-    await sql`INSERT INTO creations(user_id,prompt,content,type) VALUES(${userId},${`Remove ${object} from this image`},${imageUrl},'image')`;
+    /* -----------------------------------------
+       SAVE CREATION
+    ----------------------------------------- */
 
-    res.json({
+    await sql`
+      INSERT INTO creations(
+        user_id,
+        prompt,
+        content,
+        type
+      )
+      VALUES(
+        ${userId},
+        ${`Remove ${object} from this image`},
+        ${imageUrl},
+        'image'
+      )
+    `;
+
+    return res.json({
       success: true,
       content: imageUrl,
     });
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
+    console.error(
+      "❌ Remove Object Error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
 
+/* =====================================================
+   REVIEW RESUME
+   GENVIQ PRO ONLY
+===================================================== */
+
 export const reviewResume = async (req, res) => {
   try {
-    console.log('Request received');
+    console.log("📄 Resume Review API hit");
+
     const { userId } = req.auth();
+
     const resume = req.file;
+
     const plan = req.plan;
 
-    if (plan != 'premium') {
-      return res.json({
+    console.log("User:", userId);
+    console.log("Plan:", plan);
+
+    /* -----------------------------------------
+       PRO CHECK
+    ----------------------------------------- */
+
+    if (plan !== "pro") {
+      return res.status(403).json({
         success: false,
-        message: 'This feature is only available for premium subscriptions.',
+        message:
+          "Advanced Resume Review is available with Genviq Pro.",
       });
     }
+
+    /* -----------------------------------------
+       FILE CHECK
+    ----------------------------------------- */
+
+    if (!resume) {
+      return res.status(400).json({
+        success: false,
+        message: "Please upload your resume.",
+      });
+    }
+
+    /* -----------------------------------------
+       FILE SIZE LIMIT
+    ----------------------------------------- */
 
     if (resume.size > 5 * 1024 * 1024) {
-      return res.json({
+      return res.status(400).json({
         success: false,
-        message: 'Resume file size exceeds allowed size (5MB).',
+
+        message:
+          "Resume file size exceeds the allowed size of 5MB.",
       });
     }
 
-    const dataBuffer = fs.readFileSync(resume.path);
-    const pdfData = await pdf(dataBuffer);
+    /* -----------------------------------------
+       READ PDF
+    ----------------------------------------- */
 
-    const prompt = `Review the following resume and provide constructive feedback on its strengths, weaknesses , and areas for improvement. Resume Content:\n\n ${pdfData.text}`;
+    const dataBuffer =
+      fs.readFileSync(resume.path);
 
-    const response = await AI.chat.completions.create({
-      model: 'gemini-2.0-flash',
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 1000,
-    });
+    const pdfData =
+      await pdf(dataBuffer);
+
+    /* -----------------------------------------
+       AI PROMPT
+    ----------------------------------------- */
+
+    const prompt = `
+Review the following resume and provide constructive,
+professional feedback.
+
+Analyze:
+
+1. Overall resume quality
+2. Strengths
+3. Weaknesses
+4. Skills presentation
+5. Experience presentation
+6. ATS optimization
+7. Areas for improvement
+8. Actionable recommendations
+
+Resume Content:
+
+${pdfData.text}
+`;
+
+    /* -----------------------------------------
+       GENERATE REVIEW
+    ----------------------------------------- */
+
+    const response =
+      await AI.chat.completions.create({
+        model: "gemini-2.5-flash",
+
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+
+        temperature: 0.7,
+
+        max_tokens: 1000,
+      });
+
     const content =
-      response.choices?.[0]?.message?.content || 'No content returned.';
+      response.choices?.[0]?.message?.content ||
+      "No content returned.";
 
-    await sql`INSERT INTO creations(user_id,prompt,content,type) VALUES(${userId},'Review the uploaded resume',${content},'resume-review')`;
+    /* -----------------------------------------
+       SAVE CREATION
+    ----------------------------------------- */
 
-    res.json({
+    await sql`
+      INSERT INTO creations(
+        user_id,
+        prompt,
+        content,
+        type
+      )
+      VALUES(
+        ${userId},
+        'Review the uploaded resume',
+        ${content},
+        'resume-review'
+      )
+    `;
+
+    return res.json({
       success: true,
-       content,
+      content,
     });
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: error.message });
+    console.error(
+      "❌ Resume Review Error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };

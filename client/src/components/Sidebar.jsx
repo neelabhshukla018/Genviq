@@ -50,7 +50,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-semibold text-sm truncate">{user.fullName}</p>
-                <Protect plan='premium' fallback={
+                <Protect plan='pro_user' fallback={
                   <p className="text-gray-400 text-xs flex items-center gap-1 mt-0.5">
                     <Zap className="w-3 h-3" />
                     Free Plan
@@ -121,7 +121,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
               <img src={user?.imageUrl} alt="User" className="w-7 h-7 rounded-full border border-gray-600" />
               <div>
                 <p className="text-white text-xs font-medium">Status</p>
-                <Protect plan='premium' fallback={
+                <Protect plan='pro_user' fallback={
                   <p className="text-gray-400 text-xs">Limited</p>
                 }>
                   <p className="text-green-400 text-xs">Full Access</p>
@@ -141,12 +141,12 @@ const Sidebar = ({ sidebar, setSidebar }) => {
           <div className="space-y-1.5">
             <div className="flex justify-between text-xs">
               <span className="text-gray-400">AI Power</span>
-              <Protect plan='premium' fallback={<span className="text-gray-400">50%</span>}>
+              <Protect plan='pro_user' fallback={<span className="text-gray-400">50%</span>}>
                 <span className="text-yellow-300">MAX</span>
               </Protect>
             </div>
             <div className="w-full bg-gray-700 rounded-full h-1">
-              <Protect plan='premium' fallback={
+              <Protect plan='pro_user' fallback={
                 <div className="bg-gradient-to-r from-purple-500 to-blue-500 h-1 rounded-full w-1/2 transition-all duration-500"></div>
               }>
                 <div className="bg-gradient-to-r from-yellow-400 to-amber-500 h-1 rounded-full w-full shadow-lg shadow-yellow-500/20"></div>
