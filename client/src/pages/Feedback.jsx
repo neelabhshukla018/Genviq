@@ -248,7 +248,7 @@ const FeedbackPage = () => {
                 className="text-center mt-4"
               >
                 <p className="text-xs text-gray-400 flex items-center justify-center gap-2">
-                  GenAxis <Heart className="w-3 h-3 text-pink-400" /> by Sahil
+                  Genviq <Heart className="w-3 h-3 text-pink-400" /> by Neelabh
                 </p>
               </motion.div>
             </div>

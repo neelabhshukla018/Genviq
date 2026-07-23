@@ -165,7 +165,7 @@ const Navbar = () => {
               <div className="flex items-center space-x-2">
                 <img src="/logo.png" alt="Logo" className="h-6 w-6" />
                 <span className="text-white text-lg font-semibold">
-                  GenAxis
+                  Genviq
                 </span>
               </div>
             </motion.div>
