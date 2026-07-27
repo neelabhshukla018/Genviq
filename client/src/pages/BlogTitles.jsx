@@ -4120,3 +4120,4 @@ Example:
 export default BlogTitles;
 
 //blog title.jsx is considered as 
+//cosnidered as a things which is not mentioned here
