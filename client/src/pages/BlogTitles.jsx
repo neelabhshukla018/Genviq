@@ -4118,3 +4118,5 @@ Example:
 ===================================================== */
 
 export default BlogTitles;
+
+//blog title.jsx is considered as 
