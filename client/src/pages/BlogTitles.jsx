@@ -369,18 +369,42 @@ const BlogTitles = () => {
            Existing prompt behavior preserved.
         ============================================= */
 
-        const prompt = `
+const prompt = `
+Generate exactly 10 SEO-friendly blog titles.
 
-Generate creative, engaging, and SEO-friendly blog titles.
-
-Keyword/Topic: ${input.trim()}
+Keyword: ${input.trim()}
 
 Category: ${selectedCategory}
 
-Generate multiple high-quality blog title ideas.
+Rules:
+- Return ONLY the titles.
+- Each title must be on a NEW LINE.
+- Do NOT combine titles into a paragraph.
+- Do NOT write introductions or explanations.
+- Do NOT use markdown headings.
+- Number each title from 1 to 10.
 
-Keep the titles clear, compelling, and relevant to the topic.
+Example:
 
+1. Future of Artificial Intelligence
+
+2. AI Trends Every Developer Should Know
+
+3. How AI is Transforming Modern Business
+
+4. The Rise of Intelligent Automation
+
+5. AI in Healthcare: A New Era
+
+6. The Future of Machine Learning
+
+7. Artificial Intelligence for Beginners
+
+8. Top AI Innovations in 2026
+
+9. Ethical Challenges of AI
+
+10. Why AI Will Shape the Future
 `;
 
 
