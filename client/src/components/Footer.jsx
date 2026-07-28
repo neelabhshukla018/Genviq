@@ -287,3 +287,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
+//explaining the footer section here and there
+//tell me one more thing about this pattern
