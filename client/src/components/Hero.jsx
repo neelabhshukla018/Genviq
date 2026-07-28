@@ -112,7 +112,7 @@ const Hero = () => {
               whileHover={{ scale: 1.01 }}
             >
               <span className="text-white drop-shadow-2xl bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">
-                𝔾𝔼ℕ𝕍𝕀ℚ
+                𝕋𝕚𝕧𝕚𝕠𝕟
               </span>
             </motion.h1>
           </motion.div>

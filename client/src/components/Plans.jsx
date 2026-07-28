@@ -320,7 +320,7 @@ const Plans = () => {
       ) {
 
         alert(
-          'You already have an active Genviq Pro subscription.'
+          'You already have an active Tivion Pro subscription.'
         );
 
         return;
@@ -342,7 +342,7 @@ const Plans = () => {
       if (isPro) {
 
         alert(
-          'You currently have a Genviq Pro subscription.'
+          'You currently have a Tivion Pro subscription.'
         );
 
         return;
@@ -651,12 +651,12 @@ const Plans = () => {
 
 
           setSuccess(
-            'Your Genviq Pro subscription is already active.'
+            'Your Tivion Pro subscription is already active.'
           );
 
 
           alert(
-            'You already have an active Genviq Pro subscription.'
+            'You already have an active Tivion Pro subscription.'
           );
 
 
@@ -2320,7 +2320,7 @@ const Plans = () => {
                 'Unlimited background removal',
                 'Unlimited object removal',
                 'Unlimited resume analysis',
-                'Priority access to future Genviq tools',
+                'Priority access to future Tivion tools',
               ].map(
                 (
                   feature,
@@ -3326,7 +3326,7 @@ const Plans = () => {
 
                     >
 
-                      You're on Genviq Pro
+                      You're on Tivion Pro
 
                     </h4>
 
@@ -3424,3 +3424,5 @@ const Plans = () => {
 ===================================================== */
 
 export default Plans;
+
+//i dont know what to do with it right now but surely i will do it

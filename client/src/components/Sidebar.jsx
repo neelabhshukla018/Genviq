@@ -382,7 +382,7 @@ const Sidebar = ({
                       "
                     />
 
-                    Genviq Pro
+                    Tivion Pro
 
                   </p>
 
