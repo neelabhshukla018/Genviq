@@ -11,9 +11,13 @@ const FeedbackPage = () => {
     name: '', email: '', message: '', category: 'general'
   });
 
+
+
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +29,7 @@ const FeedbackPage = () => {
     setIsSubmitting(true);
     try {
       const response = await fetch('https://formspree.io/f/mwvgzkdd', {
+        
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, rating, type: 'feedback' }),
