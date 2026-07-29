@@ -7,28 +7,22 @@ const Footer = () => {
     {
       name: 'github',
       icon: <Github className="w-5 h-5" />,
-      url: 'https://github.com/sahilmd01',
+      url: 'https://github.com/neelabhshukla018',
       label: 'Star us on GitHub',
       color: 'hover:text-gray-400'
     },
     {
       name: 'instagram',
       icon: <Instagram className="w-5 h-5" />,
-      url: 'https://instagram.com/avoliq.dev',
+      url: 'https://www.instagram.com/satyam_shukla_1845/',
       label: 'Follow on Instagram',
       color: 'hover:text-pink-400'
     },
-    {
-      name: 'youtube',
-      icon: <Youtube className="w-5 h-5" />,
-      url: 'https://youtube.com/@codewithkinu',
-      label: 'Subscribe on YouTube',
-      color: 'hover:text-red-400'
-    },
+ 
     {
       name: 'linkedin',
       icon: <Linkedin className="w-5 h-5" />,
-      url: 'https://linkedin.com/in/codewithkinu',
+      url: 'https://www.linkedin.com/in/neelabh18shukla/',
       label: 'Connect on LinkedIn',
       color: 'hover:text-blue-400'
     }
@@ -250,10 +244,10 @@ const Footer = () => {
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-white/80 text-sm">
-                © {new Date().getFullYear()} GenAxis AI. All rights reserved.
+                © {new Date().getFullYear()} Tivion AI. All rights reserved.
               </p>
               <p className="text-white/80 text-sm">
-                © Developed by Sahil with ❤️
+                © Developed by Neelabh with ❤️
               </p>
               <div className="flex gap-6 text-sm">
                 <motion.a
