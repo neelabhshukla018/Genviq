@@ -54,14 +54,14 @@ const Navbar = () => {
 
   // Handle GitHub navigation
   const handleGitHubClick = () => {
-    window.open('https://github.com/sahilmd01/GenAxis', '_blank', 'noopener,noreferrer');
+    window.open('https://github.com/neelabhshukla018', '_blank', 'noopener,noreferrer');
   };
 
   // Navigation items for right side
   const rightNavItems = [
     { 
       label: 'Star us', 
-      path: 'https://github.com/Sahilmd01/GenAxis',
+      path: 'https://github.com/neelabhshukla018',
       external: true,
       icon: '/github.png'
     },
@@ -81,7 +81,7 @@ const Navbar = () => {
       { label: 'API Reference', path: '/resources/api' },
       { 
         label: 'Blog', 
-        path: 'https://blogni.vercel.app',
+        path: 'https://despire-blogsmt.netlify.app/',
         external: true 
       },
     ],
@@ -358,7 +358,7 @@ const Navbar = () => {
                     className="w-full flex items-center justify-center p-3 text-white/80 hover:text-white text-base font-medium cursor-pointer transition-colors duration-200"
                   >
                     <User className="w-4 h-4 mr-2" />
-                    Sign In
+                    Get Started
                   </button>
                 )}
               </div>
