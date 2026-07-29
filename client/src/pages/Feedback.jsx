@@ -24,7 +24,7 @@ const FeedbackPage = () => {
     
     setIsSubmitting(true);
     try {
-      const response = await fetch('https://formspree.io/f/xwpbojaj', {
+      const response = await fetch('https://formspree.io/f/mwvgzkdd', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, rating, type: 'feedback' }),
