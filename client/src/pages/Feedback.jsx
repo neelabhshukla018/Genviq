@@ -35,7 +35,7 @@ const FeedbackPage = () => {
         setRating(0);
       }
     } catch (error) {
-      alert("Failed to send. Email sahilmd.dev@gmail.com");
+      alert("Failed to send. neelabhshukla79@gmail.com");
     }
     setIsSubmitting(false);
   };
@@ -108,13 +108,13 @@ const FeedbackPage = () => {
                   <a href="mailto:sahilmd.dev@gmail.com" className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700/30 hover:border-yellow-500/30 transition-all">
                     <Mail className="w-4 h-4 text-blue-400" />
                     <div>
-                      <p className="text-xs font-medium text-white">sahilmd.dev@gmail.com</p>
+                      <p className="text-xs font-medium text-white">neelabhshukla79@gmail.com</p>
                     </div>
                   </a>
                   <a href="tel:+919315135594" className="flex items-center gap-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700/30 hover:border-yellow-500/30 transition-all">
                     <Phone className="w-4 h-4 text-green-400" />
                     <div>
-                      <p className="text-xs font-medium text-white">+91 9315135594</p>
+                      <p className="text-xs font-medium text-white">+91 7307551612</p>
                     </div>
                   </a>
                 </div>
@@ -248,7 +248,7 @@ const FeedbackPage = () => {
                 className="text-center mt-4"
               >
                 <p className="text-xs text-gray-400 flex items-center justify-center gap-2">
-                  Genviq <Heart className="w-3 h-3 text-pink-400" /> by Neelabh
+                  Tivion <Heart className="w-3 h-3 text-pink-400" /> by Neelabh
                 </p>
               </motion.div>
             </div>
