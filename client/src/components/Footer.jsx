@@ -169,7 +169,7 @@ const Footer = () => {
 
                 <div>
                   <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300">
-                    GenAxis
+                    Tivion
                   </span>
 
                   <p className="text-gray-400 text-sm">
@@ -333,7 +333,7 @@ const Footer = () => {
 
               {/* Copyright */}
               <p className="text-white/80 text-sm text-center md:text-left">
-                © {new Date().getFullYear()} GenAxis AI. All rights reserved.
+                © {new Date().getFullYear()} Tivion AI All rights reserved.
               </p>
 
               {/* Developed By */}
