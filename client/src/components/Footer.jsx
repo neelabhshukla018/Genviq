@@ -29,16 +29,16 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: 'AI Tools', path: '#' },
-    { name: 'Use Cases', path: '#' },
+    { name: 'AI Tools', path: '/components/Aitools' },
+    
     { name: 'Pricing', path: '/product/pricing' },
     { name: 'Documentation', path: '/resources/documentation' }
   ];
 
   const supportLinks = [
-    { name: 'Help Center', path: '/help' },
+    
     { name: 'Contact Us', path: '/contact' },
-    { name: 'Status', path: '#' },
+    
     { name: 'API Reference', path: '/resources/api' }
   ];
 
