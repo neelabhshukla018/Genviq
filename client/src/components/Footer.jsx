@@ -29,8 +29,7 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: 'AI Tools', path: '/components/Aitools' },
-    
+    { name: 'AI Tools', path: '/components/Aitools' },    
     { name: 'Pricing', path: '/product/pricing' },
     { name: 'Documentation', path: '/resources/documentation' }
   ];
