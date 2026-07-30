@@ -10,9 +10,12 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
 
   const contactInfo = [
-    { icon: Mail, title: 'Email Us', description: 'Get in touch via email', details: 'sahilmd.dev@gmail.com', link: 'mailto:sahilmd.dev@gmail.com' },
-    { icon: Phone, title: 'Call Us', description: 'Mon-Fri from 9am to 6pm', details: '+91 9315145594', link: 'tel:+919315145594' },
-    { icon: MapPin, title: 'Visit Us', description: 'Come say hello at our office', details: '123 AI Street, Tech City, TC 10101', link: '#' },
+    { icon: Mail, title: 'Email Us', description: 'Get in touch via email', details: 'neelabhshukla79@gmail.com', link: 'mailto:neelabhshukla79@gmail.com' },
+
+    { icon: Phone, title: 'Call Us', description: 'Mon-Fri from 9am to 6pm', details: '+91 7307551612', link: 'tel:+917307551612' },
+
+    { icon: MapPin, title: 'Visit Us', description: 'Come say hello at our office', details: 'Indira Nagar sector-11 Lucknow-UP', link: '#' },
+
     { icon: Clock, title: 'Response Time', description: 'We typically reply within', details: '2-4 hours during business days', link: '#' }
   ];
 
