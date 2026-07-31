@@ -7,37 +7,43 @@ const Faqs = () => {
   const [showAllFaqs, setShowAllFaqs] = useState(false);
 
   const faqData = [
-    {
-      question: "How do I access the AI tools?",
-      answer: "Simply create an account and log in to access our full suite of AI tools. Each tool is designed to be intuitive and user-friendly, with no technical expertise required."
-    },
-    {
-      question: "Is there a free trial available?",
-      answer: "Yes, we offer a 14-day free trial for all new users. You'll have full access to all features during this period with no credit card required."
-    },
-    {
-      question: "What kind of support do you provide?",
-      answer: "We offer 24/7 customer support through live chat, email, and comprehensive documentation. Our team is always ready to help you get the most out of our tools."
-    },
-    {
-      question: "Can I cancel my subscription anytime?",
-      answer: "Absolutely! You can cancel your subscription at any time without any hidden fees or complicated processes. Your access will continue until the end of your billing period."
-    },
-    {
-      question: "Are my data and files secure?",
-      answer: "Security is our top priority. We use enterprise-grade encryption and comply with industry standards to ensure your data remains safe and confidential at all times."
-    },
-    {
-      question: "Do you offer custom solutions for businesses?",
-      answer: "Yes, we provide custom AI solutions tailored to your business needs. Contact our enterprise team to discuss your specific requirements and scale."
-    }
+   {
+    question: "What is Tivion?",
+    answer:
+      "Tivion is an all-in-one AI platform that helps you generate articles, blog titles, AI images, remove image backgrounds and objects, review resumes, and much more—all from a single, easy-to-use platform."
+  },
+  {
+    question: "Do I need any technical knowledge to use Tivion?",
+    answer:
+      "Not at all! Tivion is built for everyone. Simply sign up, choose an AI tool, enter your prompt, and let our AI do the work in seconds."
+  },
+  {
+    question: "Is Tivion free to use?",
+    answer:
+      "Yes! Every new user receives **30 free AI generations** to explore all of Tivion's powerful tools. Once you've used your free generations, you can upgrade to Tivion Pro for higher limits and premium features."
+  },
+  {
+    question: "What AI tools does Tivion offer?",
+    answer:
+      "Tivion includes AI Article Writer, Blog Title Generator, AI Image Generator, Background Remover, Object Remover, Resume Reviewer, and many more productivity tools, with new features added regularly."
+  },
+  {
+    question: "Is my data safe on Tivion?",
+    answer:
+      "Absolutely. Your privacy and security are our top priorities. Tivion uses secure authentication, encrypted connections, and industry-standard security practices to keep your data safe."
+  },
+  {
+    question: "How can I contact Tivion support?",
+    answer:
+      "Need help? You can reach our support team anytime through the Contact page or by email. We'll be happy to assist you with any questions or issues."
+  }
   ];
 
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  const displayedFaqs = showAllFaqs ? faqData : faqData.slice(0, 4);
+  const displayedFaqs = showAllFaqs ? faqData : faqData.slice(0, 6);
 
   return (
     <div className="px-4 sm:px-20 xl:px-32 py-20 bg-black relative overflow-hidden">
@@ -74,55 +80,21 @@ const Faqs = () => {
       <div className="relative z-10 max-w-7xl mx-auto mt-16">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
           {/* Left Side - Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="lg:w-2/5"
-          >
-            <div className="relative">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, delay: 0.7 }}
-                viewport={{ once: true }}
-                className="relative rounded-xl overflow-hidden shadow-lg shadow-purple-500/10 border border-purple-500/10"
-              >
-                <img
-                  src="/faq-image.jpg"
-                  alt="FAQ Illustration"
-                  className="w-full h-auto object-cover"
-                  onError={(e) => {
-                    e.target.src = '/images/faqs.png';
-                  }}
-                />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-              </motion.div>
-
-              {/* Floating elements */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1 }}
-                viewport={{ once: true }}
-                className="absolute -top-2 -right-2 bg-purple-600/15 backdrop-blur-sm border border-purple-500/15 rounded-lg p-2 shadow-md"
-              >
-                <Zap className="w-5 h-5 text-purple-400" />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.2 }}
-                viewport={{ once: true }}
-                className="absolute -bottom-2 -left-2 bg-blue-600/15 backdrop-blur-sm border border-blue-500/15 rounded-lg p-2 shadow-md"
-              >
-                <Sparkles className="w-5 h-5 text-blue-400" />
-              </motion.div>
-            </div>
-          </motion.div>
+       
+<motion.div
+  initial={{ opacity: 0, x: -100 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.7 }}
+  viewport={{ once: true }}
+  className="lg:w-2/5 w-full hidden lg:flex justify-center"
+>
+  <div className="w-[420px] h-[420px] rounded-3xl overflow-hidden border border-gray-700 bg-gray-900 shadow-xl">
+    <img
+     src="/images/forfavicon.jpeg" alt="FAQ"
+      className="w-full h-full object-cover"
+    />
+  </div>
+</motion.div>
 
           {/* Right Side - FAQs */}
           <motion.div
@@ -197,44 +169,14 @@ const Faqs = () => {
               ))}
             </div>
 
-            {/* View All FAQs Button */}
-            {!showAllFaqs && faqData.length > 4 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-                viewport={{ once: true }}
-                className="text-center mt-5"
-              >
-                <button
-                  onClick={() => setShowAllFaqs(true)}
-                  className="px-8 py-2.5 rounded-full text-sm font-medium
-               text-white bg-black border border-neutral-800
-               shadow-sm transition-all duration-300
-               hover:bg-neutral-100 hover:text-black 
-               hover:shadow-[0_0_20px_rgba(168,85,247,0.6)]
-               hover:border-purple-400"
-                >
-                  View All FAQs
-                </button>
-              </motion.div>
+          
 
-            )}
+            
           </motion.div>
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
-        viewport={{ once: true }}
-        className="relative z-10 text-center mt-10"
-      >
-        <p className="text-gray-400 text-sm mb-6">
-          Still have questions? We're here to help!
-        </p>
-      </motion.div>
+   
     </div>
   );
 };

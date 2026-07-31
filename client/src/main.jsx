@@ -7,7 +7,7 @@ import './index.css';
 import App from './App.jsx';
 
 /* =====================================================
-   GENVIQ USAGE PROVIDER
+   Tivion USAGE PROVIDER
 
    Handles:
    - Neon Free / Pro plan
