@@ -91,6 +91,7 @@ const Faqs = () => {
   <div className="w-[420px] h-[420px] rounded-3xl overflow-hidden border border-gray-700 bg-gray-900 shadow-xl">
     <img
      src="/images/forfavicon.jpeg" alt="FAQ"
+     
       className="w-full h-full object-cover"
     />
   </div>
