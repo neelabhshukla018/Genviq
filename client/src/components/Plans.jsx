@@ -56,9 +56,8 @@ import {
 ===================================================== */
 
 const API_URL =
-  import.meta.env.VITE_API_URL ||
-  'http://localhost:3000';
-
+  import.meta.env.VITE_BASE_URL ||
+  "https://genviq-backend.onrender.com";
 
 /* =====================================================
    ACTIVE SUBSCRIPTION STATUSES

@@ -30,8 +30,8 @@ import Navbar from '../../components/Navbar';
 ===================================================== */
 
 const API_URL =
-  import.meta.env.VITE_API_URL ||
-  'http://localhost:3000';
+  import.meta.env.VITE_BASE_URL ||
+  "https://genviq-backend.onrender.com";
 
 
 /* =====================================================
