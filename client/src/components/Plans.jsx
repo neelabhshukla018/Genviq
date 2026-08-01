@@ -3194,38 +3194,6 @@ const Plans = () => {
           that the current account is subscribed.
       ============================================== */}
 
-      {
-        isPro && (
-
-          <motion.div
-
-            initial={{
-              opacity: 0,
-              scale: 0.98,
-            }}
-
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-
-            transition={{
-              duration: 0.4,
-            }}
-
-            className="
-              max-w-5xl
-              mx-auto
-              mb-16
-            "
-
-          >
-
-          
-          </motion.div>
-
-        )
-      }
 
 
     </div>
