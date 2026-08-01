@@ -3221,29 +3221,7 @@ const Plans = () => {
 
           >
 
-            <div
-
-              className="
-                relative
-                overflow-hidden
-                px-6
-                py-5
-                rounded-2xl
-                bg-gradient-to-r
-                from-yellow-500/[0.06]
-                via-amber-500/[0.03]
-                to-transparent
-                border
-                border-yellow-500/15
-              "
-
-            >
-
-
-              
-
-            </div>
-
+          
           </motion.div>
 
         )
