@@ -10,7 +10,11 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+import { useNavigate } from "react-router-dom";
+
+
 const Footer = () => {
+  const navigate = useNavigate();
   // ===========================
   // Social Links
   // ===========================
@@ -98,14 +102,16 @@ const Footer = () => {
               boost their productivity and creativity.
             </p>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-black text-white rounded-2xl font-semibold border-2 border-purple-400 hover:border-purple-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300 backdrop-blur-sm"
-            >
-              Get Started Free
-              <ChevronRight className="w-5 h-5 ml-2 inline" />
-            </motion.button>
+<motion.button
+
+  onClick={() => navigate("/ai")}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="px-8 py-4 bg-black text-white rounded-2xl font-semibold border-2 border-purple-400 hover:border-purple-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all duration-300 backdrop-blur-sm"
+>
+  Get Started
+  <ChevronRight className="w-5 h-5 ml-2 inline" />
+</motion.button>
 
           </motion.div>
 
