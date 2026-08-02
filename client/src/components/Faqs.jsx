@@ -20,7 +20,7 @@ const Faqs = () => {
   {
     question: "Is Tivion free to use?",
     answer:
-      "Yes! Every new user receives **30 free AI generations** to explore all of Tivion's powerful tools. Once you've used your free generations, you can upgrade to Tivion Pro for higher limits and premium features."
+      "Yes! Every new user receives - 30 free AI generations to explore all of Tivion's powerful tools. Once you've used your free generations, you can upgrade to Tivion Pro for higher limits and premium features."
   },
   {
     question: "What AI tools does Tivion offer?",
