@@ -3349,7 +3349,7 @@ const GenerateImages = () => {
                 >
 
                   {isPro
-                    ? 'Genviq Pro'
+                    ? 'Tivion Pro'
                     : 'Free Plan'}
 
                 </p>

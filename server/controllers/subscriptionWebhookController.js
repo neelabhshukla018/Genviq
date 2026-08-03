@@ -340,7 +340,7 @@ export const razorpaySubscriptionWebhook =
 
 
       /* ===============================================
-         8. FIND GENVIQ USER
+         8. FIND TIVION USER
 
          We NEVER trust a user ID from the frontend.
 
@@ -383,7 +383,7 @@ export const razorpaySubscriptionWebhook =
 
         console.warn(
 
-          "⚠️ No Genviq user found for Razorpay subscription:",
+          "⚠️ No Tivion user found for Razorpay subscription:",
 
           subscriptionId
 
@@ -395,7 +395,7 @@ export const razorpaySubscriptionWebhook =
           success: true,
 
           message:
-            "Subscription not associated with a Genviq user.",
+            "Subscription not associated with a Tivion user.",
 
         });
 
@@ -426,7 +426,7 @@ export const razorpaySubscriptionWebhook =
 
            User has an active subscription.
 
-           Genviq:
+           Tivion:
 
            plan = pro
         ============================================= */
@@ -934,7 +934,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "ℹ️ Razorpay event acknowledged but no Genviq action required:",
+            "ℹ️ Razorpay event acknowledged but no Tivion action required:",
 
             event
 

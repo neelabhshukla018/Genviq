@@ -1,7 +1,7 @@
 import sql from "../configs/db.js";
 
 /* =====================================================
-   GENVIQ AUTH MIDDLEWARE
+   Tivion AUTH MIDDLEWARE
 
    Clerk:
    - Authentication only
@@ -60,7 +60,7 @@ export const auth = async (req, res, next) => {
 
     if (!user) {
       console.log(
-        "🆕 User not found in Neon. Creating free Genviq account..."
+        "🆕 User not found in Neon. Creating free Tivion account..."
       );
 
       [user] = await sql`
@@ -114,7 +114,7 @@ export const auth = async (req, res, next) => {
       `;
 
       console.log(
-        "✅ New Genviq free user created"
+        "✅ New Tivion free user created"
       );
 
       console.log(
@@ -168,7 +168,7 @@ export const auth = async (req, res, next) => {
     ================================================= */
 
     console.log(
-      "📦 Genviq Plan:",
+      "📦 Tivion Plan:",
       plan
     );
 

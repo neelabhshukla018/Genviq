@@ -2814,7 +2814,7 @@ const Plans = () => {
 
                     {
                       isPro
-                        ? 'Genviq Pro'
+                        ? 'Tivion Pro'
                         : 'Free'
                     }
 

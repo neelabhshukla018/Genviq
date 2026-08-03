@@ -137,7 +137,7 @@ subscriptionRouter.post(
           ↓
 
    Check subscription belongs to
-   authenticated Genviq user
+   authenticated Tivion user
           ↓
 
    Fetch real subscription from Razorpay

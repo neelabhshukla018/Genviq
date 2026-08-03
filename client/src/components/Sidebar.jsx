@@ -340,7 +340,7 @@ const Sidebar = ({
                 >
                   {user.fullName ||
                     user.firstName ||
-                    'Genviq User'}
+                    'Tivion User'}
                 </p>
 
                 {/* =======================================

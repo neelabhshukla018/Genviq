@@ -190,7 +190,7 @@ try {
    CORS
 
    Allows your React/Vite frontend to communicate
-   with the Genviq backend.
+   with the Tivion backend.
 
    Example development client:
 
@@ -356,7 +356,7 @@ app.get(
       success: true,
 
       message:
-        "🚀 Genviq API server is running.",
+        "🚀 Tivion API server is running.",
 
     });
 
@@ -789,7 +789,7 @@ app.use(
 
         ↓
 
-   Synchronize Genviq plan
+   Synchronize Tivion plan
 ===================================================== */
 
 
@@ -968,7 +968,7 @@ app.use(
 
    8.
 
-   Neon stores the final Genviq application plan state.
+   Neon stores the final Tivion application plan state.
 ===================================================== */
 
 
@@ -1088,7 +1088,7 @@ app.listen(
 
       chalk.green(
 
-        `\n🌐 Genviq Server: http://localhost:${PORT}`
+        `\n🌐 Tivion Server: http://localhost:${PORT}`
 
       )
 
@@ -1154,7 +1154,7 @@ app.listen(
 
       chalk.cyan(
 
-        "✨ Genviq backend started successfully."
+        "✨ Tivion backend started successfully."
 
       )
 

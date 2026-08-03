@@ -3172,7 +3172,7 @@ Example:
                 >
 
                   {isPro
-                    ? 'Genviq Pro'
+                    ? 'Tivion Pro'
                     : 'Free Plan'}
 
                 </p>

@@ -3044,7 +3044,7 @@ const RemoveBackground = () => {
                 >
 
                   {isPro
-                    ? 'Genviq Pro'
+                    ? 'Tivion Pro'
                     : 'Free Plan'}
 
                 </p>

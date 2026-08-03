@@ -3144,7 +3144,7 @@ const RemoveObject = () => {
                 >
 
                   {isPro
-                    ? 'Genviq Pro'
+                    ? 'Tivion Pro'
                     : 'Free Plan'}
 
                 </p>

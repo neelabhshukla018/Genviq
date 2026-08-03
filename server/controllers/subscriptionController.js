@@ -177,7 +177,7 @@ export const createSubscription = async (
         success: false,
 
         message:
-          "Genviq user account was not found.",
+          "Tivion user account was not found.",
       });
     }
 
@@ -738,7 +738,7 @@ export const verifySubscriptionPayment = async (
         success: false,
 
         message:
-          "Genviq user account was not found.",
+          "Tivion user account was not found.",
       });
     }
 

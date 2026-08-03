@@ -68,7 +68,7 @@ const USAGE_COLUMNS = new Set([
 const validateUsageColumn = (column) => {
   if (!USAGE_COLUMNS.has(column)) {
     throw new Error(
-      `Invalid Genviq usage column: ${column}`
+      `Invalid Tivion usage column: ${column}`
     );
   }
 };
@@ -1826,7 +1826,7 @@ export const generateImage = async (req, res) => {
 
         {
           folder:
-            "genviq/generated-images",
+            "Tivion/generated-images",
 
           resource_type:
             "image",
@@ -2251,7 +2251,7 @@ export const removeImageBackground = async (req, res) => {
 
         {
           folder:
-            "genviq/background-removal",
+            "Tivion/background-removal",
 
           resource_type:
             "image",
@@ -2843,7 +2843,7 @@ export const removeImageObject = async (req, res) => {
 
         {
           folder:
-            "genviq/object-removal",
+            "Tivion/object-removal",
 
           resource_type:
             "image",
@@ -3170,7 +3170,7 @@ export const removeImageObject = async (req, res) => {
 
 /* =====================================================
    REVIEW RESUME
-   GENVIQ AI RESUME ANALYZER
+   TIVION AI RESUME ANALYZER
 
    FREE USER:
    - 5 lifetime free resume reviews
@@ -3566,7 +3566,7 @@ Important requirements:
               "system",
 
             content:
-              "You are Genviq's expert resume analyzer, technical recruiter, ATS specialist, and career advisor. Give accurate, specific, constructive resume feedback without inventing candidate information.",
+              "You are Tivion's expert resume analyzer, technical recruiter, ATS specialist, and career advisor. Give accurate, specific, constructive resume feedback without inventing candidate information.",
           },
 
           {
