@@ -1711,7 +1711,7 @@ const Plans = () => {
 
           >
 
-            Explore Genviq and try every AI tool.
+            Explore Tivion and try every AI tool.
 
           </p>
 

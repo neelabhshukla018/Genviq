@@ -462,7 +462,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "👑 Genviq Pro activated:",
+            "👑 Tivion Pro activated:",
 
             user.clerk_user_id
 
@@ -513,7 +513,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "💳 Genviq Pro subscription charged:",
+            "💳 Tivion Pro subscription charged:",
 
             user.clerk_user_id
 
@@ -688,7 +688,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "⚠️ Genviq Pro halted:",
+            "⚠️ Tivion Pro halted:",
 
             user.clerk_user_id
 
@@ -765,7 +765,7 @@ export const razorpaySubscriptionWebhook =
 
               ? "🗓️ Subscription cancelled; Pro retained until period end:"
 
-              : "❌ Genviq Pro cancelled:",
+              : "❌ Tivion Pro cancelled:",
 
             user.clerk_user_id
 
@@ -816,7 +816,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "🏁 Genviq Pro subscription completed:",
+            "🏁 Tivion Pro subscription completed:",
 
             user.clerk_user_id
 
@@ -860,7 +860,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "⏸️ Genviq Pro paused:",
+            "⏸️ Tivion Pro paused:",
 
             user.clerk_user_id
 
@@ -910,7 +910,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "▶️ Genviq Pro resumed:",
+            "▶️ Tivion Pro resumed:",
 
             user.clerk_user_id
 

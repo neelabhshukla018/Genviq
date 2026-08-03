@@ -78,7 +78,7 @@ const syncProSubscription = async (
 };
 
 /* =====================================================
-   CREATE GENVIQ PRO SUBSCRIPTION
+   CREATE Tivion PRO SUBSCRIPTION
 
    FLOW:
 
@@ -105,7 +105,7 @@ export const createSubscription = async (
 ) => {
   try {
     console.log(
-      "💳 Create Genviq Pro subscription request received"
+      "💳 Create Tivion Pro subscription request received"
     );
 
     /* =================================================
@@ -207,7 +207,7 @@ export const createSubscription = async (
       )
     ) {
       console.log(
-        "👑 User already has Genviq Pro"
+        "👑 User already has Tivion Pro"
       );
 
       return res.status(409).json({
@@ -221,7 +221,7 @@ export const createSubscription = async (
           user.subscription_status,
 
         message:
-          "You already have an active Genviq Pro subscription.",
+          "You already have an active Tivion Pro subscription.",
       });
     }
 
@@ -280,7 +280,7 @@ export const createSubscription = async (
           );
 
           console.log(
-            "🔄 Synchronizing Genviq Pro with Neon..."
+            "🔄 Synchronizing Tivion Pro with Neon..."
           );
 
           const updatedUser =
@@ -290,7 +290,7 @@ export const createSubscription = async (
             );
 
           console.log(
-            "👑 GENVIQ PRO SYNCHRONIZED"
+            "👑 TIVION PRO SYNCHRONIZED"
           );
 
           console.log(
@@ -311,7 +311,7 @@ export const createSubscription = async (
             synchronized: true,
 
             message:
-              "Your Genviq Pro subscription is already active.",
+              "Your Tivion Pro subscription is already active.",
 
             plan:
               "pro",
@@ -451,7 +451,7 @@ export const createSubscription = async (
           userId,
 
         product:
-          "Genviq Pro",
+          "Tivion Pro",
 
         billing:
           "monthly",
@@ -526,7 +526,7 @@ export const createSubscription = async (
       success: true,
 
       message:
-        "Genviq Pro subscription created successfully.",
+        "Tivion Pro subscription created successfully.",
 
       keyId:
         process.env.RAZORPAY_KEY_ID,
@@ -570,7 +570,7 @@ export const createSubscription = async (
             ?.description ||
           error?.error?.reason ||
           error.message ||
-          "Unable to create Genviq Pro subscription.",
+          "Unable to create Tivion Pro subscription.",
       });
   }
 };
@@ -585,7 +585,7 @@ export const createSubscription = async (
    2. Fetch subscription directly from Razorpay
    3. Confirm subscription belongs to this user
    4. Confirm valid subscription status
-   5. Activate Genviq Pro in Neon
+   5. Activate Tivion Pro in Neon
 ===================================================== */
 
 export const verifySubscriptionPayment = async (
@@ -594,7 +594,7 @@ export const verifySubscriptionPayment = async (
 ) => {
   try {
     console.log(
-      "🔐 Verify Genviq Pro subscription request received"
+      "🔐 Verify Tivion Pro subscription request received"
     );
 
     /* =================================================
@@ -813,7 +813,7 @@ export const verifySubscriptionPayment = async (
        9. VERIFY PLAN
 
        Prevent a subscription from another Razorpay
-       plan from activating Genviq Pro.
+       plan from activating Tivion Pro.
     ================================================= */
 
     if (
@@ -847,7 +847,7 @@ export const verifySubscriptionPayment = async (
       );
 
     /* =================================================
-       11. ACTIVATE GENVIQ PRO
+       11. ACTIVATE Tivion PRO
     ================================================= */
 
     const [updatedUser] = await sql`
@@ -885,7 +885,7 @@ export const verifySubscriptionPayment = async (
     `;
 
     console.log(
-      "👑 GENVIQ PRO ACTIVATED"
+      "👑 TIVION PRO ACTIVATED"
     );
 
     console.log(
@@ -911,7 +911,7 @@ export const verifySubscriptionPayment = async (
       success: true,
 
       message:
-        "Genviq Pro activated successfully.",
+        "Tivion Pro activated successfully.",
 
       plan:
         updatedUser.plan,
@@ -952,7 +952,7 @@ export const verifySubscriptionPayment = async (
         message:
           error?.error?.description ||
           error.message ||
-          "Unable to verify Genviq Pro subscription.",
+          "Unable to verify Tivion Pro subscription.",
       });
   }
 };
