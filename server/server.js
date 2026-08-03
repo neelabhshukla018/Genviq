@@ -478,7 +478,7 @@ app.use(
 
 
 /* =====================================================
-   GENVIQ PRO / RAZORPAY SUBSCRIPTION ROUTES
+   TIVION PRO / RAZORPAY SUBSCRIPTION ROUTES
 
    Base:
 
@@ -501,7 +501,7 @@ app.use(
 
    User clicks:
 
-   Upgrade to Genviq Pro
+   Upgrade to Tivion Pro
 
         ↓
 
@@ -697,7 +697,7 @@ app.use(
    RAZORPAY
    ─────────────────────────────────────────────────────
 
-   Genviq Pro
+   Tivion Pro
 
    ₹49 / month
 
@@ -717,7 +717,7 @@ app.use(
                     ↓
 
 
-   GENVIQ PRO ACCESS
+   Tivion PRO ACCESS
    ─────────────────────────────────────────────────────
 
    Neon is the source of truth for application access.

@@ -26,7 +26,7 @@ import {
    inactive | created | authenticated | active | etc.
 
    This allows this page to immediately know whether
-   the currently logged-in user already has Genviq Pro.
+   the currently logged-in user already has Tivion Pro.
 ===================================================== */
 
 import {
@@ -63,7 +63,7 @@ const API_URL =
    ACTIVE SUBSCRIPTION STATUSES
 
    These statuses mean that the user should be treated
-   as already subscribed to Genviq Pro.
+   as already subscribed to Tivion Pro.
 
    We use this together with:
 
@@ -198,7 +198,7 @@ const Plans = () => {
 
 
   /* ===================================================
-     GENVIQ PLAN / USAGE CONTEXT
+     Tivion PLAN / USAGE CONTEXT
 
      UsageContext calls:
 
@@ -361,7 +361,7 @@ const Plans = () => {
 
 
   /* ===================================================
-     UPGRADE TO GENVIQ PRO
+     UPGRADE TO TIVION PRO
 
      COMPLETE FLOW:
 
@@ -494,7 +494,7 @@ const Plans = () => {
         if (isPro) {
 
           alert(
-            'You already have an active Genviq Pro subscription.'
+            'You already have an active Tivion Pro subscription.'
           );
 
           return;
@@ -509,7 +509,7 @@ const Plans = () => {
         if (!isSignedIn) {
 
           setError(
-            'Please sign in before upgrading to Genviq Pro.'
+            'Please sign in before upgrading to Tivion Pro.'
           );
 
           return;
@@ -621,7 +621,7 @@ const Plans = () => {
 
            A 409 response can legitimately mean:
 
-           "You already have an active Genviq Pro
+           "You already have an active Tivion Pro
            subscription."
 
            That is NOT something for which we should
@@ -691,7 +691,7 @@ const Plans = () => {
 
             createData?.message ||
 
-            'Unable to create Genviq Pro subscription.'
+            'Unable to create Tivion Pro subscription.'
 
           );
 
@@ -730,7 +730,7 @@ const Plans = () => {
         ) {
 
           console.log(
-            '👑 Genviq Pro subscription synchronized:',
+            '👑 Tivion Pro subscription synchronized:',
             createData
           );
 
@@ -754,12 +754,12 @@ const Plans = () => {
 
 
           setSuccess(
-            'Your Genviq Pro subscription is active.'
+            'Your Tivion Pro subscription is active.'
           );
 
 
           alert(
-            'You already have an active Genviq Pro subscription.'
+            'You already have an active Tivion Pro subscription.'
           );
 
 
@@ -944,11 +944,11 @@ const Plans = () => {
           =========================================== */
 
           name:
-            'Genviq',
+            'Tivion',
 
 
           description:
-            'Genviq Pro - ₹49/month',
+            'Tivion Pro - ₹49/month',
 
 
           /* ===========================================
@@ -1010,7 +1010,7 @@ const Plans = () => {
 
 
                 setSuccess(
-                  'Payment successful. Verifying your Genviq Pro subscription...'
+                  'Payment successful. Verifying your Tivion Pro subscription...'
                 );
 
 
@@ -1144,12 +1144,12 @@ const Plans = () => {
                 ===================================== */
 
                 console.log(
-                  '👑 Genviq Pro successfully activated'
+                  '👑 Tivion Pro successfully activated'
                 );
 
 
                 setSuccess(
-                  'Welcome to Genviq Pro! Your subscription has been activated.'
+                  'Welcome to Tivion Pro! Your subscription has been activated.'
                 );
 
 
@@ -1290,7 +1290,7 @@ const Plans = () => {
 
 
             product:
-              'Genviq Pro',
+              'Tivion Pro',
 
 
             plan:
@@ -1426,7 +1426,7 @@ const Plans = () => {
         ============================================= */
 
         console.error(
-          '❌ Genviq upgrade error:',
+          '❌ Tivion Pro upgrade error:',
           upgradeError
         );
 
@@ -1460,7 +1460,7 @@ const Plans = () => {
 
      Free Plan
           +
-     Genviq Pro
+     Tivion Pro
 
      The visual design is NOT being redesigned.
 
@@ -1468,7 +1468,7 @@ const Plans = () => {
 
      FREE:
 
-     [ ⚡ Upgrade to Genviq Pro ]
+     [ ⚡ Upgrade to Tivion Pro ]
 
 
      PRO:
@@ -1895,7 +1895,7 @@ const Plans = () => {
 
 
         {/* ===========================================
-            GENVIQ PRO CARD
+             TIVION PRO CARD
 
             This card reacts to the REAL plan coming
             from Neon through UsageContext.
@@ -1905,7 +1905,7 @@ const Plans = () => {
             isPro = false
 
             Button:
-            Upgrade to Genviq Pro
+            Upgrade to Tivion Pro
 
 
             PRO USER:
@@ -1918,7 +1918,7 @@ const Plans = () => {
             The button becomes visually dimmed but
             remains clickable so we can show:
 
-            "You already have an active Genviq Pro
+            "You already have an active Tivion Pro
             subscription."
         ============================================ */}
 
@@ -2163,7 +2163,7 @@ const Plans = () => {
 
                 >
 
-                  Genviq Pro
+                  Tivion Pro
 
                 </h3>
 
@@ -2223,9 +2223,9 @@ const Plans = () => {
                 {
                   isPro
 
-                    ? 'Your Genviq Pro subscription is currently active.'
+                    ? 'Your Tivion Pro subscription is currently active.'
 
-                    : 'Unlock unlimited access and get the most out of every Genviq AI tool.'
+                    : 'Unlock unlimited access and get the most out of every Tivion AI tool.'
                 }
 
               </p>
@@ -2616,7 +2616,7 @@ const Plans = () => {
 
                     />
 
-                    Upgrade to Genviq Pro
+                    Upgrade to Tivion Pro
 
                   </>
 

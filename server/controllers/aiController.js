@@ -582,7 +582,7 @@ const sendQuotaExceeded = (
       "FREE_QUOTA_EXCEEDED",
 
     message:
-      `You have used all ${FREE_USAGE_LIMIT} free ${featureName} uses. Upgrade to Genviq Pro to continue.`,
+      `You have used all ${FREE_USAGE_LIMIT} free ${featureName} uses. Upgrade to Tivion Pro to continue.`,
 
     plan:
       "free",
@@ -750,7 +750,7 @@ export const generateArticle = async (req, res) => {
       );
     } else {
       console.log(
-        "👑 Genviq Pro — article quota bypassed"
+        "👑 Tivion Pro — article quota bypassed"
       );
     }
 
@@ -794,7 +794,7 @@ Requirements:
             role: "system",
 
             content:
-              "You are Genviq's professional AI writing assistant. Produce polished, useful, original articles based on the user's request.",
+              "You are Tivion's professional AI writing assistant. Produce polished, useful, original articles based on the user's request.",
           },
 
           {
@@ -1073,7 +1073,7 @@ export const generateBlogTitle = async (req, res) => {
       );
     } else {
       console.log(
-        "👑 Genviq Pro — Blog Title quota bypassed"
+        "👑 Tivion Pro — Blog Title quota bypassed"
       );
     }
 
@@ -1122,7 +1122,7 @@ Requirements:
               "system",
 
             content:
-              "You are Genviq's professional blog title generator. Create concise, engaging, relevant, original blog title ideas.",
+              "You are Tivion's professional blog title generator. Create concise, engaging, relevant, original blog title ideas.",
           },
 
           {
@@ -1412,7 +1412,7 @@ export const generateImage = async (req, res) => {
       );
     } else {
       console.log(
-        "👑 Genviq Pro — Image Generation quota bypassed"
+        "👑 Tivion Pro — Image Generation quota bypassed"
       );
     }
 
@@ -2207,7 +2207,7 @@ export const removeImageBackground = async (req, res) => {
       );
     } else {
       console.log(
-        "👑 Genviq Pro — Background Removal quota bypassed"
+        "👑 Tivion Pro — Background Removal quota bypassed"
       );
     }
 
@@ -2808,7 +2808,7 @@ export const removeImageObject = async (req, res) => {
       );
     } else {
       console.log(
-        "👑 Genviq Pro — Object Removal quota bypassed"
+        "👑 Tivion Pro — Object Removal quota bypassed"
       );
     }
 
@@ -3344,7 +3344,7 @@ export const reviewResume = async (req, res) => {
       );
     } else {
       console.log(
-        "👑 Genviq Pro — Resume Analysis quota bypassed"
+        "👑 Tivion Pro — Resume Analysis quota bypassed"
       );
     }
 
