@@ -171,7 +171,7 @@ const features = [
       'Available Anywhere',
 
     description:
-      'Access Genviq and your AI-powered creation tools from anywhere with a modern web experience.',
+      'Access Tivion and your AI-powered creation tools from anywhere with a modern web experience.',
 
   },
 
@@ -185,7 +185,7 @@ const features = [
       'Powerful AI Tools',
 
     description:
-      'Unlock enhanced access to Genviq AI tools with the Pro subscription.',
+      'Unlock enhanced access to Tivion AI tools with the Pro subscription.',
 
   },
 
@@ -204,7 +204,7 @@ const faqs = [
       'Can I change plans anytime?',
 
     answer:
-      'Yes. You can upgrade to Genviq Pro and manage your subscription according to your billing status.',
+      'Yes. You can upgrade to Tivion Pro and manage your subscription according to your billing status.',
 
   },
 
@@ -214,17 +214,17 @@ const faqs = [
       'Is there a free plan?',
 
     answer:
-      'Yes. Genviq includes a free plan with limited AI usage, so you can try the available tools before upgrading.',
+      'Yes. Tivion includes a free plan with limited AI usage, so you can try the available tools before upgrading.',
 
   },
 
   {
 
     question:
-      'What payment system does Genviq use?',
+      'What payment system does Tivion use?',
 
     answer:
-      'Genviq uses Razorpay for secure subscription payments. During development, payments run in Razorpay Test Mode and no real money is charged.',
+      'Tivion uses Razorpay for secure subscription payments. During development, payments run in Razorpay Test Mode and no real money is charged.',
 
   },
 
@@ -295,7 +295,7 @@ const Pricing = () => {
 
 
   /* ===================================================
-     UPGRADE TO GENVIQ PRO
+     UPGRADE TO TIVION PRO
 
      FLOW:
 
@@ -364,7 +364,7 @@ const Pricing = () => {
       if (!isSignedIn) {
 
         setError(
-          'Please sign in before upgrading to Genviq Pro.'
+          'Please sign in before upgrading to Tivion Pro.'
         );
 
         return;
@@ -469,7 +469,7 @@ const Pricing = () => {
 
           createData.message ||
 
-          'Unable to create Genviq Pro subscription.'
+          'Unable to create Tivion Pro subscription.'
 
         );
 
@@ -542,10 +542,10 @@ const Pricing = () => {
           subscriptionId,
 
         name:
-          'Genviq',
+          'Tivion',
 
         description:
-          'Genviq Pro - ₹49/month',
+          'Tivion Pro - ₹49/month',
 
         image:
           undefined,
@@ -573,7 +573,7 @@ const Pricing = () => {
               setError('');
 
               setMessage(
-                'Payment completed. Verifying your Genviq Pro subscription...'
+                'Payment completed. Verifying your Tivion Pro subscription...'
               );
 
 
@@ -668,7 +668,7 @@ const Pricing = () => {
               ======================================= */
 
               setMessage(
-                'Welcome to Genviq Pro! Your subscription has been activated successfully.'
+                'Welcome to Tivion Pro! Your subscription has been activated successfully.'
               );
 
 
@@ -677,7 +677,7 @@ const Pricing = () => {
                 then refresh.
 
                 This allows your existing user/usage
-                context to fetch the updated Neon plan.
+                context to fetch the updated Tivion plan.
               */
 
               setTimeout(() => {
@@ -746,7 +746,7 @@ const Pricing = () => {
         notes: {
 
           product:
-            'Genviq Pro',
+            'Tivion Pro',
 
           billing:
             'monthly',
@@ -853,7 +853,7 @@ const Pricing = () => {
 
       console.error(
 
-        'Genviq Pro upgrade error:',
+        'Tivion Pro upgrade error:',
 
         upgradeError
 
@@ -864,7 +864,7 @@ const Pricing = () => {
 
         upgradeError.message ||
 
-        'Unable to start Genviq Pro checkout.'
+        'Unable to start Tivion Pro checkout.'
 
       );
 
@@ -1038,7 +1038,7 @@ const Pricing = () => {
 
               <p className="text-gray-400">
 
-                Get started with Genviq AI tools.
+                Get started with Tivion AI tools.
 
               </p>
 
@@ -1160,7 +1160,7 @@ const Pricing = () => {
 
 
           {/* =============================================
-              GENVIQ PRO PLAN
+              TIVION PRO PLAN
           ============================================= */}
 
           <motion.div
@@ -1222,7 +1222,7 @@ const Pricing = () => {
 
                 <h3 className="text-2xl font-bold text-white">
 
-                  Genviq Pro
+                  Tivion Pro
 
                 </h3>
 
@@ -1231,7 +1231,7 @@ const Pricing = () => {
 
               <p className="text-gray-400">
 
-                Unlock the full power of Genviq AI.
+                Unlock the full power of Tivion AI.
 
               </p>
 
@@ -1401,7 +1401,7 @@ const Pricing = () => {
 
                       <Crown className="w-5 h-5" />
 
-                      Upgrade to Genviq Pro
+                      Upgrade to Tivion Pro
 
                     </>
 

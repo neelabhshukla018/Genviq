@@ -129,7 +129,7 @@ const BlogTitles = () => {
 
 
   /* =================================================
-     GENVIQ PLAN + BLOG TITLE USAGE
+     Tivion PLAN + BLOG TITLE USAGE
 
      Source:
 
@@ -331,7 +331,7 @@ const BlogTitles = () => {
       ) {
 
         toast.error(
-          'You have used all 5 free Blog Title credits. Upgrade to Genviq Pro to continue.'
+          'You have used all 5 free Blog Title credits. Upgrade to Tivion Pro to continue.'
         );
 
         return;
@@ -428,7 +428,7 @@ Example:
 
 
         /* =============================================
-           CALL EXISTING GENVIQ API
+           CALL EXISTING TIVION API
 
            Existing endpoint preserved:
 
@@ -841,7 +841,7 @@ Example:
 
               PRO:
 
-              GENVIQ PRO · UNLIMITED
+              Tivion PRO · UNLIMITED
           =========================================== */}
 
           {isPro ? (
@@ -879,7 +879,7 @@ Example:
                 "
               >
 
-                GENVIQ PRO · UNLIMITED
+                Tivion PRO · UNLIMITED
 
               </span>
 
@@ -1583,7 +1583,7 @@ Example:
 
                         You've used all {blogTitleLimit} free
                         Blog Title generations. Upgrade to
-                        Genviq Pro to continue generating
+                       Tivion Pro to continue generating
                         AI blog titles.
 
                       </p>
@@ -2409,7 +2409,7 @@ Example:
                       "
                     >
 
-                      Upgrade to Genviq Pro to continue.
+                      Upgrade to Tivion Pro to continue.
 
                     </p>
 
@@ -3045,7 +3045,7 @@ Example:
 
             - 0/5 exhausted state
 
-            - Genviq Pro unlimited state
+            - Tivion Pro unlimited state
 
             - Final closing tags
 
@@ -3514,7 +3514,7 @@ Example:
                     "
                   >
 
-                    Your free Genviq account includes{' '}
+                    Your free Tivion account includes{' '}
                     {blogTitleLimit} Blog Title generations.
 
                     {' '}
@@ -3737,7 +3737,7 @@ Example:
 
                     {' '}
 
-                    Upgrade to Genviq Pro to continue
+                    Upgrade to Tivion  Pro to continue
                     generating AI blog titles.
 
                   </p>
@@ -3828,7 +3828,7 @@ Example:
                   "
                 >
 
-                  Genviq Pro Active
+                  Tivion Pro Active
 
                 </p>
 
@@ -4100,7 +4100,7 @@ Example:
 
                     ↓
 
-            GENVIQ PRO · UNLIMITED
+            Tivion PRO · UNLIMITED
 
         ============================================= */}
 

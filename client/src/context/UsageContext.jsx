@@ -13,7 +13,7 @@ import axios from 'axios';
 /* =====================================================
    AXIOS BASE URL
 
-   Uses the same backend URL as the rest of Genviq.
+   Uses the same backend URL as the rest of Tivion.
 
    Example:
    VITE_BASE_URL=http://localhost:3000
@@ -201,7 +201,7 @@ export const UsageProvider = ({
         }
 
         /* ===========================================
-           CALL GENVIQ BACKEND
+           CALL TIVION BACKEND
         =========================================== */
 
         const { data } =
@@ -263,13 +263,13 @@ export const UsageProvider = ({
         }
 
         console.log(
-          '📊 Genviq usage loaded:',
+          '📊 Tivion usage loaded:',
           data
         );
 
       } catch (error) {
         console.error(
-          '❌ Failed to load Genviq usage:',
+          '❌ Failed to load Tivion usage:',
           error
         );
 
@@ -563,7 +563,7 @@ export const UsageProvider = ({
 /* =====================================================
    CUSTOM HOOK
 
-   Any Genviq component can now do:
+   Any Tivion component can now do:
 
    const {
      plan,

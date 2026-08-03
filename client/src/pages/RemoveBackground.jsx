@@ -94,7 +94,7 @@ const RemoveBackground = () => {
 
 
   /* =================================================
-     GENVIQ PLAN + BACKGROUND REMOVAL USAGE
+     Tivion PLAN + BACKGROUND REMOVAL USAGE
 
      Source of truth:
 
@@ -355,7 +355,7 @@ const RemoveBackground = () => {
       ) {
 
         toast.error(
-          'You have used all 5 free Background Removal credits. Upgrade to Genviq Pro to continue.'
+          'You have used all 5 free Background Removal credits. Upgrade to Tivion Pro to continue.'
         );
 
 
@@ -412,7 +412,7 @@ const RemoveBackground = () => {
 
 
         /* =============================================
-           CALL GENVIQ BACKEND
+           CALL Tivion BACKEND
 
            POST:
 
@@ -809,7 +809,7 @@ const RemoveBackground = () => {
 
               PRO:
 
-              GENVIQ PRO · UNLIMITED
+              Tivion PRO · UNLIMITED
           =========================================== */}
 
           {isPro ? (
@@ -847,7 +847,7 @@ const RemoveBackground = () => {
                 "
               >
 
-                GENVIQ PRO · UNLIMITED
+                Tivion PRO · UNLIMITED
 
               </span>
 
@@ -1486,7 +1486,7 @@ const RemoveBackground = () => {
 
                         You've used all {backgroundLimit} free
                         Background Removal credits. Upgrade to
-                        Genviq Pro to continue removing
+                        Tivion Pro to continue removing
                         backgrounds from images.
 
                       </p>
@@ -2288,7 +2288,7 @@ const RemoveBackground = () => {
                       "
                     >
 
-                      Upgrade to Genviq Pro to continue.
+                      Upgrade to Tivion Pro to continue.
 
                     </p>
 
@@ -2921,7 +2921,7 @@ const RemoveBackground = () => {
             - Free plan information
             - 5/5 progress
             - 0/5 exhausted state
-            - Genviq Pro state
+            - Tivion Pro state
             - Final closing tags
             - export default RemoveBackground
         ============================================= */}        {/* =============================================
@@ -3375,7 +3375,7 @@ const RemoveBackground = () => {
                     "
                   >
 
-                    Your free Genviq account includes{' '}
+                    Your free Tivion account includes{' '}
                     {backgroundLimit} Background Removal uses.
 
                     {' '}
@@ -3583,7 +3583,7 @@ const RemoveBackground = () => {
                   >
 
                     Your {backgroundLimit} free Background Removal
-                    uses have been consumed. Upgrade to Genviq Pro
+                    uses have been consumed. Upgrade to Tivion Pro
                     for continued access.
 
                   </p>
@@ -3670,7 +3670,7 @@ const RemoveBackground = () => {
                     text-yellow-300
                   "
                 >
-                  Genviq Pro Active
+                  Tivion Pro Active
                 </p>
 
 
@@ -3856,7 +3856,7 @@ const RemoveBackground = () => {
 
                     ↓
 
-            GENVIQ PRO · UNLIMITED
+            Tivion PRO · UNLIMITED
 
         ============================================= */}
 

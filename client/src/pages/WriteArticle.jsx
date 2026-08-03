@@ -132,7 +132,7 @@ const WriteArticle = () => {
 
 
   /* =================================================
-     GENVIQ PLAN + ARTICLE USAGE
+     Tivion PLAN + ARTICLE USAGE
 
      Source of truth:
 
@@ -288,7 +288,7 @@ const WriteArticle = () => {
       ) {
 
         toast.error(
-          'You have used all 5 free Article Writing credits. Upgrade to Genviq Pro to continue.'
+          'You have used all 5 free Article Writing credits. Upgrade to Tivion Pro to continue.'
         );
 
         return;
@@ -355,7 +355,7 @@ Requirements:
 
 
         /* =============================================
-           CALL GENVIQ BACKEND
+           CALL Tivion BACKEND
 
            Backend:
 
@@ -687,7 +687,7 @@ Requirements:
               FREE · 5/5 LEFT
 
               PRO:
-              GENVIQ PRO · UNLIMITED
+              Tivion PRO · UNLIMITED
           =========================================== */}
 
           {isPro ? (
@@ -725,7 +725,7 @@ Requirements:
                 "
               >
 
-                GENVIQ PRO · UNLIMITED
+                Tivion PRO · UNLIMITED
 
               </span>
 
@@ -1519,7 +1519,7 @@ Requirements:
 
                         You've used all {articleLimit} free
                         Article Writing credits. Upgrade to
-                        Genviq Pro to continue generating
+                        Tivion Pro to continue generating
                         articles.
 
                       </p>
@@ -1999,7 +1999,7 @@ Requirements:
                     "
                   >
 
-                    Genviq is creating a structured,
+                    Tivion is creating a structured,
                     professional article based on your
                     topic and selected length.
 
@@ -2596,7 +2596,7 @@ Requirements:
                   >
 
                     Enter an article topic, choose your
-                    preferred length, and let Genviq
+                    preferred length, and let Tivion
                     create your article.
 
                   </p>
@@ -2692,7 +2692,7 @@ Requirements:
                         "
                       >
 
-                        Upgrade to Genviq Pro to continue.
+                        Upgrade to Tivion Pro to continue.
 
                       </p>
 
@@ -3212,7 +3212,7 @@ Requirements:
                     "
                   >
 
-                    Your free Genviq account includes{' '}
+                    Your free Tivion account includes{' '}
                     {articleLimit} Article Writing
                     generations.
 
@@ -3397,7 +3397,7 @@ Requirements:
                   "
                 >
 
-                  Genviq Pro Active
+                  Tivion Pro Active
 
                 </p>
 

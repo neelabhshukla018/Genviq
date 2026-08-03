@@ -99,7 +99,7 @@ const RemoveObject = () => {
 
 
   /* =================================================
-     GENVIQ PLAN + OBJECT REMOVAL USAGE
+     Tivion PLAN + OBJECT REMOVAL USAGE
 
      Source:
 
@@ -410,7 +410,7 @@ const RemoveObject = () => {
       ) {
 
         toast.error(
-          'You have used all 5 free Object Removal credits. Upgrade to Genviq Pro to continue.'
+          'You have used all 5 free Object Removal credits. Upgrade to Tivion Pro to continue.'
         );
 
         return;
@@ -472,7 +472,7 @@ const RemoveObject = () => {
 
 
         /* =============================================
-           CALL GENVIQ BACKEND
+           CALL Tivion BACKEND
 
            POST:
 
@@ -866,7 +866,7 @@ const RemoveObject = () => {
                 "
               >
 
-                GENVIQ PRO · UNLIMITED
+                Tivion PRO · UNLIMITED
 
               </span>
 
@@ -1654,7 +1654,7 @@ const RemoveObject = () => {
 
                         You've used all {objectLimit} free
                         Object Removal credits. Upgrade to
-                        Genviq Pro to continue removing
+                        Tivion Pro to continue removing
                         objects from images.
 
                       </p>
@@ -2477,7 +2477,7 @@ const RemoveObject = () => {
                       "
                     >
 
-                      Upgrade to Genviq Pro to continue.
+                      Upgrade to Tivion Pro to continue.
 
                     </p>
 
@@ -3489,7 +3489,7 @@ const RemoveObject = () => {
                     "
                   >
 
-                    Your free Genviq account includes{' '}
+                    Your free Tivion account includes{' '}
                     {objectLimit} Object Removal uses.
 
                     {' '}
@@ -3719,7 +3719,7 @@ const RemoveObject = () => {
 
                     Your {objectLimit} free Object Removal
                     uses have been consumed. Upgrade to
-                    Genviq Pro for continued access.
+                    Tivion Pro for continued access.
 
                   </p>
 
@@ -3810,7 +3810,7 @@ const RemoveObject = () => {
                   "
                 >
 
-                  Genviq Pro Active
+                  Tivion Pro Active
 
                 </p>
 
@@ -4015,7 +4015,7 @@ const RemoveObject = () => {
 
                     ↓
 
-            GENVIQ PRO · UNLIMITED
+            Tivion PRO · UNLIMITED
 
         ============================================= */}
 

@@ -132,7 +132,7 @@ const GenerateImages = () => {
 
 
   /* =================================================
-     GENVIQ PLAN + IMAGE GENERATION USAGE
+     Tivion PLAN + IMAGE GENERATION USAGE
 
      Source:
 
@@ -335,7 +335,7 @@ const GenerateImages = () => {
       ) {
 
         toast.error(
-          'You have used all 5 free Image Generation credits. Upgrade to Genviq Pro to continue.'
+          'You have used all 5 free Image Generation credits. Upgrade to Tivion Pro to continue.'
         );
 
         return;
@@ -401,7 +401,7 @@ const GenerateImages = () => {
 
 
         /* =============================================
-           CALL GENVIQ BACKEND
+           CALL Tivion BACKEND
 
            Existing endpoint preserved:
 
@@ -856,7 +856,7 @@ const GenerateImages = () => {
 
               PRO:
 
-              GENVIQ PRO · UNLIMITED
+              Tivion PRO · UNLIMITED
 
 
               Clerk Protect is completely removed.
@@ -897,7 +897,7 @@ const GenerateImages = () => {
                 "
               >
 
-                GENVIQ PRO · UNLIMITED
+                Tivion PRO · UNLIMITED
 
               </span>
 
@@ -1770,7 +1770,7 @@ const GenerateImages = () => {
 
                         You've used all {imageLimit} free
                         Image Generation credits. Upgrade
-                        to Genviq Pro to continue generating
+                        to Tivion Pro to continue generating
                         AI images.
 
                       </p>
@@ -2587,7 +2587,7 @@ const GenerateImages = () => {
                       "
                     >
 
-                      Upgrade to Genviq Pro to continue.
+                      Upgrade to Tivion Pro to continue.
 
                     </p>
 
@@ -3189,7 +3189,7 @@ const GenerateImages = () => {
 
                Free Plan
                   OR
-               Genviq Pro
+               Tivion Pro
 
 
             2. Image Generation Usage card
@@ -3220,7 +3220,7 @@ const GenerateImages = () => {
             6. 0/5 exhausted state
 
 
-            7. Genviq Pro state
+            7. Tivion Pro state
 
 
             8. Final closing tags
@@ -3691,7 +3691,7 @@ const GenerateImages = () => {
                     "
                   >
 
-                    Your free Genviq account includes{' '}
+                    Your free Tivion account includes{' '}
                     {imageLimit} AI Image Generation uses.
 
                     {' '}
@@ -3911,7 +3911,7 @@ const GenerateImages = () => {
 
                     Your {imageLimit} free AI Image Generation
                     uses have been consumed. Upgrade to
-                    Genviq Pro for continued image generation.
+                    Tivion Pro for continued image generation.
 
                   </p>
 
@@ -4003,7 +4003,7 @@ const GenerateImages = () => {
                   "
                 >
 
-                  Genviq Pro Active
+                  Tivion Pro Active
 
                 </p>
 
@@ -4284,7 +4284,7 @@ const GenerateImages = () => {
 
                     ↓
 
-            GENVIQ PRO · UNLIMITED
+            Tivion PRO · UNLIMITED
 
         ============================================= */}
 

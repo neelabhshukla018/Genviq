@@ -87,7 +87,7 @@ const ReviewResume = () => {
 
 
   /* =================================================
-     GENVIQ PLAN + RESUME REVIEW USAGE
+     Tivion PLAN + RESUME REVIEW USAGE
 
      Source of truth:
 
@@ -330,7 +330,7 @@ const ReviewResume = () => {
       ) {
 
         toast.error(
-          'You have used all 5 free Resume Review credits. Upgrade to Genviq Pro to continue.'
+          'You have used all 5 free Resume Review credits. Upgrade to Tivion Pro to continue.'
         );
 
         return;
@@ -387,7 +387,7 @@ const ReviewResume = () => {
 
 
         /* =============================================
-           CALL GENVIQ BACKEND
+           CALL Tivion BACKEND
 
            Backend:
 
@@ -645,7 +645,7 @@ const ReviewResume = () => {
               FREE · 5/5 LEFT
 
               PRO:
-              GENVIQ PRO · UNLIMITED
+              Tivion PRO · UNLIMITED
           =========================================== */}
 
           {isPro ? (
@@ -683,7 +683,7 @@ const ReviewResume = () => {
                 "
               >
 
-                GENVIQ PRO · UNLIMITED
+                Tivion PRO · UNLIMITED
 
               </span>
 
@@ -1392,7 +1392,7 @@ const ReviewResume = () => {
 
                         You've used all {resumeLimit} free
                         Resume Review credits. Upgrade to
-                        Genviq Pro to continue analyzing
+                        Tivion Pro to continue analyzing
                         resumes.
 
                       </p>
@@ -2664,7 +2664,7 @@ const ReviewResume = () => {
                         "
                       >
 
-                        Upgrade to Genviq Pro to continue.
+                        Upgrade to Tivion Pro to continue.
 
                       </p>
 
@@ -3214,7 +3214,7 @@ const ReviewResume = () => {
                     "
                   >
 
-                    Your free Genviq account includes{' '}
+                    Your free Tivion account includes{' '}
                     {resumeLimit} Resume Review analyses.
 
                     {' '}
@@ -3409,7 +3409,7 @@ const ReviewResume = () => {
                   "
                 >
 
-                  Genviq Pro Active
+                  Tivion Pro Active
 
                 </p>
 

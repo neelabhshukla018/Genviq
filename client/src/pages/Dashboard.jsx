@@ -545,7 +545,7 @@ const Dashboard = () => {
                     text-yellow-300
                   "
                 >
-                  Genviq Pro
+                  Tivion Pro
                 </span>
 
               ) : (
@@ -750,7 +750,7 @@ const Dashboard = () => {
             >
 
               {isPro
-                ? "Your Genviq Pro plan includes full AI tool access."
+                ? "Your Tivion Pro plan includes full AI tool access."
                 : "Each AI tool includes 5 free uses."}
 
             </p>

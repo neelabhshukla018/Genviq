@@ -112,7 +112,7 @@ const Sidebar = ({
   } = useClerk();
 
   /* =================================================
-     GENVIQ PLAN + USAGE
+     Tivion PLAN + USAGE
 
      Comes from:
 

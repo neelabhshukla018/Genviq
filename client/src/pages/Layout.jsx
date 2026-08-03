@@ -20,7 +20,7 @@ const Layout = () => {
             onClick={() => navigate('/')} 
           />
           <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-600 via-slate-300 to-purple-400 bg-clip-text text-transparent tracking-wide font-serif">
-            Tivion Tools
+            𝙏𝙞𝙫𝙞𝙤𝙣 𝙏𝙤𝙤𝙡𝙨
           </span>
         </div>
         {sidebar ? (

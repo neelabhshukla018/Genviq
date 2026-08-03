@@ -44,7 +44,7 @@ if (!PUBLISHABLE_KEY) {
 }
 
 /* =====================================================
-   RENDER GENVIQ
+   RENDER TIVION
 ===================================================== */
 
 createRoot(
@@ -64,7 +64,7 @@ createRoot(
       <BrowserRouter>
 
         {/* ============================================
-            SHARED GENVIQ PLAN + USAGE STATE
+            SHARED Tivion PLAN + USAGE STATE
 
             ClerkProvider MUST stay outside because
             UsageProvider uses Clerk's useAuth().
