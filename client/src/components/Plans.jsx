@@ -1303,7 +1303,7 @@ const Plans = () => {
           /* ===========================================
              CHECKOUT THEME
 
-             Keeping your existing yellow/gold Genviq
+             Keeping your existing yellow/gold Tivion
              Pro styling.
           =========================================== */
 
@@ -2765,7 +2765,7 @@ const Plans = () => {
 
                 >
 
-                  Current Genviq account plan
+                  Current Tivion account plan
 
                 </p>
 

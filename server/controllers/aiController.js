@@ -1862,7 +1862,7 @@ export const generateImage = async (req, res) => {
        usage is still NOT deducted.
 
        The Cloudinary asset may exist, but the user's
-       free quota remains unchanged because Genviq
+       free quota remains unchanged because Tivion
        did not complete the full operation.
     ================================================= */
 

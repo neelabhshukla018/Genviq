@@ -18,7 +18,7 @@ import {
    - Provides authenticated user identity
 
    Razorpay:
-   - Creates Genviq Pro subscriptions
+   - Creates Tivion Pro subscriptions
    - Handles subscription payments
 
    Neon:
@@ -31,7 +31,7 @@ const subscriptionRouter = express.Router();
 
 
 /* =====================================================
-   1. CREATE GENVIQ PRO SUBSCRIPTION
+   1. CREATE TIVION PRO SUBSCRIPTION
 
    ENDPOINT:
 
@@ -41,7 +41,7 @@ const subscriptionRouter = express.Router();
    FLOW:
 
    User clicks:
-   "Upgrade to Genviq Pro"
+   "Upgrade to Tivion Pro"
 
             ↓
 
@@ -80,7 +80,7 @@ const subscriptionRouter = express.Router();
    IMPORTANT:
 
    Creating a Razorpay subscription does NOT
-   automatically activate Genviq Pro.
+   automatically activate Tivion Pro.
 
    Payment must first be successfully completed
    and verified.
@@ -159,7 +159,7 @@ subscriptionRouter.post(
 
           ↓
 
-   Genviq Pro activated
+   Tivion Pro activated
 
 
    SECURITY:
