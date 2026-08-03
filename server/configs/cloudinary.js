@@ -18,11 +18,11 @@ const connectCloudinary = async () => {
 
 
     const response = await cloudinary.api.ping();
-    console.log("✅ Connected to Cloudinary successfully!");
+    console.log("Connected to Cloudinary successfully!");
 
     return response;
   } catch (error) {
-    console.error("⚠️ Could not connect to Cloudinary.");
+    console.error("Could not connect to Cloudinary.");
     console.error("Reason:", error.message);
     throw new Error("Cloudinary connection failed. Please check your credentials or internet connection.");
   }

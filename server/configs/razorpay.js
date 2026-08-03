@@ -11,13 +11,13 @@ const {
 
 if (!RAZORPAY_KEY_ID) {
   throw new Error(
-    "❌ RAZORPAY_KEY_ID is missing from server/.env"
+    "RAZORPAY_KEY_ID is missing from server/.env"
   );
 }
 
 if (!RAZORPAY_KEY_SECRET) {
   throw new Error(
-    "❌ RAZORPAY_KEY_SECRET is missing from server/.env"
+    "RAZORPAY_KEY_SECRET is missing from server/.env"
   );
 }
 

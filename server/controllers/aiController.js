@@ -11,7 +11,7 @@ import pdf from "pdf-parse/lib/pdf-parse.js";
 
 if (!process.env.GROQ_API_KEY) {
   console.warn(
-    "⚠️ GROQ_API_KEY is missing. Text AI features will not work."
+    "GROQ_API_KEY is missing. Text AI features will not work."
   );
 }
 
@@ -297,11 +297,11 @@ const checkFeatureAccess = async ({
     );
 
   console.log(
-    `📊 ${featureName} usage: ${usage.used}/${usage.limit} used`
+    `${featureName} usage: ${usage.used}/${usage.limit} used`
   );
 
   console.log(
-    `🎁 ${featureName} remaining: ${usage.remaining}/${usage.limit}`
+    `${featureName} remaining: ${usage.remaining}/${usage.limit}`
   );
 
   if (

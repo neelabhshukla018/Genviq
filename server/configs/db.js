@@ -3,7 +3,7 @@ import { neon } from "@neondatabase/serverless";
 const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!DATABASE_URL) {
-  console.error("❌ DATABASE_URL is missing from server/.env");
+  console.error("DATABASE_URL is missing from server/.env");
   process.exit(1);
 }
 
@@ -18,7 +18,7 @@ export const testDatabaseConnection = async () => {
     `;
 
     console.log("======================================");
-    console.log("🟢 NEON DATABASE CONNECTED");
+    console.log("NEON DATABASE CONNECTED");
     console.log("Database:", result[0].database);
     console.log("Schema:", result[0].schema);
 
@@ -30,17 +30,17 @@ export const testDatabaseConnection = async () => {
 
     if (tables.length > 0) {
       console.log(
-        "✅ Creations table found:",
+        "Creations table found:",
         `${tables[0].table_schema}.${tables[0].table_name}`
 
       );
     } else {
-      console.log("❌ Creations table NOT FOUND in this database");
+      console.log("Creations table NOT FOUND in this database");
     }
 
     console.log("======================================");
   } catch (error) {
-    console.error("❌ Neon database connection failed:");
+    console.error("Neon database connection failed:");
     console.error(error);
   }
 };
