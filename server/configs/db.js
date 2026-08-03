@@ -32,6 +32,7 @@ export const testDatabaseConnection = async () => {
       console.log(
         "✅ Creations table found:",
         `${tables[0].table_schema}.${tables[0].table_name}`
+
       );
     } else {
       console.log("❌ Creations table NOT FOUND in this database");
