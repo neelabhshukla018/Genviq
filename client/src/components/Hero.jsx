@@ -469,7 +469,7 @@ const Hero = () => {
                 className="p-4 sm:p-6 bg-black/80 border-t border-white/10"
               >
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
-                  GENAXIS Platform Demo
+                  TIVION Platform Demo
                 </h3>
                 <p className="text-gray-300 text-sm sm:text-base">
                   See how our AI platform transforms workflows and boosts productivity

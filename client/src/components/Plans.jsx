@@ -634,7 +634,7 @@ const Plans = () => {
         ) {
 
           console.log(
-            '👑 Backend confirmed existing Pro subscription'
+            'Backend confirmed existing Pro subscription'
           );
 
 
@@ -730,7 +730,7 @@ const Plans = () => {
         ) {
 
           console.log(
-            '👑 Tivion Pro subscription synchronized:',
+            'Tivion Pro subscription synchronized:',
             createData
           );
 
@@ -874,7 +874,7 @@ const Plans = () => {
 
 
         console.log(
-          '✅ Razorpay Subscription ID:',
+          'Razorpay Subscription ID:',
           subscriptionId
         );
 
@@ -995,7 +995,7 @@ const Plans = () => {
 
 
                 console.log(
-                  '✅ Razorpay checkout response:',
+                  'Razorpay checkout response:',
                   response
                 );
 
@@ -1089,7 +1089,7 @@ const Plans = () => {
 
 
                 console.log(
-                  '🔐 Subscription verification response:',
+                  'Subscription verification response:',
                   verifyData
                 );
 
@@ -1144,7 +1144,7 @@ const Plans = () => {
                 ===================================== */
 
                 console.log(
-                  '👑 Tivion Pro successfully activated'
+                  'Tivion Pro successfully activated'
                 );
 
 
@@ -1214,7 +1214,7 @@ const Plans = () => {
 
 
                 console.error(
-                  '❌ Payment verification error:',
+                  'Payment verification error:',
                   verificationError
                 );
 
@@ -1370,7 +1370,7 @@ const Plans = () => {
 
 
             console.error(
-              '❌ Razorpay payment failed:',
+              'Razorpay payment failed:',
               response?.error
             );
 
@@ -1426,7 +1426,7 @@ const Plans = () => {
         ============================================= */
 
         console.error(
-          '❌ Tivion Pro upgrade error:',
+          'Tivion Pro upgrade error:',
           upgradeError
         );
 
