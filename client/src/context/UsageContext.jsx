@@ -263,13 +263,13 @@ export const UsageProvider = ({
         }
 
         console.log(
-          '📊 Tivion usage loaded:',
+          'Tivion usage loaded:',
           data
         );
 
       } catch (error) {
         console.error(
-          '❌ Failed to load Tivion usage:',
+          'Failed to load Tivion usage:',
           error
         );
 
