@@ -101,7 +101,7 @@ const containerVariants = {
       staggerChildren: 0.1,
     },
 
-  },
+  }
 
 };
 

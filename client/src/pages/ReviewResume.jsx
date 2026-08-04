@@ -537,7 +537,7 @@ const ReviewResume = () => {
 
         console.error(
 
-          '❌ Resume review error:',
+          'Resume review error:',
 
           error
 
@@ -674,6 +674,7 @@ const ReviewResume = () => {
                   fill-yellow-400
                 "
               />
+
 
 
               <span

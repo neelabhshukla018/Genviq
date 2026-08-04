@@ -577,7 +577,7 @@ const RemoveBackground = () => {
 
         console.error(
 
-          '❌ Background Removal Error:',
+          'Background Removal Error:',
 
           error
 

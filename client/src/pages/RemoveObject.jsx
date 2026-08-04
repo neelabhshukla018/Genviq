@@ -619,7 +619,7 @@ const RemoveObject = () => {
 
         console.error(
 
-          '❌ Object Removal Error:',
+          'Object Removal Error:',
 
           error
 

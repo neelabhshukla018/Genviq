@@ -766,7 +766,7 @@ Example:
 
         console.error(
 
-          '❌ Clipboard error:',
+          'Clipboard error:',
 
           error
 

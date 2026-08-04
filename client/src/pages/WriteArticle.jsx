@@ -513,7 +513,7 @@ Requirements:
 
         console.error(
 
-          '❌ Article generation error:',
+          'Article generation error:',
 
           error
 
@@ -625,7 +625,7 @@ Requirements:
 
         console.error(
 
-          '❌ Clipboard error:',
+          'Clipboard error:',
 
           error
 
