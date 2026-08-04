@@ -55,7 +55,7 @@ export const razorpaySubscriptionWebhook =
     try {
 
       console.log(
-        "📩 Razorpay webhook received"
+        "Razorpay webhook received"
       );
 
 
@@ -70,7 +70,7 @@ export const razorpaySubscriptionWebhook =
       if (!webhookSecret) {
 
         console.error(
-          "❌ RAZORPAY_WEBHOOK_SECRET is missing"
+          "RAZORPAY_WEBHOOK_SECRET is missing"
         );
 
         return res.status(500).json({
@@ -98,7 +98,7 @@ export const razorpaySubscriptionWebhook =
       if (!razorpaySignature) {
 
         console.error(
-          "❌ Razorpay webhook signature missing"
+          "Razorpay webhook signature missing"
         );
 
         return res.status(400).json({
@@ -136,7 +136,7 @@ export const razorpaySubscriptionWebhook =
       if (!Buffer.isBuffer(req.body)) {
 
         console.error(
-          "❌ Razorpay webhook body is not raw Buffer"
+          "Razorpay webhook body is not raw Buffer"
         );
 
         return res.status(500).json({
@@ -218,7 +218,7 @@ export const razorpaySubscriptionWebhook =
       if (!signatureIsValid) {
 
         console.error(
-          "❌ Invalid Razorpay webhook signature"
+          "Invalid Razorpay webhook signature"
         );
 
         return res.status(400).json({
@@ -234,7 +234,7 @@ export const razorpaySubscriptionWebhook =
 
 
       console.log(
-        "✅ Razorpay webhook signature verified"
+        "Razorpay webhook signature verified"
       );
 
 
@@ -257,7 +257,7 @@ export const razorpaySubscriptionWebhook =
       } catch (parseError) {
 
         console.error(
-          "❌ Invalid Razorpay webhook JSON"
+          "Invalid Razorpay webhook JSON"
         );
 
         return res.status(400).json({
@@ -277,7 +277,7 @@ export const razorpaySubscriptionWebhook =
 
 
       console.log(
-        "⚡ Razorpay Event:",
+        "Razorpay Event:",
         event
       );
 
@@ -308,7 +308,7 @@ export const razorpaySubscriptionWebhook =
       if (!subscription?.id) {
 
         console.log(
-          "ℹ️ No subscription entity found. Event acknowledged."
+          "No subscription entity found. Event acknowledged."
         );
 
         return res.status(200).json({
@@ -328,13 +328,13 @@ export const razorpaySubscriptionWebhook =
 
 
       console.log(
-        "📦 Subscription ID:",
+        "Subscription ID:",
         subscriptionId
       );
 
 
       console.log(
-        "📊 Subscription Status:",
+        "Subscription Status:",
         subscription.status
       );
 
@@ -383,7 +383,7 @@ export const razorpaySubscriptionWebhook =
 
         console.warn(
 
-          "⚠️ No Tivion user found for Razorpay subscription:",
+          "No Tivion user found for Razorpay subscription:",
 
           subscriptionId
 
@@ -462,7 +462,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "👑 Tivion Pro activated:",
+            "Tivion Pro activated:",
 
             user.clerk_user_id
 
@@ -513,7 +513,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "💳 Tivion Pro subscription charged:",
+            "Tivion Pro subscription charged:",
 
             user.clerk_user_id
 
@@ -581,7 +581,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "🔐 Subscription authenticated:",
+            "Subscription authenticated:",
 
             user.clerk_user_id
 
@@ -637,7 +637,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "⏳ Subscription pending:",
+            "Subscription pending:",
 
             user.clerk_user_id
 
@@ -688,7 +688,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "⚠️ Tivion Pro halted:",
+            "Tivion Pro halted:",
 
             user.clerk_user_id
 
@@ -763,9 +763,9 @@ export const razorpaySubscriptionWebhook =
 
             hasPaidTimeRemaining
 
-              ? "🗓️ Subscription cancelled; Pro retained until period end:"
+              ? "Subscription cancelled; Pro retained until period end:"
 
-              : "❌ Tivion Pro cancelled:",
+              : "Tivion Pro cancelled:",
 
             user.clerk_user_id
 
@@ -816,7 +816,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "🏁 Tivion Pro subscription completed:",
+            "Tivion Pro subscription completed:",
 
             user.clerk_user_id
 
@@ -860,7 +860,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "⏸️ Tivion Pro paused:",
+            "Tivion Pro paused:",
 
             user.clerk_user_id
 
@@ -910,7 +910,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "▶️ Tivion Pro resumed:",
+            "Tivion Pro resumed:",
 
             user.clerk_user_id
 
@@ -934,7 +934,7 @@ export const razorpaySubscriptionWebhook =
 
           console.log(
 
-            "ℹ️ Razorpay event acknowledged but no Tivion action required:",
+            "Razorpay event acknowledged but no Tivion action required:",
 
             event
 
@@ -968,7 +968,7 @@ export const razorpaySubscriptionWebhook =
 
       console.error(
 
-        "❌ Razorpay Webhook Error:",
+        "Razorpay Webhook Error:",
 
         error.message
 
