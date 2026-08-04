@@ -1070,6 +1070,20 @@ app.use(
 );
 
 
+app.get("/api/test-razorpay", async (req, res) => {
+  try {
+    const plans = await razorpay.plans.all({ count: 1 });
+
+    res.json({
+      success: true,
+      plans,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
 /* =====================================================
    START SERVER
 ===================================================== */

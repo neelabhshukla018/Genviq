@@ -37,6 +37,9 @@ const razorpay = new Razorpay({
   key_secret: RAZORPAY_KEY_SECRET,
 });
 
+console.log("Razorpay Key ID:", RAZORPAY_KEY_ID);
+console.log("Secret exists:", !!RAZORPAY_KEY_SECRET);
+
 /* =====================================================
    EXPORT
 ===================================================== */
