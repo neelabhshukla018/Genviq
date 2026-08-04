@@ -418,7 +418,23 @@ app.get(
   }
 );
 
+app.get("/api/test-razorpay", async (req, res) => {
+  try {
+    const plans = await razorpay.plans.all({ count: 1 });
 
+    return res.json({
+      success: true,
+      plans,
+    });
+  } catch (err) {
+    console.error(err);
+
+    return res.status(500).json({
+      success: false,
+      error: err,
+    });
+  }
+});
 /* =====================================================
    AI ROUTES
 
