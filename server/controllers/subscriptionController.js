@@ -547,42 +547,26 @@ export const createSubscription = async (
       },
     });
   } catch (error) {
-    console.error(
-      "CREATE SUBSCRIPTION ERROR:"
-    );
-
-catch (error) {
   console.error("========== RAZORPAY ERROR ==========");
   console.error(error);
-  console.error("Status:", error.statusCode);
-  console.error("Error Object:", error.error);
-  console.error("Description:", error.error?.description);
-  console.error("Reason:", error.error?.reason);
-  console.error("Field:", error.error?.field);
+  console.error("Status:", error?.statusCode);
+  console.error("Error Object:", error?.error);
+  console.error("Description:", error?.error?.description);
+  console.error("Reason:", error?.error?.reason);
+  console.error("Field:", error?.error?.field);
   console.error("====================================");
 
-  return res.status(error.statusCode || 500).json({
-    success: false,
-    message: error.error?.description || error.message,
-  });
+  return res
+    .status(error?.statusCode || 500)
+    .json({
+      success: false,
+      message:
+        error?.error?.description ||
+        error?.error?.reason ||
+        error.message ||
+        "Unable to create Tivion Pro subscription.",
+    });
 }
-
-    return res
-      .status(
-        error?.statusCode ||
-          500
-      )
-      .json({
-        success: false,
-
-        message:
-          error?.error
-            ?.description ||
-          error?.error?.reason ||
-          error.message ||
-          "Unable to create Tivion Pro subscription.",
-      });
-  }
 };
 /* =====================================================
    VERIFY RAZORPAY SUBSCRIPTION PAYMENT
