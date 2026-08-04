@@ -621,7 +621,7 @@ const sendQuotaExceeded = (
 
 export const generateArticle = async (req, res) => {
   try {
-    console.log("📝 Generate Article API hit");
+    console.log("Generate Article API hit");
 
     /* =================================================
        GET AUTHENTICATED USER
@@ -734,7 +734,7 @@ export const generateArticle = async (req, res) => {
 
     if (!access.allowed) {
       console.log(
-        "⛔ Article free quota exhausted"
+        "Article free quota exhausted"
       );
 
       return sendQuotaExceeded(
@@ -746,11 +746,11 @@ export const generateArticle = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `🎁 Article credits before generation: ${access.usage.remaining}/${access.usage.limit}`
+        `Article credits before generation: ${access.usage.remaining}/${access.usage.limit}`
       );
     } else {
       console.log(
-        "👑 Tivion Pro — article quota bypassed"
+        "Tivion Pro — article quota bypassed"
       );
     }
 
@@ -852,7 +852,7 @@ Requirements:
     `;
 
     console.log(
-      "💾 Article saved to Neon"
+      "Article saved to Neon"
     );
 
     /* =================================================
@@ -882,7 +882,7 @@ Requirements:
 
     if (plan === "free") {
       console.log(
-        `📊 Article credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
+        `Article credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
 
@@ -928,7 +928,7 @@ Requirements:
   } catch (error) {
 
     console.error(
-      "❌ Generate Article Error:",
+      "Generate Article Error:",
       error
     );
 
@@ -958,7 +958,7 @@ Requirements:
 
 export const generateBlogTitle = async (req, res) => {
   try {
-    console.log("🏷️ Generate Blog Title API hit");
+    console.log("Generate Blog Title API hit");
 
     /* =================================================
        GET AUTHENTICATED USER
@@ -1051,7 +1051,7 @@ export const generateBlogTitle = async (req, res) => {
 
     if (!access.allowed) {
       console.log(
-        "⛔ Blog Title free quota exhausted"
+        "Blog Title free quota exhausted"
       );
 
       return sendQuotaExceeded(
@@ -1069,11 +1069,11 @@ export const generateBlogTitle = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `🎁 Blog Title credits before generation: ${access.usage.remaining}/${access.usage.limit}`
+        `Blog Title credits before generation: ${access.usage.remaining}/${access.usage.limit}`
       );
     } else {
       console.log(
-        "👑 Tivion Pro — Blog Title quota bypassed"
+        "Tivion Pro — Blog Title quota bypassed"
       );
     }
 
@@ -1108,7 +1108,7 @@ Requirements:
     ================================================= */
 
     console.log(
-      "🤖 Generating blog titles with Groq..."
+      "Generating blog titles with Groq..."
     );
 
     const completion =
@@ -1183,7 +1183,7 @@ Requirements:
     `;
 
     console.log(
-      "💾 Blog titles saved to Neon"
+      " Blog titles saved to Neon"
     );
 
     /* =================================================
@@ -1217,7 +1217,7 @@ Requirements:
 
     if (plan === "free") {
       console.log(
-        `📊 Blog Title credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
+        `Blog Title credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
 
@@ -1274,7 +1274,7 @@ Requirements:
   } catch (error) {
 
     console.error(
-      "❌ Generate Blog Title Error:",
+      "Generate Blog Title Error:",
       error
     );
 
@@ -1308,7 +1308,7 @@ Requirements:
 
 export const generateImage = async (req, res) => {
   try {
-    console.log("🎨 Generate Image API hit");
+    console.log(" Generate Image API hit");
 
     /* =================================================
        AUTHENTICATED USER
@@ -1390,7 +1390,7 @@ export const generateImage = async (req, res) => {
 
     if (!access.allowed) {
       console.log(
-        "⛔ Image Generation free quota exhausted"
+        "Image Generation free quota exhausted"
       );
 
       return sendQuotaExceeded(
@@ -1408,11 +1408,11 @@ export const generateImage = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `🎁 Image credits before generation: ${access.usage.remaining}/${access.usage.limit}`
+        `Image credits before generation: ${access.usage.remaining}/${access.usage.limit}`
       );
     } else {
       console.log(
-        "👑 Tivion Pro — Image Generation quota bypassed"
+        "Tivion Pro — Image Generation quota bypassed"
       );
     }
 
@@ -1427,17 +1427,17 @@ export const generateImage = async (req, res) => {
       process.env.CLOUDFLARE_API_TOKEN;
 
     console.log(
-      "☁️ Cloudflare Account ID:",
+      " Cloudflare Account ID:",
       accountId
-        ? "✅ LOADED"
-        : "❌ MISSING"
+        ? " LOADED"
+        : " MISSING"
     );
 
     console.log(
-      "🔑 Cloudflare API Token:",
+      " Cloudflare API Token:",
       apiToken
-        ? "✅ LOADED"
-        : "❌ MISSING"
+        ? " LOADED"
+        : " MISSING"
     );
 
     if (
@@ -1475,11 +1475,11 @@ export const generateImage = async (req, res) => {
       `${accountId}/ai/run/${model}`;
 
     console.log(
-      "🎨 Generating image with Cloudflare Workers AI..."
+      " Generating image with Cloudflare Workers AI..."
     );
 
     console.log(
-      "🤖 Cloudflare model:",
+      "Cloudflare model:",
       model
     );
 
@@ -1545,7 +1545,7 @@ export const generateImage = async (req, res) => {
           );
 
         console.error(
-          "❌ Cloudflare response:",
+          "Cloudflare response:",
           errorText
         );
 
@@ -1616,7 +1616,7 @@ export const generateImage = async (req, res) => {
       "image/png";
 
     console.log(
-      "🖼️ Cloudflare response type:",
+      "Cloudflare response type:",
       contentType
     );
 
@@ -1724,11 +1724,11 @@ export const generateImage = async (req, res) => {
       ).toFixed(2);
 
     console.log(
-      "✅ Cloudflare generated image successfully"
+      "Cloudflare generated image successfully"
     );
 
     console.log(
-      `📦 Generated image size: ${imageSizeMB} MB`
+      `Generated image size: ${imageSizeMB} MB`
     );
 
     /* =================================================
@@ -1761,7 +1761,7 @@ export const generateImage = async (req, res) => {
       );
 
     console.log(
-      "📦 Image converted for Cloudinary"
+      "Image converted for Cloudinary"
     );
 
     /* =================================================
@@ -1769,31 +1769,31 @@ export const generateImage = async (req, res) => {
     ================================================= */
 
     console.log(
-      "☁️ Cloudinary configuration:"
+      "Cloudinary configuration:"
     );
 
     console.log(
       "Cloud name:",
       process.env
         .CLOUDINARY_CLOUD_NAME
-        ? "✅ LOADED"
-        : "❌ MISSING"
+        ? "LOADED"
+        : "MISSING"
     );
 
     console.log(
       "API key:",
       process.env
         .CLOUDINARY_API_KEY
-        ? "✅ LOADED"
-        : "❌ MISSING"
+        ? "LOADED"
+        : "MISSING"
     );
 
     console.log(
       "API secret:",
       process.env
         .CLOUDINARY_API_SECRET
-        ? "✅ LOADED"
-        : "❌ MISSING"
+        ? "LOADED"
+        : "MISSING"
     );
 
     if (
@@ -1817,7 +1817,7 @@ export const generateImage = async (req, res) => {
     ================================================= */
 
     console.log(
-      "☁️ Uploading generated image to Cloudinary..."
+      "Uploading generated image to Cloudinary..."
     );
 
     const uploadResult =
@@ -1847,11 +1847,11 @@ export const generateImage = async (req, res) => {
     }
 
     console.log(
-      "✅ Cloudinary upload successful"
+      "Cloudinary upload successful"
     );
 
     console.log(
-      "🔗 Image URL:",
+      "Image URL:",
       secureUrl
     );
 
@@ -1885,7 +1885,7 @@ export const generateImage = async (req, res) => {
     `;
 
     console.log(
-      "💾 Generated image saved to Neon"
+      "Generated image saved to Neon"
     );
 
     /* =================================================
@@ -1915,7 +1915,7 @@ export const generateImage = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `📊 Image credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
+        `Image credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
 
@@ -1956,7 +1956,7 @@ export const generateImage = async (req, res) => {
   } catch (error) {
 
     console.error(
-      "❌ Generate Image Error"
+      "Generate Image Error"
     );
 
     console.error(
@@ -2068,7 +2068,7 @@ export const removeImageBackground = async (req, res) => {
 
   try {
     console.log(
-      "🖼️ Remove Image Background API hit"
+      "Remove Image Background API hit"
     );
 
     /* =================================================
@@ -2154,7 +2154,7 @@ export const removeImageBackground = async (req, res) => {
 
     if (!access.allowed) {
       console.log(
-        "⛔ Background Removal free quota exhausted"
+        "Background Removal free quota exhausted"
       );
 
       /*
@@ -2182,7 +2182,7 @@ export const removeImageBackground = async (req, res) => {
           cleanupError
         ) {
           console.error(
-            "⚠️ Temporary file cleanup failed:",
+            "Temporary file cleanup failed:",
             cleanupError.message
           );
         }
@@ -2203,11 +2203,11 @@ export const removeImageBackground = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `🎁 Background Removal credits before processing: ${access.usage.remaining}/${access.usage.limit}`
+        `Background Removal credits before processing: ${access.usage.remaining}/${access.usage.limit}`
       );
     } else {
       console.log(
-        "👑 Tivion Pro — Background Removal quota bypassed"
+        "Tivion Pro — Background Removal quota bypassed"
       );
     }
 
@@ -2242,7 +2242,7 @@ export const removeImageBackground = async (req, res) => {
     ================================================= */
 
     console.log(
-      "☁️ Uploading image to Cloudinary..."
+      "Uploading image to Cloudinary..."
     );
 
     const uploadResult =
@@ -2322,11 +2322,11 @@ export const removeImageBackground = async (req, res) => {
     }
 
     console.log(
-      "🎨 Background removal result prepared"
+      "Background removal result prepared"
     );
 
     console.log(
-      "🔗 Result:",
+      "Result:",
       transformedUrl
     );
 
@@ -2358,7 +2358,7 @@ export const removeImageBackground = async (req, res) => {
     `;
 
     console.log(
-      "💾 Background removal saved to Neon"
+      "Background removal saved to Neon"
     );
 
     /* =================================================
@@ -2403,7 +2403,7 @@ export const removeImageBackground = async (req, res) => {
         );
 
         console.log(
-          "🧹 Temporary upload removed"
+          "Temporary upload removed"
         );
 
         localFilePath =
@@ -2413,7 +2413,7 @@ export const removeImageBackground = async (req, res) => {
         cleanupError
       ) {
         console.error(
-          "⚠️ Temporary file cleanup failed:",
+          "Temporary file cleanup failed:",
           cleanupError.message
         );
       }
@@ -2425,7 +2425,7 @@ export const removeImageBackground = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `📊 Background Removal credits after processing: ${updatedUsage.remaining}/${updatedUsage.limit}`
+        `Background Removal credits after processing: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
 
@@ -2463,7 +2463,7 @@ export const removeImageBackground = async (req, res) => {
   } catch (error) {
 
     console.error(
-      "❌ Remove Background Error:",
+      "Remove Background Error:",
       error
     );
 
@@ -2486,14 +2486,14 @@ export const removeImageBackground = async (req, res) => {
         );
 
         console.log(
-          "🧹 Temporary upload removed after failure"
+          "Temporary upload removed after failure"
         );
 
       } catch (
         cleanupError
       ) {
         console.error(
-          "⚠️ Temporary file cleanup failed:",
+          "Temporary file cleanup failed:",
           cleanupError.message
         );
       }
@@ -2715,7 +2715,7 @@ export const removeImageObject = async (req, res) => {
           cleanupError
         ) {
           console.error(
-            "⚠️ Temporary file cleanup failed:",
+            "Temporary file cleanup failed:",
             cleanupError.message
           );
         }
@@ -2758,7 +2758,7 @@ export const removeImageObject = async (req, res) => {
 
     if (!access.allowed) {
       console.log(
-        "⛔ Object Removal free quota exhausted"
+        "Object Removal free quota exhausted"
       );
 
       if (
@@ -2776,14 +2776,14 @@ export const removeImageObject = async (req, res) => {
             null;
 
           console.log(
-            "🧹 Temporary upload removed"
+            "Temporary upload removed"
           );
 
         } catch (
           cleanupError
         ) {
           console.error(
-            "⚠️ Temporary file cleanup failed:",
+            "Temporary file cleanup failed:",
             cleanupError.message
           );
         }
@@ -2804,11 +2804,11 @@ export const removeImageObject = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `🎁 Object Removal credits before processing: ${access.usage.remaining}/${access.usage.limit}`
+        `Object Removal credits before processing: ${access.usage.remaining}/${access.usage.limit}`
       );
     } else {
       console.log(
-        "👑 Tivion Pro — Object Removal quota bypassed"
+        "Tivion Pro — Object Removal quota bypassed"
       );
     }
 
@@ -2834,7 +2834,7 @@ export const removeImageObject = async (req, res) => {
     ================================================= */
 
     console.log(
-      "☁️ Uploading image to Cloudinary..."
+      "Uploading image to Cloudinary..."
     );
 
     const uploadResult =
@@ -2919,7 +2919,7 @@ export const removeImageObject = async (req, res) => {
     );
 
     console.log(
-      "🔗 Result:",
+      "Result:",
       transformedUrl
     );
 
@@ -2951,7 +2951,7 @@ export const removeImageObject = async (req, res) => {
     `;
 
     console.log(
-      "💾 Object removal saved to Neon"
+      "Object removal saved to Neon"
     );
 
     /* =================================================
@@ -2988,14 +2988,14 @@ export const removeImageObject = async (req, res) => {
           null;
 
         console.log(
-          "🧹 Temporary upload removed"
+          "Temporary upload removed"
         );
 
       } catch (
         cleanupError
       ) {
         console.error(
-          "⚠️ Temporary file cleanup failed:",
+          "Temporary file cleanup failed:",
           cleanupError.message
         );
       }
@@ -3007,7 +3007,7 @@ export const removeImageObject = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `📊 Object Removal credits after processing: ${updatedUsage.remaining}/${updatedUsage.limit}`
+        `Object Removal credits after processing: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
 
@@ -3051,7 +3051,7 @@ export const removeImageObject = async (req, res) => {
   } catch (error) {
 
     console.error(
-      "❌ Remove Object Error:",
+      "Remove Object Error:",
       error
     );
 
@@ -3071,14 +3071,14 @@ export const removeImageObject = async (req, res) => {
         );
 
         console.log(
-          "🧹 Temporary upload removed after failure"
+          "Temporary upload removed after failure"
         );
 
       } catch (
         cleanupError
       ) {
         console.error(
-          "⚠️ Temporary file cleanup failed:",
+          "Temporary file cleanup failed:",
           cleanupError.message
         );
       }
@@ -3289,7 +3289,7 @@ export const reviewResume = async (req, res) => {
 
     if (!access.allowed) {
       console.log(
-        "⛔ Resume Analysis free quota exhausted"
+        "Resume Analysis free quota exhausted"
       );
 
       /*
@@ -3312,14 +3312,14 @@ export const reviewResume = async (req, res) => {
             null;
 
           console.log(
-            "🧹 Temporary resume removed"
+            "Temporary resume removed"
           );
 
         } catch (
           cleanupError
         ) {
           console.error(
-            "⚠️ Resume cleanup failed:",
+            "Resume cleanup failed:",
             cleanupError.message
           );
         }
@@ -3340,11 +3340,11 @@ export const reviewResume = async (req, res) => {
 
     if (plan === "free") {
       console.log(
-        `🎁 Resume Analysis credits before review: ${access.usage.remaining}/${access.usage.limit}`
+        `Resume Analysis credits before review: ${access.usage.remaining}/${access.usage.limit}`
       );
     } else {
       console.log(
-        "👑 Tivion Pro — Resume Analysis quota bypassed"
+        "Tivion Pro — Resume Analysis quota bypassed"
       );
     }
 
@@ -3388,7 +3388,7 @@ export const reviewResume = async (req, res) => {
           cleanupError
         ) {
           console.error(
-            "⚠️ Resume cleanup failed:",
+            "Resume cleanup failed:",
             cleanupError.message
           );
         }
@@ -3407,7 +3407,7 @@ export const reviewResume = async (req, res) => {
     ================================================= */
 
     console.log(
-      "📖 Reading resume PDF..."
+      "Reading resume PDF..."
     );
 
     const pdfBuffer =
@@ -3429,7 +3429,7 @@ export const reviewResume = async (req, res) => {
     ================================================= */
 
     console.log(
-      "🔍 Extracting text from resume..."
+      "Extracting text from resume..."
     );
 
     const pdfData =
@@ -3447,7 +3447,7 @@ export const reviewResume = async (req, res) => {
     }
 
     console.log(
-      "✅ Resume text extracted"
+      "Resume text extracted"
     );
 
     console.log(
@@ -3552,7 +3552,7 @@ Important requirements:
     ================================================= */
 
     console.log(
-      "🤖 Analyzing resume with Groq..."
+      "Analyzing resume with Groq..."
     );
 
     const completion =
@@ -3598,7 +3598,7 @@ Important requirements:
     }
 
     console.log(
-      "✅ Resume analyzed successfully"
+      "Resume analyzed successfully"
     );
 
     /* =================================================
@@ -3631,7 +3631,7 @@ Important requirements:
     `;
 
     console.log(
-      "💾 Resume review saved to Neon"
+      "Resume review saved to Neon"
     );
 
     /* =================================================
@@ -3681,14 +3681,14 @@ Important requirements:
           null;
 
         console.log(
-          "🧹 Temporary resume removed"
+          "Temporary resume removed"
         );
 
       } catch (
         cleanupError
       ) {
         console.error(
-          "⚠️ Resume cleanup failed:",
+          "Resume cleanup failed:",
           cleanupError.message
         );
       }
@@ -3700,7 +3700,7 @@ Important requirements:
 
     if (plan === "free") {
       console.log(
-        `📊 Resume Analysis credits after review: ${updatedUsage.remaining}/${updatedUsage.limit}`
+        `Resume Analysis credits after review: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
 
@@ -3759,7 +3759,7 @@ Important requirements:
   } catch (error) {
 
     console.error(
-      "❌ Resume Review Error:",
+      "Resume Review Error:",
       error
     );
 
@@ -3788,7 +3788,7 @@ Important requirements:
         cleanupError
       ) {
         console.error(
-          "⚠️ Resume cleanup failed:",
+          "Resume cleanup failed:",
           cleanupError.message
         );
       }
