@@ -418,23 +418,7 @@ app.get(
   }
 );
 
-app.get("/api/test-razorpay", async (req, res) => {
-  try {
-    const plans = await razorpay.plans.all({ count: 1 });
 
-    return res.json({
-      success: true,
-      plans,
-    });
-  } catch (err) {
-    console.error(err);
-
-    return res.status(500).json({
-      success: false,
-      error: err,
-    });
-  }
-});
 /* =====================================================
    AI ROUTES
 
@@ -1090,13 +1074,25 @@ app.get("/api/test-razorpay", async (req, res) => {
   try {
     const plans = await razorpay.plans.all({ count: 1 });
 
-    res.json({
+    return res.json({
       success: true,
       plans,
     });
   } catch (err) {
+    console.error("========== RAZORPAY TEST ==========");
     console.error(err);
-    res.status(500).json(err);
+    console.error("Status:", err.statusCode);
+    console.error("Message:", err.message);
+    console.error("Error:", err.error);
+    console.error("Stack:", err.stack);
+    console.error("===================================");
+
+    return res.status(500).json({
+      success: false,
+      status: err.statusCode,
+      message: err.message,
+      error: err.error,
+    });
   }
 });
 
