@@ -125,7 +125,7 @@ export const createSubscription = async (
     }
 
     console.log(
-      "👤 Subscription user:",
+      "Subscription user:",
       userId
     );
 
@@ -138,7 +138,7 @@ export const createSubscription = async (
 
     if (!razorpayPlanId) {
       console.error(
-        "❌ RAZORPAY_PLAN_ID missing"
+        "RAZORPAY_PLAN_ID missing"
       );
 
       return res.status(500).json({
@@ -182,12 +182,12 @@ export const createSubscription = async (
     }
 
     console.log(
-      "📦 Neon Plan:",
+      "Neon Plan:",
       user.plan
     );
 
     console.log(
-      "📦 Neon Subscription Status:",
+      " Neon Subscription Status:",
       user.subscription_status
     );
 
@@ -207,7 +207,7 @@ export const createSubscription = async (
       )
     ) {
       console.log(
-        "👑 User already has Tivion Pro"
+        "User already has Tivion Pro"
       );
 
       return res.status(409).json({
@@ -241,7 +241,7 @@ export const createSubscription = async (
       user.razorpay_subscription_id
     ) {
       console.log(
-        "🔎 Checking existing Razorpay subscription:",
+        "Checking existing Razorpay subscription:",
         user.razorpay_subscription_id
       );
 
@@ -252,7 +252,7 @@ export const createSubscription = async (
           );
 
         console.log(
-          "📊 Existing Razorpay Status:",
+          "Existing Razorpay Status:",
           existingSubscription.status
         );
 
@@ -276,11 +276,11 @@ export const createSubscription = async (
           )
         ) {
           console.log(
-            "🔄 Razorpay subscription is valid."
+            "Razorpay subscription is valid."
           );
 
           console.log(
-            "🔄 Synchronizing Tivion Pro with Neon..."
+            "Synchronizing Tivion Pro with Neon..."
           );
 
           const updatedUser =
@@ -290,7 +290,7 @@ export const createSubscription = async (
             );
 
           console.log(
-            "👑 TIVION PRO SYNCHRONIZED"
+            "TIVION PRO SYNCHRONIZED"
           );
 
           console.log(
@@ -356,7 +356,7 @@ export const createSubscription = async (
           )
         ) {
           console.log(
-            "♻️ Reusing existing Razorpay subscription"
+            "Reusing existing Razorpay subscription"
           );
 
           return res.status(200).json({
@@ -408,12 +408,12 @@ export const createSubscription = async (
         }
 
         console.log(
-          "ℹ️ Existing subscription cannot be reused:",
+          "Existing subscription cannot be reused:",
           existingSubscription.status
         );
       } catch (existingError) {
         console.error(
-          "⚠️ Existing subscription fetch failed:",
+          "Existing subscription fetch failed:",
           existingError?.error
             ?.description ||
             existingError.message
@@ -466,7 +466,7 @@ export const createSubscription = async (
     }
 
     console.log(
-      "🚀 Creating new Razorpay subscription..."
+      "Creating new Razorpay subscription..."
     );
 
     const subscription =
@@ -483,7 +483,7 @@ export const createSubscription = async (
     }
 
     console.log(
-      "✅ Razorpay Subscription Created:",
+      "Razorpay Subscription Created:",
       subscription.id
     );
 
@@ -515,7 +515,7 @@ export const createSubscription = async (
     `;
 
     console.log(
-      "💾 Razorpay subscription saved in Neon"
+      "Razorpay subscription saved in Neon"
     );
 
     /* =================================================
@@ -548,7 +548,7 @@ export const createSubscription = async (
     });
   } catch (error) {
     console.error(
-      "❌ CREATE SUBSCRIPTION ERROR:"
+      "CREATE SUBSCRIPTION ERROR:"
     );
 
     console.error(
@@ -594,7 +594,7 @@ export const verifySubscriptionPayment = async (
 ) => {
   try {
     console.log(
-      "🔐 Verify Tivion Pro subscription request received"
+      "Verify Tivion Pro subscription request received"
     );
 
     /* =================================================
@@ -636,12 +636,12 @@ export const verifySubscriptionPayment = async (
     }
 
     console.log(
-      "💳 Payment ID:",
+      "Payment ID:",
       razorpay_payment_id
     );
 
     console.log(
-      "📦 Subscription ID:",
+      "Subscription ID:",
       razorpay_subscription_id
     );
 
@@ -696,7 +696,7 @@ export const verifySubscriptionPayment = async (
 
     if (!signatureIsValid) {
       console.error(
-        "❌ Invalid Razorpay signature"
+        "Invalid Razorpay signature"
       );
 
       return res.status(400).json({
@@ -708,7 +708,7 @@ export const verifySubscriptionPayment = async (
     }
 
     console.log(
-      "✅ Razorpay signature verified"
+      "Razorpay signature verified"
     );
 
     /* =================================================
@@ -751,7 +751,7 @@ export const verifySubscriptionPayment = async (
       razorpay_subscription_id
     ) {
       console.error(
-        "❌ Subscription ID does not belong to user"
+        "Subscription ID does not belong to user"
       );
 
       return res.status(403).json({
@@ -783,7 +783,7 @@ export const verifySubscriptionPayment = async (
     }
 
     console.log(
-      "📊 Razorpay Subscription Status:",
+      "Razorpay Subscription Status:",
       subscription.status
     );
 
@@ -821,7 +821,7 @@ export const verifySubscriptionPayment = async (
       process.env.RAZORPAY_PLAN_ID
     ) {
       console.error(
-        "❌ Razorpay plan mismatch"
+        "Razorpay plan mismatch"
       );
 
       return res.status(403).json({
@@ -885,21 +885,21 @@ export const verifySubscriptionPayment = async (
     `;
 
     console.log(
-      "👑 TIVION PRO ACTIVATED"
+      "TIVION PRO ACTIVATED"
     );
 
     console.log(
-      "👤 User:",
+      "User:",
       userId
     );
 
     console.log(
-      "📦 Plan:",
+      "Plan:",
       updatedUser.plan
     );
 
     console.log(
-      "💳 Status:",
+      "Status:",
       updatedUser.subscription_status
     );
 
@@ -932,7 +932,7 @@ export const verifySubscriptionPayment = async (
     });
   } catch (error) {
     console.error(
-      "❌ VERIFY SUBSCRIPTION ERROR:"
+      "VERIFY SUBSCRIPTION ERROR:"
     );
 
     console.error(
