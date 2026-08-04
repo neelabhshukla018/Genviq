@@ -65,7 +65,7 @@ export const toggleLikeCreation = async (req, res) => {
 
 export const getUserUsage = async (req, res) => {
   try {
-    console.log("📊 Get User Usage API hit");
+    console.log("Get User Usage API hit");
 
     const userId = req.userId;
 
@@ -197,7 +197,7 @@ export const getUserUsage = async (req, res) => {
 
   } catch (error) {
     console.error(
-      "❌ Get User Usage Error:",
+      "Get User Usage Error:",
       error
     );
 
