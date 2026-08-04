@@ -16,7 +16,7 @@ import sql from "../configs/db.js";
 
 export const auth = async (req, res, next) => {
   try {
-    console.log("🔐 Entered auth middleware");
+    console.log("Entered auth middleware");
 
     /* =================================================
        1. GET CLERK AUTHENTICATED USER
@@ -60,7 +60,7 @@ export const auth = async (req, res, next) => {
 
     if (!user) {
       console.log(
-        "🆕 User not found in Neon. Creating free Tivion account..."
+        "User not found in Neon. Creating free Tivion account..."
       );
 
       [user] = await sql`
@@ -114,11 +114,11 @@ export const auth = async (req, res, next) => {
       `;
 
       console.log(
-        "✅ New Tivion free user created"
+        "New Tivion free user created"
       );
 
       console.log(
-        "🎁 Initial free credits: 5/5 for every tool"
+        "Initial free credits: 5/5 for every tool"
       );
     }
 
@@ -168,12 +168,12 @@ export const auth = async (req, res, next) => {
     ================================================= */
 
     console.log(
-      "📦 Tivion Plan:",
+      "Tivion Plan:",
       plan
     );
 
     console.log(
-      "💳 Subscription:",
+      "Subscription:",
       req.subscriptionStatus
     );
 
@@ -182,7 +182,7 @@ export const auth = async (req, res, next) => {
   } catch (error) {
 
     console.error(
-      "❌ Auth middleware error:"
+      "Auth middleware error:"
     );
 
     console.error(error);
