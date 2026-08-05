@@ -5,9 +5,7 @@ import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import pdf from "pdf-parse/lib/pdf-parse.js";
 
-/* =====================================================
-   GROQ AI CONFIGURATION
-===================================================== */
+
 
 if (!process.env.GROQ_API_KEY) {
   console.warn(
@@ -22,35 +20,9 @@ const AI = new OpenAI({
 
 const TEXT_AI_MODEL = "llama-3.3-70b-versatile";
 
-/* =====================================================
-   FREE PLAN CONFIGURATION
-
-   Every FREE user gets:
-
-   Article Writing        5
-   Blog Titles            5
-   Image Generation       5
-   Background Removal     5
-   Object Removal         5
-   Resume Review          5
-
-   Each tool has its OWN independent counter.
-
-   PRO users are not restricted by these counters.
-===================================================== */
 
 const FREE_USAGE_LIMIT = 5;
 
-/* =====================================================
-   VALID USAGE COLUMNS
-
-   IMPORTANT:
-
-   Never accept a database column name directly from
-   req.body or any user-controlled input.
-
-   Only these internally-defined columns are allowed.
-===================================================== */
 
 const USAGE_COLUMNS = new Set([
   "article_generation_used",
@@ -61,9 +33,6 @@ const USAGE_COLUMNS = new Set([
   "resume_analysis_used",
 ]);
 
-/* =====================================================
-   HELPER: VALIDATE USAGE COLUMN
-===================================================== */
 
 const validateUsageColumn = (column) => {
   if (!USAGE_COLUMNS.has(column)) {
@@ -73,9 +42,6 @@ const validateUsageColumn = (column) => {
   }
 };
 
-/* =====================================================
-   HELPER: HANDLE AI PROVIDER ERRORS
-===================================================== */
 
 const handleAIProviderError = (
   error,
@@ -118,20 +84,6 @@ const handleAIProviderError = (
   });
 };
 
-/* =====================================================
-   HELPER: MAKE SURE USER USAGE ROW EXISTS
-
-   auth.js already creates this row.
-
-   This helper is an additional safety check for:
-   - Existing users
-   - Old accounts
-   - Missing usage records
-
-   New row defaults:
-
-   0 used = 5 remaining
-===================================================== */
 
 const ensureUsageRecord = async (userId) => {
   await sql`
@@ -148,24 +100,6 @@ const ensureUsageRecord = async (userId) => {
   `;
 };
 
-/* =====================================================
-   HELPER: GET FEATURE USAGE
-
-   Example:
-
-   getFeatureUsage(
-     userId,
-     "blog_title_used"
-   )
-
-   Result:
-
-   {
-     used: 0,
-     remaining: 5,
-     limit: 5
-   }
-===================================================== */
 
 const getFeatureUsage = async (
   userId,
@@ -174,15 +108,6 @@ const getFeatureUsage = async (
   validateUsageColumn(column);
 
   await ensureUsageRecord(userId);
-
-  /*
-    @neondatabase/serverless tagged-template SQL
-    intentionally does not interpolate identifiers
-    like column names.
-
-    Since the column is selected exclusively from our
-    internal allowlist, we map it to a fixed query.
-  */
 
   let result;
 
@@ -262,17 +187,6 @@ const getFeatureUsage = async (
   };
 };
 
-/* =====================================================
-   HELPER: CHECK FREE FEATURE ACCESS
-
-   Call this BEFORE using Groq / Cloudflare / Cloudinary.
-
-   FREE:
-   - Checks individual feature quota.
-
-   PRO:
-   - Immediately allowed.
-===================================================== */
 
 const checkFeatureAccess = async ({
   userId,
@@ -325,28 +239,6 @@ const checkFeatureAccess = async ({
     usage,
   };
 };
-
-/* =====================================================
-   HELPER: INCREMENT FEATURE USAGE
-
-   IMPORTANT:
-
-   Call this ONLY AFTER the operation has completed
-   successfully.
-
-   Failed generation should NOT consume a free use.
-
-   Example:
-
-   Before:
-   blog_title_used = 0
-   remaining = 5
-
-   Successful generation:
-
-   blog_title_used = 1
-   remaining = 4
-===================================================== */
 
 const incrementFeatureUsage = async (
   userId,
