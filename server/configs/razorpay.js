@@ -1,9 +1,5 @@
 import Razorpay from "razorpay";
 
-/* =====================================================
-   RAZORPAY ENVIRONMENT CHECK
-===================================================== */
-
 const {
   RAZORPAY_KEY_ID,
   RAZORPAY_KEY_SECRET,
@@ -21,16 +17,6 @@ if (!RAZORPAY_KEY_SECRET) {
   );
 }
 
-/* =====================================================
-   RAZORPAY INSTANCE
-
-   IMPORTANT:
-
-   This file is SERVER-SIDE ONLY.
-
-   Never expose RAZORPAY_KEY_SECRET
-   to the React/Vite frontend.
-===================================================== */
 
 const razorpay = new Razorpay({
   key_id: RAZORPAY_KEY_ID,
@@ -40,8 +26,6 @@ const razorpay = new Razorpay({
 console.log("Razorpay Key ID:", RAZORPAY_KEY_ID);
 console.log("Secret exists:", !!RAZORPAY_KEY_SECRET);
 
-/* =====================================================
-   EXPORT
-===================================================== */
+
 
 export default razorpay;
