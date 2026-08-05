@@ -1056,16 +1056,12 @@ export const generateImage = async (req, res) => {
       });
     }
 
-  
 
     const model =
       process.env
         .CLOUDFLARE_IMAGE_MODEL ||
       "@cf/black-forest-labs/flux-1-schnell";
 
-    /* =================================================
-       CLOUDFLARE API URL
-    ================================================= */
 
     const cloudflareUrl =
       `https://api.cloudflare.com/client/v4/accounts/` +
@@ -1080,13 +1076,6 @@ export const generateImage = async (req, res) => {
       model
     );
 
-    /* =================================================
-       GENERATE IMAGE
-
-       responseType arraybuffer is important because
-       Cloudflare returns binary image data for image
-       generation models.
-    ================================================= */
 
     const imageResponse =
       await axios.post(
@@ -1121,10 +1110,6 @@ export const generateImage = async (req, res) => {
       "📡 Cloudflare status:",
       imageResponse.status
     );
-
-    /* =================================================
-       HANDLE CLOUDFLARE ERROR RESPONSE
-    ================================================= */
 
     if (
       imageResponse.status < 200 ||
@@ -1188,9 +1173,6 @@ export const generateImage = async (req, res) => {
         });
     }
 
-    /* =================================================
-       VALIDATE GENERATED DATA
-    ================================================= */
 
     if (
       !imageResponse.data ||
@@ -1202,9 +1184,6 @@ export const generateImage = async (req, res) => {
       );
     }
 
-    /* =================================================
-       DETECT RESPONSE CONTENT TYPE
-    ================================================= */
 
     const contentType =
       imageResponse.headers[
@@ -1217,13 +1196,6 @@ export const generateImage = async (req, res) => {
       contentType
     );
 
-    /*
-      Some Cloudflare AI responses may return JSON
-      instead of raw image bytes depending on the
-      selected model/provider.
-
-      Handle that safely.
-    */
 
     if (
       contentType.includes(
@@ -1251,12 +1223,6 @@ export const generateImage = async (req, res) => {
         );
       }
 
-      /*
-        Some models/providers can return a base64 image
-        inside a JSON result.
-
-        Support common response shapes.
-      */
 
       const base64Result =
         parsed?.result?.image ||
@@ -1294,10 +1260,6 @@ export const generateImage = async (req, res) => {
         );
     }
 
-    /* =================================================
-       CONVERT GENERATED IMAGE TO BUFFER
-    ================================================= */
-
     const imageBuffer =
       Buffer.isBuffer(
         imageResponse.data
@@ -1328,13 +1290,6 @@ export const generateImage = async (req, res) => {
       `Generated image size: ${imageSizeMB} MB`
     );
 
-    /* =================================================
-       DETERMINE IMAGE MIME TYPE
-
-       If Cloudflare returned JSON/base64, default PNG
-       is safe for our Cloudinary data URI.
-    ================================================= */
-
     let imageMimeType =
       contentType;
 
@@ -1347,10 +1302,6 @@ export const generateImage = async (req, res) => {
         "image/png";
     }
 
-    /* =================================================
-       CONVERT BUFFER TO BASE64 DATA URI
-    ================================================= */
-
     const base64Image =
       `data:${imageMimeType};base64,` +
       imageBuffer.toString(
@@ -1360,10 +1311,6 @@ export const generateImage = async (req, res) => {
     console.log(
       "Image converted for Cloudinary"
     );
-
-    /* =================================================
-       CLOUDINARY CONFIG CHECK
-    ================================================= */
 
     console.log(
       "Cloudinary configuration:"
@@ -1406,13 +1353,6 @@ export const generateImage = async (req, res) => {
       );
     }
 
-    /* =================================================
-       UPLOAD TO CLOUDINARY
-
-       If this fails:
-       → no usage credit is consumed.
-    ================================================= */
-
     console.log(
       "Uploading generated image to Cloudinary..."
     );
@@ -1429,10 +1369,6 @@ export const generateImage = async (req, res) => {
             "image",
         }
       );
-
-    /* =================================================
-       GET CLOUDINARY URL
-    ================================================= */
 
     const secureUrl =
       uploadResult?.secure_url;
@@ -1452,16 +1388,6 @@ export const generateImage = async (req, res) => {
       secureUrl
     );
 
-    /* =================================================
-       SAVE CREATION TO NEON
-
-       If Neon fails:
-       usage is still NOT deducted.
-
-       The Cloudinary asset may exist, but the user's
-       free quota remains unchanged because Tivion
-       did not complete the full operation.
-    ================================================= */
 
     await sql`
       INSERT INTO creations (
@@ -1485,18 +1411,6 @@ export const generateImage = async (req, res) => {
       "Generated image saved to Neon"
     );
 
-    /* =================================================
-       INCREMENT IMAGE USAGE
-
-       Only now do we consume one FREE image use.
-
-       FREE:
-       5/5 → 4/5 → 3/5 → 2/5 → 1/5 → 0/5
-
-       PRO:
-       No free usage consumed.
-    ================================================= */
-
     const updatedUsage =
       await incrementFeatureUsage(
         userId,
@@ -1506,19 +1420,12 @@ export const generateImage = async (req, res) => {
         "image_generation_used"
       );
 
-    /* =================================================
-       LOG UPDATED USAGE
-    ================================================= */
 
     if (plan === "free") {
       console.log(
         `Image credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
-
-    /* =================================================
-       SUCCESS
-    ================================================= */
 
     console.log(
       "🎉 Image generation completed successfully"
@@ -1561,10 +1468,6 @@ export const generateImage = async (req, res) => {
       error
     );
 
-    /* =================================================
-       RESOLVE ERROR INFORMATION
-    ================================================= */
-
     const status =
       error?.status ||
       error?.http_code ||
@@ -1591,9 +1494,6 @@ export const generateImage = async (req, res) => {
       message
     );
 
-    /* =================================================
-       CLOUDFLARE AUTH ERROR
-    ================================================= */
 
     if (
       status === 401 ||
@@ -1610,9 +1510,6 @@ export const generateImage = async (req, res) => {
         });
     }
 
-    /* =================================================
-       RATE LIMIT
-    ================================================= */
 
     if (status === 429) {
       return res
@@ -1624,10 +1521,6 @@ export const generateImage = async (req, res) => {
             "Image generation rate limit reached. Please try again shortly.",
         });
     }
-
-    /* =================================================
-       GENERAL ERROR
-    ================================================= */
 
     return res
       .status(
@@ -1643,23 +1536,6 @@ export const generateImage = async (req, res) => {
   }
 };
 
-/* =====================================================
-   REMOVE IMAGE BACKGROUND
-
-   FREE USER:
-   - 5 lifetime free background removals
-   - Uses background_removal_used
-
-   PRO USER:
-   - No free quota restriction
-
-   IMPORTANT:
-   Usage is incremented ONLY after:
-   1. Image is successfully processed
-   2. Final image is available
-   3. Creation is successfully saved to Neon
-===================================================== */
-
 export const removeImageBackground = async (req, res) => {
   let localFilePath = null;
 
@@ -1668,9 +1544,6 @@ export const removeImageBackground = async (req, res) => {
       "Remove Image Background API hit"
     );
 
-    /* =================================================
-       AUTHENTICATED USER
-    ================================================= */
 
     const userId =
       req.userId;
@@ -1688,9 +1561,6 @@ export const removeImageBackground = async (req, res) => {
       plan
     );
 
-    /* =================================================
-       AUTH CHECK
-    ================================================= */
 
     if (!userId) {
       return res.status(401).json({
@@ -1701,9 +1571,6 @@ export const removeImageBackground = async (req, res) => {
       });
     }
 
-    /* =================================================
-       FILE VALIDATION
-    ================================================= */
 
     if (!req.file) {
       return res.status(400).json({
@@ -1722,15 +1589,6 @@ export const removeImageBackground = async (req, res) => {
       localFilePath
     );
 
-    /* =================================================
-       CHECK BACKGROUND REMOVAL QUOTA
-
-       ONLY this counter is checked:
-
-       background_removal_used
-
-       Other feature credits remain independent.
-    ================================================= */
 
     const access =
       await checkFeatureAccess({
@@ -1745,20 +1603,11 @@ export const removeImageBackground = async (req, res) => {
           "Background Removal",
       });
 
-    /* =================================================
-       FREE LIMIT REACHED
-    ================================================= */
-
     if (!access.allowed) {
       console.log(
         "Background Removal free quota exhausted"
       );
 
-      /*
-        Since multer may already have saved the uploaded
-        file before auth/controller execution, remove the
-        temporary local file before returning.
-      */
 
       if (
         localFilePath &&
@@ -1794,9 +1643,6 @@ export const removeImageBackground = async (req, res) => {
       );
     }
 
-    /* =================================================
-       LOG CURRENT USAGE
-    ================================================= */
 
     if (plan === "free") {
       console.log(
@@ -1807,10 +1653,6 @@ export const removeImageBackground = async (req, res) => {
         "Tivion Pro — Background Removal quota bypassed"
       );
     }
-
-    /* =================================================
-       CLOUDINARY CONFIG CHECK
-    ================================================= */
 
     if (
       !process.env
@@ -1825,18 +1667,6 @@ export const removeImageBackground = async (req, res) => {
       );
     }
 
-    /* =================================================
-       UPLOAD ORIGINAL IMAGE TO CLOUDINARY
-
-       We use Cloudinary background removal transformation.
-
-       IMPORTANT:
-
-       If your existing working function uses a specific
-       Cloudinary transformation/add-on, preserve the
-       transformation configuration that already works
-       for your Cloudinary account.
-    ================================================= */
 
     console.log(
       "Uploading image to Cloudinary..."
@@ -1858,9 +1688,6 @@ export const removeImageBackground = async (req, res) => {
         }
       );
 
-    /* =================================================
-       VALIDATE CLOUDINARY RESPONSE
-    ================================================= */
 
     if (
       !uploadResult ||
@@ -1880,14 +1707,6 @@ export const removeImageBackground = async (req, res) => {
       uploadResult.public_id
     );
 
-    /* =================================================
-       BUILD FINAL BACKGROUND-REMOVED IMAGE URL
-
-       Cloudinary AI background removal can process
-       asynchronously depending on account/configuration.
-
-       The transformed URL uses the uploaded public ID.
-    ================================================= */
 
     const transformedUrl =
       cloudinary.url(
@@ -1927,14 +1746,6 @@ export const removeImageBackground = async (req, res) => {
       transformedUrl
     );
 
-    /* =================================================
-       SAVE CREATION TO NEON
-
-       Save before deducting quota.
-
-       If this fails:
-       → user keeps their free credit.
-    ================================================= */
 
     await sql`
       INSERT INTO creations (
