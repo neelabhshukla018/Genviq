@@ -1769,22 +1769,6 @@ export const removeImageBackground = async (req, res) => {
       "Background removal saved to Neon"
     );
 
-    /* =================================================
-       INCREMENT ONLY BACKGROUND REMOVAL USAGE
-
-       FREE:
-
-       5/5
-       ↓ successful operation
-       4/5
-
-       Does NOT affect:
-       - Article
-       - Blog Titles
-       - Images
-       - Object Removal
-       - Resume
-    ================================================= */
 
     const updatedUsage =
       await incrementFeatureUsage(
@@ -1794,10 +1778,6 @@ export const removeImageBackground = async (req, res) => {
 
         "background_removal_used"
       );
-
-    /* =================================================
-       CLEAN UP TEMPORARY LOCAL FILE
-    ================================================= */
 
     if (
       localFilePath &&
@@ -1827,9 +1807,6 @@ export const removeImageBackground = async (req, res) => {
       }
     }
 
-    /* =================================================
-       LOG UPDATED USAGE
-    ================================================= */
 
     if (plan === "free") {
       console.log(
@@ -1837,9 +1814,6 @@ export const removeImageBackground = async (req, res) => {
       );
     }
 
-    /* =================================================
-       SUCCESS RESPONSE
-    ================================================= */
 
     return res.status(200).json({
       success:
@@ -1875,12 +1849,6 @@ export const removeImageBackground = async (req, res) => {
       error
     );
 
-    /* =================================================
-       CLEAN TEMP FILE ON FAILURE
-
-       A failed request must not leave unnecessary
-       temporary files on the server.
-    ================================================= */
 
     if (
       localFilePath &&
@@ -1907,10 +1875,6 @@ export const removeImageBackground = async (req, res) => {
       }
     }
 
-    /* =================================================
-       RESOLVE ERROR
-    ================================================= */
-
     const status =
       error?.status ||
       error?.http_code ||
@@ -1936,10 +1900,6 @@ export const removeImageBackground = async (req, res) => {
       message
     );
 
-    /* =================================================
-       AUTH / PERMISSION ERROR
-    ================================================= */
-
     if (
       status === 401 ||
       status === 403
@@ -1956,10 +1916,6 @@ export const removeImageBackground = async (req, res) => {
         });
     }
 
-    /* =================================================
-       RATE LIMIT
-    ================================================= */
-
     if (
       status === 429
     ) {
@@ -1974,9 +1930,6 @@ export const removeImageBackground = async (req, res) => {
         });
     }
 
-    /* =================================================
-       GENERAL ERROR
-    ================================================= */
 
     return res
       .status(
@@ -1993,22 +1946,6 @@ export const removeImageBackground = async (req, res) => {
   }
 };
 
-/* =====================================================
-   REMOVE IMAGE OBJECT
-
-   FREE USER:
-   - 5 lifetime free object removals
-   - Uses object_removal_used
-
-   PRO USER:
-   - No free quota restriction
-
-   IMPORTANT:
-   Usage is incremented ONLY after:
-   1. Image is successfully uploaded/processed
-   2. Final result is successfully created
-   3. Creation is successfully saved to Neon
-===================================================== */
 
 export const removeImageObject = async (req, res) => {
   let localFilePath = null;
@@ -2017,10 +1954,6 @@ export const removeImageObject = async (req, res) => {
     console.log(
       "🪄 Remove Image Object API hit"
     );
-
-    /* =================================================
-       AUTHENTICATED USER
-    ================================================= */
 
     const userId =
       req.userId;
@@ -2033,13 +1966,6 @@ export const removeImageObject = async (req, res) => {
       objectName,
       prompt,
     } = req.body;
-
-    /*
-      Your existing frontend may use one of these names.
-
-      We support all three so we don't unnecessarily
-      break the current frontend request.
-    */
 
     const objectToRemove =
       object?.trim() ||
@@ -2061,9 +1987,6 @@ export const removeImageObject = async (req, res) => {
       objectToRemove
     );
 
-    /* =================================================
-       AUTH CHECK
-    ================================================= */
 
     if (!userId) {
       return res.status(401).json({
@@ -2074,9 +1997,6 @@ export const removeImageObject = async (req, res) => {
       });
     }
 
-    /* =================================================
-       FILE VALIDATION
-    ================================================= */
 
     if (!req.file) {
       return res.status(400).json({
@@ -2095,15 +2015,8 @@ export const removeImageObject = async (req, res) => {
       localFilePath
     );
 
-    /* =================================================
-       OBJECT VALIDATION
-    ================================================= */
 
     if (!objectToRemove) {
-      /*
-        Multer may already have created a temporary
-        local file, so clean it before returning.
-      */
 
       if (
         localFilePath &&
@@ -2137,16 +2050,6 @@ export const removeImageObject = async (req, res) => {
       });
     }
 
-    /* =================================================
-       CHECK OBJECT REMOVAL QUOTA
-
-       This checks ONLY:
-
-       object_removal_used
-
-       It does NOT consume credits from any other tool.
-    ================================================= */
-
     const access =
       await checkFeatureAccess({
         userId,
@@ -2159,10 +2062,6 @@ export const removeImageObject = async (req, res) => {
         featureName:
           "Object Removal",
       });
-
-    /* =================================================
-       FREE LIMIT REACHED
-    ================================================= */
 
     if (!access.allowed) {
       console.log(
@@ -2206,9 +2105,6 @@ export const removeImageObject = async (req, res) => {
       );
     }
 
-    /* =================================================
-       CURRENT USAGE
-    ================================================= */
 
     if (plan === "free") {
       console.log(
@@ -2219,10 +2115,6 @@ export const removeImageObject = async (req, res) => {
         "Tivion Pro — Object Removal quota bypassed"
       );
     }
-
-    /* =================================================
-       CLOUDINARY CONFIG CHECK
-    ================================================= */
 
     if (
       !process.env
@@ -2237,9 +2129,6 @@ export const removeImageObject = async (req, res) => {
       );
     }
 
-    /* =================================================
-       UPLOAD ORIGINAL IMAGE TO CLOUDINARY
-    ================================================= */
 
     console.log(
       "Uploading image to Cloudinary..."
@@ -2275,22 +2164,6 @@ export const removeImageObject = async (req, res) => {
       "Public ID:",
       uploadResult.public_id
     );
-
-    /* =================================================
-       CREATE OBJECT REMOVAL TRANSFORMATION
-
-       Cloudinary Generative Remove syntax:
-
-       e_gen_remove:prompt_<object>
-
-       cloudinary.url() generates the delivery URL
-       containing the transformation.
-
-       IMPORTANT:
-       If your OLD working object-removal function uses
-       a different Cloudinary transformation syntax,
-       preserve that exact working transformation block.
-    ================================================= */
 
     console.log(
       "🪄 Preparing object removal..."
@@ -2331,14 +2204,6 @@ export const removeImageObject = async (req, res) => {
       transformedUrl
     );
 
-    /* =================================================
-       SAVE TO NEON
-
-       We save before consuming quota.
-
-       If this fails:
-       FREE credit remains unchanged.
-    ================================================= */
 
     await sql`
       INSERT INTO creations (
@@ -2362,11 +2227,6 @@ export const removeImageObject = async (req, res) => {
       "Object removal saved to Neon"
     );
 
-    /* =================================================
-       INCREMENT ONLY OBJECT REMOVAL USAGE
-
-       Only after successful processing + Neon save.
-    ================================================= */
 
     const updatedUsage =
       await incrementFeatureUsage(
@@ -2376,10 +2236,6 @@ export const removeImageObject = async (req, res) => {
 
         "object_removal_used"
       );
-
-    /* =================================================
-       CLEAN TEMPORARY LOCAL FILE
-    ================================================= */
 
     if (
       localFilePath &&
@@ -2409,25 +2265,11 @@ export const removeImageObject = async (req, res) => {
       }
     }
 
-    /* =================================================
-       UPDATED USAGE
-    ================================================= */
-
     if (plan === "free") {
       console.log(
         `Object Removal credits after processing: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
-
-    /* =================================================
-       SUCCESS RESPONSE
-
-       Frontend can immediately update:
-
-       5/5 → 4/5
-
-       using data.usage.
-    ================================================= */
 
     return res.status(200).json({
       success:
@@ -2463,10 +2305,6 @@ export const removeImageObject = async (req, res) => {
       error
     );
 
-    /* =================================================
-       CLEAN TEMP FILE ON FAILURE
-    ================================================= */
-
     if (
       localFilePath &&
       fs.existsSync(
@@ -2491,10 +2329,6 @@ export const removeImageObject = async (req, res) => {
         );
       }
     }
-
-    /* =================================================
-       RESOLVE ERROR
-    ================================================= */
 
     const status =
       error?.status ||
@@ -2521,9 +2355,6 @@ export const removeImageObject = async (req, res) => {
       message
     );
 
-    /* =================================================
-       AUTH / PERMISSION ERROR
-    ================================================= */
 
     if (
       status === 401 ||
@@ -2541,9 +2372,6 @@ export const removeImageObject = async (req, res) => {
         });
     }
 
-    /* =================================================
-       RATE LIMIT
-    ================================================= */
 
     if (status === 429) {
       return res
@@ -2557,9 +2385,6 @@ export const removeImageObject = async (req, res) => {
         });
     }
 
-    /* =================================================
-       GENERAL ERROR
-    ================================================= */
 
     return res
       .status(
@@ -2576,41 +2401,13 @@ export const removeImageObject = async (req, res) => {
   }
 };
 
-/* =====================================================
-   REVIEW RESUME
-   TIVION AI RESUME ANALYZER
-
-   FREE USER:
-   - 5 lifetime free resume reviews
-   - Uses resume_analysis_used
-
-   PRO USER:
-   - No free quota restriction
-
-   IMPORTANT:
-   Usage is incremented ONLY after:
-   1. Resume is successfully uploaded/read
-   2. PDF text is successfully extracted
-   3. Groq successfully analyzes the resume
-   4. Review is successfully saved to Neon
-===================================================== */
-
 export const reviewResume = async (req, res) => {
   let localFilePath = null;
 
   try {
     console.log(
-      "📄 Resume Review API hit"
+      "Resume Review API hit"
     );
-
-    /* =================================================
-       AUTHENTICATED USER
-
-       auth.js provides:
-
-       req.userId
-       req.plan
-    ================================================= */
 
     const userId =
       req.userId;
@@ -2628,10 +2425,6 @@ export const reviewResume = async (req, res) => {
       plan
     );
 
-    /* =================================================
-       AUTH CHECK
-    ================================================= */
-
     if (!userId) {
       return res.status(401).json({
         success: false,
@@ -2641,9 +2434,6 @@ export const reviewResume = async (req, res) => {
       });
     }
 
-    /* =================================================
-       FILE VALIDATION
-    ================================================= */
 
     if (!req.file) {
       return res.status(400).json({
@@ -2662,21 +2452,6 @@ export const reviewResume = async (req, res) => {
       localFilePath
     );
 
-    /* =================================================
-       CHECK RESUME ANALYSIS QUOTA
-
-       Checks ONLY:
-
-       resume_analysis_used
-
-       It does NOT affect:
-
-       article_generation_used
-       blog_title_used
-       image_generation_used
-       background_removal_used
-       object_removal_used
-    ================================================= */
 
     const access =
       await checkFeatureAccess({
@@ -2691,19 +2466,11 @@ export const reviewResume = async (req, res) => {
           "Resume Analysis",
       });
 
-    /* =================================================
-       FREE LIMIT REACHED
-    ================================================= */
-
     if (!access.allowed) {
       console.log(
         "Resume Analysis free quota exhausted"
       );
 
-      /*
-        Multer has already handled the upload,
-        so remove the temporary file before returning.
-      */
 
       if (
         localFilePath &&
@@ -2742,10 +2509,6 @@ export const reviewResume = async (req, res) => {
       );
     }
 
-    /* =================================================
-       CURRENT USAGE
-    ================================================= */
-
     if (plan === "free") {
       console.log(
         `Resume Analysis credits before review: ${access.usage.remaining}/${access.usage.limit}`
@@ -2756,15 +2519,6 @@ export const reviewResume = async (req, res) => {
       );
     }
 
-    /* =================================================
-       VALIDATE FILE TYPE
-
-       Your route uses:
-
-       upload.single("resume")
-
-       We expect a PDF resume.
-    ================================================= */
 
     const mimeType =
       req.file.mimetype;
@@ -2810,10 +2564,6 @@ export const reviewResume = async (req, res) => {
       });
     }
 
-    /* =================================================
-       READ PDF FILE
-    ================================================= */
-
     console.log(
       "Reading resume PDF..."
     );
@@ -2832,9 +2582,6 @@ export const reviewResume = async (req, res) => {
       );
     }
 
-    /* =================================================
-       EXTRACT TEXT FROM PDF
-    ================================================= */
 
     console.log(
       "Extracting text from resume..."
@@ -2863,15 +2610,6 @@ export const reviewResume = async (req, res) => {
       resumeText.length
     );
 
-    /* =================================================
-       LIMIT INPUT SIZE
-
-       Large PDFs can contain huge amounts of text.
-
-       Resume analysis generally does not need unlimited
-       document content, so cap the extracted text before
-       sending it to the AI provider.
-    ================================================= */
 
     const MAX_RESUME_CHARACTERS =
       30000;
@@ -2881,10 +2619,6 @@ export const reviewResume = async (req, res) => {
         0,
         MAX_RESUME_CHARACTERS
       );
-
-    /* =================================================
-       BUILD RESUME REVIEW PROMPT
-    ================================================= */
 
     const resumePrompt = `
 You are an expert technical recruiter, resume reviewer, ATS specialist, and career advisor.
@@ -2955,9 +2689,6 @@ Important requirements:
 - Return only the resume analysis.
 `;
 
-    /* =================================================
-       GENERATE REVIEW WITH GROQ
-    ================================================= */
 
     console.log(
       "Analyzing resume with Groq..."
@@ -2990,9 +2721,6 @@ Important requirements:
           0.4,
       });
 
-    /* =================================================
-       EXTRACT AI REVIEW
-    ================================================= */
 
     const content =
       completion?.choices?.[0]
@@ -3009,14 +2737,6 @@ Important requirements:
       "Resume analyzed successfully"
     );
 
-    /* =================================================
-       SAVE REVIEW TO NEON
-
-       Save BEFORE consuming a credit.
-
-       If this fails:
-       → user's Resume Analysis remains unchanged.
-    ================================================= */
 
     const originalFileName =
       req.file.originalname ||
@@ -3042,21 +2762,7 @@ Important requirements:
       "Resume review saved to Neon"
     );
 
-    /* =================================================
-       INCREMENT ONLY RESUME ANALYSIS USAGE
 
-       Only now is one credit consumed.
-
-       FREE:
-
-       5/5
-        ↓
-       successful analysis
-        ↓
-       4/5
-
-       All other counters remain unchanged.
-    ================================================= */
 
     const updatedUsage =
       await incrementFeatureUsage(
@@ -3067,12 +2773,6 @@ Important requirements:
         "resume_analysis_used"
       );
 
-    /* =================================================
-       CLEAN TEMPORARY RESUME
-
-       The analysis is complete, so the temporary
-       uploaded PDF is no longer needed.
-    ================================================= */
 
     if (
       localFilePath &&
@@ -3102,9 +2802,7 @@ Important requirements:
       }
     }
 
-    /* =================================================
-       UPDATED USAGE LOG
-    ================================================= */
+
 
     if (plan === "free") {
       console.log(
@@ -3112,31 +2810,6 @@ Important requirements:
       );
     }
 
-    /* =================================================
-       SUCCESS RESPONSE
-
-       Frontend receives:
-
-       FREE example:
-
-       {
-         success: true,
-         content: "...review...",
-         plan: "free",
-
-         usage: {
-           used: 1,
-           remaining: 4,
-           limit: 5
-         }
-       }
-
-       PRO:
-
-       usage: {
-         unlimited: true
-       }
-    ================================================= */
 
     return res.status(200).json({
       success:
@@ -3171,11 +2844,6 @@ Important requirements:
       error
     );
 
-    /* =================================================
-       CLEAN TEMP FILE ON ANY FAILURE
-
-       Failed analysis does NOT consume quota.
-    ================================================= */
 
     if (
       localFilePath &&
@@ -3201,10 +2869,6 @@ Important requirements:
         );
       }
     }
-
-    /* =================================================
-       AI PROVIDER ERRORS
-    ================================================= */
 
     return handleAIProviderError(
       error,
