@@ -247,9 +247,6 @@ const incrementFeatureUsage = async (
 ) => {
   validateUsageColumn(column);
 
-  /*
-    PRO users do not consume free quota.
-  */
 
   if (plan === "pro") {
     return {
@@ -264,13 +261,6 @@ const incrementFeatureUsage = async (
 
   let result;
 
-  /*
-    The WHERE condition prevents the value from
-    exceeding FREE_USAGE_LIMIT.
-
-    This also provides an additional server-side
-    safeguard against accidental increments above 5.
-  */
 
   switch (column) {
     case "article_generation_used":
@@ -411,10 +401,6 @@ const incrementFeatureUsage = async (
       );
   }
 
-  /*
-    If nothing was updated, quota was already exhausted.
-  */
-
   if (!result?.length) {
     const usage =
       await getFeatureUsage(
@@ -449,18 +435,12 @@ const incrementFeatureUsage = async (
   };
 
   console.log(
-    `📉 Usage updated: ${usage.remaining}/${usage.limit} remaining`
+    ` Usage updated: ${usage.remaining}/${usage.limit} remaining`
   );
 
   return usage;
 };
 
-/* =====================================================
-   HELPER: SEND QUOTA LIMIT RESPONSE
-
-   Standard response used by all six AI tools when
-   a FREE user reaches 0/5.
-===================================================== */
 
 const sendQuotaExceeded = (
   res,
@@ -495,34 +475,12 @@ const sendQuotaExceeded = (
   });
 };
 
-/* =====================================================
-   GENERATE ARTICLE
-
-   FREE USER:
-   - 5 lifetime free article generations
-   - Uses article_generation_used
-
-   PRO USER:
-   - No free quota restriction
-
-   IMPORTANT:
-   Usage is incremented ONLY after:
-   1. Groq successfully generates the article
-   2. Creation is successfully saved to Neon
-===================================================== */
 
 export const generateArticle = async (req, res) => {
   try {
     console.log("Generate Article API hit");
 
-    /* =================================================
-       GET AUTHENTICATED USER
-
-       auth.js already gives us:
-       req.userId
-       req.plan
-    ================================================= */
-
+ 
     const userId = req.userId;
 
     const plan = req.plan || "free";
@@ -535,9 +493,7 @@ export const generateArticle = async (req, res) => {
     console.log("User:", userId);
     console.log("Plan:", plan);
 
-    /* =================================================
-       AUTH CHECK
-    ================================================= */
+  
 
     if (!userId) {
       return res.status(401).json({
@@ -547,10 +503,6 @@ export const generateArticle = async (req, res) => {
           "Unauthorized. Please sign in.",
       });
     }
-
-    /* =================================================
-       PROMPT VALIDATION
-    ================================================= */
 
     if (
       !prompt ||
@@ -563,13 +515,6 @@ export const generateArticle = async (req, res) => {
           "Please provide an article topic or prompt.",
       });
     }
-
-    /* =================================================
-       NORMALIZE ARTICLE LENGTH
-
-       Protect the backend from invalid or extremely
-       large frontend values.
-    ================================================= */
 
     let requestedLength =
       Number(length);
@@ -592,21 +537,6 @@ export const generateArticle = async (req, res) => {
       3000
     );
 
-    /* =================================================
-       CHECK ARTICLE QUOTA
-
-       This checks ONLY:
-
-       article_generation_used
-
-       It does NOT affect:
-       - Images
-       - Blog Titles
-       - Resume
-       - Background Removal
-       - Object Removal
-    ================================================= */
-
     const access =
       await checkFeatureAccess({
         userId,
@@ -619,10 +549,6 @@ export const generateArticle = async (req, res) => {
         featureName:
           "Article Writing",
       });
-
-    /* =================================================
-       FREE LIMIT REACHED
-    ================================================= */
 
     if (!access.allowed) {
       console.log(
@@ -646,10 +572,6 @@ export const generateArticle = async (req, res) => {
       );
     }
 
-    /* =================================================
-       BUILD ARTICLE PROMPT
-    ================================================= */
-
     const articlePrompt = `
 Write a high-quality, original, well-structured article based on the following request:
 
@@ -668,12 +590,9 @@ Requirements:
 - Return only the finished article.
 `;
 
-    /* =================================================
-       GENERATE ARTICLE WITH GROQ
-    ================================================= */
 
     console.log(
-      "🤖 Generating article with Groq..."
+      " Generating article with Groq..."
     );
 
     const completion =
@@ -700,9 +619,7 @@ Requirements:
         temperature: 0.7,
       });
 
-    /* =================================================
-       EXTRACT GENERATED CONTENT
-    ================================================= */
+  
 
     const content =
       completion?.choices?.[0]
@@ -716,16 +633,8 @@ Requirements:
     }
 
     console.log(
-      "✅ Article generated successfully"
+      " Article generated successfully"
     );
-
-    /* =================================================
-       SAVE CREATION TO NEON
-
-       We save first.
-
-       If this fails, usage is NOT deducted.
-    ================================================= */
 
     await sql`
       INSERT INTO creations (
@@ -747,18 +656,6 @@ Requirements:
       "Article saved to Neon"
     );
 
-    /* =================================================
-       INCREMENT ARTICLE USAGE
-
-       ONLY after successful generation + DB save.
-
-       FREE:
-       5/5 → 4/5 → 3/5 → 2/5 → 1/5 → 0/5
-
-       PRO:
-       Does not consume free credits.
-    ================================================= */
-
     const updatedUsage =
       await incrementFeatureUsage(
         userId,
@@ -768,30 +665,11 @@ Requirements:
         "article_generation_used"
       );
 
-    /* =================================================
-       LOG UPDATED USAGE
-    ================================================= */
-
     if (plan === "free") {
       console.log(
         `Article credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
-
-    /* =================================================
-       SUCCESS RESPONSE
-
-       Frontend will later use "usage" to update
-       the counter instantly without refreshing.
-
-       Example:
-
-       usage: {
-         used: 1,
-         remaining: 4,
-         limit: 5
-       }
-    ================================================= */
 
     return res.status(200).json({
       success: true,
@@ -832,33 +710,9 @@ Requirements:
   }
 };
 
-/* =====================================================
-   GENERATE BLOG TITLES
-
-   FREE USER:
-   - 5 lifetime free blog title generations
-   - Uses blog_title_used
-
-   PRO USER:
-   - No free quota restriction
-
-   IMPORTANT:
-   Usage is incremented ONLY after:
-   1. Groq successfully generates the titles
-   2. Creation is successfully saved to Neon
-===================================================== */
-
 export const generateBlogTitle = async (req, res) => {
   try {
     console.log("Generate Blog Title API hit");
-
-    /* =================================================
-       GET AUTHENTICATED USER
-
-       auth.js provides:
-       req.userId
-       req.plan
-    ================================================= */
 
     const userId = req.userId;
 
@@ -879,9 +733,6 @@ export const generateBlogTitle = async (req, res) => {
       plan
     );
 
-    /* =================================================
-       AUTH CHECK
-    ================================================= */
 
     if (!userId) {
       return res.status(401).json({
@@ -892,9 +743,6 @@ export const generateBlogTitle = async (req, res) => {
       });
     }
 
-    /* =================================================
-       PROMPT VALIDATION
-    ================================================= */
 
     if (
       !prompt ||
@@ -908,22 +756,7 @@ export const generateBlogTitle = async (req, res) => {
       });
     }
 
-    /* =================================================
-       CHECK BLOG TITLE QUOTA
-
-       This checks ONLY:
-
-       blog_title_used
-
-       It does NOT affect:
-
-       article_generation_used
-       image_generation_used
-       background_removal_used
-       object_removal_used
-       resume_analysis_used
-    ================================================= */
-
+ 
     const access =
       await checkFeatureAccess({
         userId,
@@ -936,10 +769,6 @@ export const generateBlogTitle = async (req, res) => {
         featureName:
           "Blog Title Generation",
       });
-
-    /* =================================================
-       FREE LIMIT REACHED
-    ================================================= */
 
     if (!access.allowed) {
       console.log(
@@ -955,9 +784,6 @@ export const generateBlogTitle = async (req, res) => {
       );
     }
 
-    /* =================================================
-       LOG CURRENT USAGE
-    ================================================= */
 
     if (plan === "free") {
       console.log(
@@ -968,16 +794,6 @@ export const generateBlogTitle = async (req, res) => {
         "Tivion Pro — Blog Title quota bypassed"
       );
     }
-
-    /* =================================================
-       BUILD AI PROMPT
-
-       Your frontend may already combine keyword +
-       category into req.body.prompt.
-
-       So we keep "prompt" flexible rather than
-       changing your frontend request structure.
-    ================================================= */
 
     const blogTitlePrompt = `
 Generate 10 high-quality, creative, clickable blog title ideas based on the following request:
@@ -995,9 +811,6 @@ Requirements:
 - Return one title per line.
 `;
 
-    /* =================================================
-       GENERATE BLOG TITLES WITH GROQ
-    ================================================= */
 
     console.log(
       "Generating blog titles with Groq..."
@@ -1030,9 +843,6 @@ Requirements:
           0.8,
       });
 
-    /* =================================================
-       EXTRACT GENERATED CONTENT
-    ================================================= */
 
     const content =
       completion?.choices?.[0]
@@ -1048,15 +858,6 @@ Requirements:
     console.log(
       "✅ Blog titles generated successfully"
     );
-
-    /* =================================================
-       SAVE TO NEON
-
-       Save BEFORE deducting a free use.
-
-       If database saving fails:
-       → user keeps their free credit.
-    ================================================= */
 
     await sql`
       INSERT INTO creations (
@@ -1078,22 +879,6 @@ Requirements:
       " Blog titles saved to Neon"
     );
 
-    /* =================================================
-       INCREMENT ONLY BLOG TITLE USAGE
-
-       FREE:
-
-       Before first generation:
-       blog_title_used = 0
-       UI = 5/5
-
-       After first success:
-       blog_title_used = 1
-       UI = 4/5
-
-       Other five feature counters remain unchanged.
-    ================================================= */
-
     const updatedUsage =
       await incrementFeatureUsage(
         userId,
@@ -1103,40 +888,12 @@ Requirements:
         "blog_title_used"
       );
 
-    /* =================================================
-       LOG UPDATED USAGE
-    ================================================= */
 
     if (plan === "free") {
       console.log(
         `Blog Title credits after generation: ${updatedUsage.remaining}/${updatedUsage.limit}`
       );
     }
-
-    /* =================================================
-       SUCCESS RESPONSE
-
-       Later BlogTitles.jsx can immediately use:
-
-       data.usage.remaining
-       data.usage.limit
-
-       Example after first generation:
-
-       {
-         success: true,
-         plan: "free",
-
-         usage: {
-           used: 1,
-           remaining: 4,
-           limit: 5
-         }
-       }
-
-       This means no page refresh is required to
-       visually change 5/5 → 4/5.
-    ================================================= */
 
     return res.status(200).json({
       success: true,
@@ -1180,31 +937,11 @@ Requirements:
   }
 };
 
-/* =====================================================
-   GENERATE IMAGE
-   CLOUDFLARE WORKERS AI
-
-   FREE USER:
-   - 5 lifetime free image generations
-   - Uses image_generation_used
-
-   PRO USER:
-   - No free quota restriction
-
-   IMPORTANT:
-   Usage is incremented ONLY after:
-   1. Cloudflare successfully generates the image
-   2. Cloudinary successfully uploads the image
-   3. Creation is successfully saved to Neon
-===================================================== */
 
 export const generateImage = async (req, res) => {
   try {
     console.log(" Generate Image API hit");
 
-    /* =================================================
-       AUTHENTICATED USER
-    ================================================= */
 
     const userId = req.userId;
 
@@ -1226,9 +963,6 @@ export const generateImage = async (req, res) => {
       plan
     );
 
-    /* =================================================
-       AUTH CHECK
-    ================================================= */
 
     if (!userId) {
       return res.status(401).json({
@@ -1239,9 +973,6 @@ export const generateImage = async (req, res) => {
       });
     }
 
-    /* =================================================
-       PROMPT VALIDATION
-    ================================================= */
 
     if (
       !prompt ||
@@ -1254,14 +985,6 @@ export const generateImage = async (req, res) => {
           "Please provide an image prompt.",
       });
     }
-
-    /* =================================================
-       CHECK IMAGE GENERATION QUOTA
-
-       Only image_generation_used is checked.
-
-       Other counters are completely independent.
-    ================================================= */
 
     const access =
       await checkFeatureAccess({
@@ -1276,9 +999,6 @@ export const generateImage = async (req, res) => {
           "Image Generation",
       });
 
-    /* =================================================
-       FREE LIMIT REACHED
-    ================================================= */
 
     if (!access.allowed) {
       console.log(
@@ -1294,10 +1014,6 @@ export const generateImage = async (req, res) => {
       );
     }
 
-    /* =================================================
-       LOG CURRENT USAGE
-    ================================================= */
-
     if (plan === "free") {
       console.log(
         `Image credits before generation: ${access.usage.remaining}/${access.usage.limit}`
@@ -1307,10 +1023,6 @@ export const generateImage = async (req, res) => {
         "Tivion Pro — Image Generation quota bypassed"
       );
     }
-
-    /* =================================================
-       CLOUDFLARE ENV CHECK
-    ================================================= */
 
     const accountId =
       process.env.CLOUDFLARE_ACCOUNT_ID;
@@ -1344,14 +1056,7 @@ export const generateImage = async (req, res) => {
       });
     }
 
-    /* =================================================
-       CLOUDFLARE MODEL
-
-       Keep the model configurable through .env.
-
-       If CLOUDFLARE_IMAGE_MODEL is not defined,
-       this fallback model is used.
-    ================================================= */
+  
 
     const model =
       process.env
