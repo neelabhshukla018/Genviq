@@ -1,14 +1,8 @@
-// =====================================================
-// CLOUDINARY DIRECT UPLOAD DIAGNOSTIC TEST
-// =====================================================
 
 import "dotenv/config";
 import axios from "axios";
 import crypto from "crypto";
 
-// =====================================================
-// ENV VARIABLES
-// =====================================================
 
 const CLOUD_NAME =
   process.env.CLOUDINARY_CLOUD_NAME;
@@ -19,9 +13,6 @@ const API_KEY =
 const API_SECRET =
   process.env.CLOUDINARY_API_SECRET;
 
-// =====================================================
-// CHECK ENV
-// =====================================================
 
 console.log("\n======================================");
 console.log("☁️ CLOUDINARY DIRECT UPLOAD TEST");
@@ -54,23 +45,10 @@ if (
   process.exit(1);
 }
 
-// =====================================================
-// CREATE SIGNATURE
-// =====================================================
 
 const timestamp =
   Math.floor(Date.now() / 1000);
 
-/*
-  IMPORTANT:
-
-  Cloudinary signatures are generated from
-  the signed parameters in alphabetical order.
-
-  For this simple test, we only sign:
-
-  timestamp
-*/
 
 const signatureString =
   `timestamp=${timestamp}${API_SECRET}`;
@@ -81,39 +59,17 @@ const signature =
     .update(signatureString)
     .digest("hex");
 
-// =====================================================
-// TINY TEST IMAGE
-// =====================================================
-
-/*
-  Tiny PNG data URI.
-
-  This means:
-
-  - No Hugging Face
-  - No Cloudflare
-  - No local file
-  - No frontend
-
-  We are testing ONLY Cloudinary.
-*/
 
 const testImage =
   "data:image/png;base64," +
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwC" +
   "AAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
 
-// =====================================================
-// CLOUDINARY UPLOAD URL
-// =====================================================
 
 const uploadUrl =
   `https://api.cloudinary.com/v1_1/` +
   `${CLOUD_NAME}/image/upload`;
 
-// =====================================================
-// CREATE FORM DATA
-// =====================================================
 
 const formData =
   new FormData();
@@ -138,9 +94,6 @@ formData.append(
   signature
 );
 
-// =====================================================
-// RUN TEST
-// =====================================================
 
 async function testCloudinary() {
   console.log(
@@ -162,16 +115,7 @@ async function testCloudinary() {
         uploadUrl,
         formData,
         {
-          /*
-            IMPORTANT:
-
-            Don't let Axios throw automatically
-            for 4xx/5xx.
-
-            We want to READ the actual
-            Cloudinary response.
-          */
-
+  
           validateStatus:
             () => true,
 
@@ -180,9 +124,6 @@ async function testCloudinary() {
         }
       );
 
-    // =================================================
-    // PRINT EVERYTHING USEFUL
-    // =================================================
 
     console.log(
       "\n======================================"
@@ -209,9 +150,6 @@ async function testCloudinary() {
       }
     );
 
-    // =================================================
-    // SUCCESS
-    // =================================================
 
     if (
       response.status >= 200 &&
@@ -247,9 +185,6 @@ async function testCloudinary() {
       return;
     }
 
-    // =================================================
-    // FAILURE
-    // =================================================
 
     console.log(
       "\n======================================"
@@ -283,9 +218,6 @@ async function testCloudinary() {
       cloudinaryMessage
     );
 
-    // =================================================
-    // COMMON ERROR HINTS
-    // =================================================
 
     if (
       response.status === 401
@@ -333,9 +265,6 @@ async function testCloudinary() {
 
   } catch (error) {
 
-    // =================================================
-    // NETWORK / AXIOS FAILURE
-    // =================================================
 
     console.log(
       "\n======================================"
@@ -385,8 +314,5 @@ async function testCloudinary() {
   }
 }
 
-// =====================================================
-// START
-// =====================================================
 
 testCloudinary();
