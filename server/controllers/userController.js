@@ -59,10 +59,6 @@ export const toggleLikeCreation = async (req, res) => {
 };
 
 
-/* =====================================================
-   GET USER PLAN + AI USAGE
-===================================================== */
-
 export const getUserUsage = async (req, res) => {
   try {
     console.log("Get User Usage API hit");
@@ -76,9 +72,6 @@ export const getUserUsage = async (req, res) => {
       });
     }
 
-    /* ===============================================
-       GET USER PLAN
-    =============================================== */
 
     const [user] = await sql`
       SELECT
@@ -89,9 +82,6 @@ export const getUserUsage = async (req, res) => {
       LIMIT 1
     `;
 
-    /* ===============================================
-       GET USAGE
-    =============================================== */
 
     let [usage] = await sql`
       SELECT
@@ -106,12 +96,6 @@ export const getUserUsage = async (req, res) => {
       LIMIT 1
     `;
 
-    /*
-      Safety for existing users.
-
-      If usage row somehow doesn't exist,
-      create it automatically.
-    */
 
     if (!usage) {
       [usage] = await sql`
@@ -150,9 +134,6 @@ export const getUserUsage = async (req, res) => {
       };
     };
 
-    /* ===============================================
-       RESPONSE
-    =============================================== */
 
     const plan =
       user?.plan === "pro"
