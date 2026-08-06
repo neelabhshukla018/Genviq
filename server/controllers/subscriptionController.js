@@ -2,9 +2,6 @@ import razorpay from "../configs/razorpay.js";
 import sql from "../configs/db.js";
 import crypto from "crypto";
 
-/* =====================================================
-   HELPER — CONVERT RAZORPAY UNIX TIME TO JS DATE
-===================================================== */
 
 const razorpayTimestampToDate = (timestamp) => {
   if (!timestamp) {
@@ -14,18 +11,6 @@ const razorpayTimestampToDate = (timestamp) => {
   return new Date(timestamp * 1000);
 };
 
-/* =====================================================
-   HELPER — ACTIVATE / SYNC PRO IN NEON
-
-   IMPORTANT:
-
-   Only call this after the subscription has been fetched
-   directly from Razorpay server-side and verified as:
-
-   authenticated
-   OR
-   active
-===================================================== */
 
 const syncProSubscription = async (
   userId,
@@ -77,28 +62,6 @@ const syncProSubscription = async (
   return updatedUser;
 };
 
-/* =====================================================
-   CREATE Tivion PRO SUBSCRIPTION
-
-   FLOW:
-
-   Clerk authenticated user
-          ↓
-   Check Neon
-          ↓
-   Check existing Razorpay subscription
-          ↓
-
-   If Razorpay says ACTIVE/AUTHENTICATED:
-      Sync Neon → PRO
-
-   If CREATED/PENDING:
-      Reuse existing subscription
-
-   Otherwise:
-      Create new Razorpay subscription
-===================================================== */
-
 export const createSubscription = async (
   req,
   res
@@ -108,9 +71,6 @@ export const createSubscription = async (
       "💳 Create Tivion Pro subscription request received"
     );
 
-    /* =================================================
-       1. AUTHENTICATED USER
-    ================================================= */
 
     const userId =
       req.userId;
@@ -129,10 +89,6 @@ export const createSubscription = async (
       userId
     );
 
-    /* =================================================
-       2. CHECK RAZORPAY CONFIG
-    ================================================= */
-
     const razorpayPlanId =
       process.env.RAZORPAY_PLAN_ID;
 
@@ -149,9 +105,6 @@ export const createSubscription = async (
       });
     }
 
-    /* =================================================
-       3. GET USER FROM NEON
-    ================================================= */
 
     const [user] = await sql`
       SELECT
@@ -191,11 +144,6 @@ export const createSubscription = async (
       user.subscription_status
     );
 
-    /* =================================================
-       4. USER ALREADY PRO
-
-       No new Razorpay subscription should be created.
-    ================================================= */
 
     if (
       user.plan === "pro" &&
@@ -225,17 +173,7 @@ export const createSubscription = async (
       });
     }
 
-    /* =================================================
-       5. CHECK EXISTING RAZORPAY SUBSCRIPTION
-
-       This fixes the exact situation where:
-
-       Razorpay = active
-
-       but
-
-       Neon = free / created
-    ================================================= */
+ 
 
     if (
       user.razorpay_subscription_id
@@ -256,16 +194,6 @@ export const createSubscription = async (
           existingSubscription.status
         );
 
-        /* =============================================
-           ACTIVE / AUTHENTICATED
-
-           Razorpay itself confirms subscription state.
-
-           Sync Neon immediately.
-
-           This is especially useful locally before
-           webhooks are configured.
-        ============================================= */
 
         if (
           [
@@ -337,13 +265,6 @@ export const createSubscription = async (
           });
         }
 
-        /* =============================================
-           CREATED / PENDING
-
-           Do NOT create duplicate subscriptions.
-
-           Return existing subscription to checkout.
-        ============================================= */
 
         const reusableStatuses = [
           "created",
@@ -388,12 +309,6 @@ export const createSubscription = async (
           });
         }
 
-        /* =============================================
-           HALTED
-
-           Do not silently create another recurring
-           subscription.
-        ============================================= */
 
         if (
           existingSubscription.status ===
@@ -419,19 +334,9 @@ export const createSubscription = async (
             existingError.message
         );
 
-        /*
-          The stored subscription may belong to an old
-          Test/Live environment.
-
-          Continue below and allow creation of a new
-          subscription.
-        */
       }
     }
 
-    /* =================================================
-       6. CREATE NEW RAZORPAY SUBSCRIPTION
-    ================================================= */
 
     const subscriptionOptions = {
       plan_id:
@@ -487,16 +392,6 @@ export const createSubscription = async (
       subscription.id
     );
 
-    /* =================================================
-       7. SAVE CREATED SUBSCRIPTION
-
-       IMPORTANT:
-
-       User is NOT Pro yet.
-
-       Checkout must complete first.
-    ================================================= */
-
     await sql`
       UPDATE users
 
@@ -518,9 +413,6 @@ export const createSubscription = async (
       "Razorpay subscription saved in Neon"
     );
 
-    /* =================================================
-       8. RETURN CHECKOUT DATA
-    ================================================= */
 
     return res.status(201).json({
       success: true,
@@ -568,19 +460,7 @@ export const createSubscription = async (
     });
 }
 };
-/* =====================================================
-   VERIFY RAZORPAY SUBSCRIPTION PAYMENT
 
-   Called after Razorpay Checkout succeeds.
-
-   SECURITY:
-
-   1. Verify Razorpay signature
-   2. Fetch subscription directly from Razorpay
-   3. Confirm subscription belongs to this user
-   4. Confirm valid subscription status
-   5. Activate Tivion Pro in Neon
-===================================================== */
 
 export const verifySubscriptionPayment = async (
   req,
@@ -591,9 +471,6 @@ export const verifySubscriptionPayment = async (
       "Verify Tivion Pro subscription request received"
     );
 
-    /* =================================================
-       1. AUTHENTICATED USER
-    ================================================= */
 
     const userId =
       req.userId;
@@ -606,9 +483,7 @@ export const verifySubscriptionPayment = async (
       });
     }
 
-    /* =================================================
-       2. GET RAZORPAY CHECKOUT RESPONSE
-    ================================================= */
+  
 
     const {
       razorpay_payment_id,
@@ -639,10 +514,6 @@ export const verifySubscriptionPayment = async (
       razorpay_subscription_id
     );
 
-    /* =================================================
-       3. CHECK SECRET
-    ================================================= */
-
     const keySecret =
       process.env.RAZORPAY_KEY_SECRET;
 
@@ -655,13 +526,7 @@ export const verifySubscriptionPayment = async (
       });
     }
 
-    /* =================================================
-       4. VERIFY RAZORPAY SIGNATURE
 
-       Razorpay subscription signature format:
-
-       payment_id | subscription_id
-    ================================================= */
 
     const signatureBody =
       `${razorpay_payment_id}|${razorpay_subscription_id}`;
@@ -705,12 +570,6 @@ export const verifySubscriptionPayment = async (
       "Razorpay signature verified"
     );
 
-    /* =================================================
-       5. GET USER FROM NEON
-
-       Make sure this subscription actually belongs
-       to the currently logged-in Clerk user.
-    ================================================= */
 
     const [user] = await sql`
       SELECT
@@ -736,10 +595,6 @@ export const verifySubscriptionPayment = async (
       });
     }
 
-    /* =================================================
-       6. VERIFY SUBSCRIPTION ID MATCHES NEON
-    ================================================= */
-
     if (
       user.razorpay_subscription_id !==
       razorpay_subscription_id
@@ -756,11 +611,6 @@ export const verifySubscriptionPayment = async (
       });
     }
 
-    /* =================================================
-       7. FETCH SUBSCRIPTION DIRECTLY FROM RAZORPAY
-
-       Never trust frontend status.
-    ================================================= */
 
     const subscription =
       await razorpay.subscriptions.fetch(
@@ -781,9 +631,6 @@ export const verifySubscriptionPayment = async (
       subscription.status
     );
 
-    /* =================================================
-       8. VALID SUBSCRIPTION STATUS
-    ================================================= */
 
     const validStatuses = [
       "authenticated",
@@ -803,12 +650,6 @@ export const verifySubscriptionPayment = async (
       });
     }
 
-    /* =================================================
-       9. VERIFY PLAN
-
-       Prevent a subscription from another Razorpay
-       plan from activating Tivion Pro.
-    ================================================= */
 
     if (
       subscription.plan_id !==
@@ -826,9 +667,6 @@ export const verifySubscriptionPayment = async (
       });
     }
 
-    /* =================================================
-       10. PERIOD DATES
-    ================================================= */
 
     const periodStart =
       razorpayTimestampToDate(
@@ -839,10 +677,6 @@ export const verifySubscriptionPayment = async (
       razorpayTimestampToDate(
         subscription.current_end
       );
-
-    /* =================================================
-       11. ACTIVATE Tivion PRO
-    ================================================= */
 
     const [updatedUser] = await sql`
       UPDATE users
@@ -897,9 +731,6 @@ export const verifySubscriptionPayment = async (
       updatedUser.subscription_status
     );
 
-    /* =================================================
-       12. SUCCESS
-    ================================================= */
 
     return res.status(200).json({
       success: true,
