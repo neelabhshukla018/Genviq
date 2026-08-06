@@ -1,26 +1,8 @@
 import sql from "../configs/db.js";
 
-/* =====================================================
-   Tivion AUTH MIDDLEWARE
-
-   Clerk:
-   - Authentication only
-   - Provides userId
-
-   Neon:
-   - Stores plan
-   - Stores subscription status
-
-   Clerk Billing is NOT used.
-===================================================== */
-
 export const auth = async (req, res, next) => {
   try {
     console.log("Entered auth middleware");
-
-    /* =================================================
-       1. GET CLERK AUTHENTICATED USER
-    ================================================= */
 
     const authData = req.auth();
 
@@ -35,9 +17,6 @@ export const auth = async (req, res, next) => {
 
     console.log("👤 Clerk User ID:", userId);
 
-    /* =================================================
-       2. FIND USER IN NEON
-    ================================================= */
 
     let [user] = await sql`
       SELECT
@@ -49,14 +28,6 @@ export const auth = async (req, res, next) => {
       LIMIT 1
     `;
 
-    /* =================================================
-       3. CREATE USER IF FIRST TIME
-
-       Every new user starts on FREE.
-
-       Usage counters will start at 0,
-       meaning they have 5/5 available.
-    ================================================= */
 
     if (!user) {
       console.log(
@@ -82,11 +53,6 @@ export const auth = async (req, res, next) => {
           subscription_status
       `;
 
-      /* ===============================================
-         CREATE USAGE RECORD
-
-         0 used = 5/5 remaining
-      =============================================== */
 
       await sql`
         INSERT INTO user_usage (
@@ -122,12 +88,6 @@ export const auth = async (req, res, next) => {
       );
     }
 
-    /* =================================================
-       4. MAKE SURE USAGE RECORD EXISTS
-
-       This is important for existing users who were
-       created before we introduced user_usage.
-    ================================================= */
 
     await sql`
       INSERT INTO user_usage (
@@ -142,18 +102,12 @@ export const auth = async (req, res, next) => {
       DO NOTHING
     `;
 
-    /* =================================================
-       5. NORMALIZE PLAN
-    ================================================= */
 
     const plan =
       user?.plan === "pro"
         ? "pro"
         : "free";
 
-    /* =================================================
-       6. ATTACH USER DATA TO REQUEST
-    ================================================= */
 
     req.userId = userId;
 
@@ -162,10 +116,6 @@ export const auth = async (req, res, next) => {
     req.subscriptionStatus =
       user?.subscription_status ||
       "inactive";
-
-    /* =================================================
-       7. DEBUG LOG
-    ================================================= */
 
     console.log(
       "Tivion Plan:",
