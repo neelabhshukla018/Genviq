@@ -1,38 +1,6 @@
 import crypto from "crypto";
 import sql from "../configs/db.js";
 
-/* =====================================================
-   RAZORPAY SUBSCRIPTION WEBHOOK CONTROLLER
-
-   Razorpay
-       ↓
-   POST /api/subscription/webhook
-       ↓
-   Verify webhook signature
-       ↓
-   Read Razorpay event
-       ↓
-   Find user by razorpay_subscription_id
-       ↓
-   Synchronize Neon plan + subscription status
-
-   IMPORTANT:
-
-   - No Clerk auth is used here.
-   - Razorpay itself calls this endpoint.
-   - Authentication is done using:
-     RAZORPAY_WEBHOOK_SECRET
-     +
-     x-razorpay-signature
-===================================================== */
-
-
-/* =====================================================
-   HELPER: CONVERT UNIX TIMESTAMP TO DATE
-
-   Razorpay generally returns timestamps
-   as Unix seconds.
-===================================================== */
 
 const toDate = (timestamp) => {
   if (!timestamp) {
@@ -45,10 +13,6 @@ const toDate = (timestamp) => {
 };
 
 
-/* =====================================================
-   WEBHOOK HANDLER
-===================================================== */
-
 export const razorpaySubscriptionWebhook =
   async (req, res) => {
 
@@ -58,10 +22,6 @@ export const razorpaySubscriptionWebhook =
         "Razorpay webhook received"
       );
 
-
-      /* ===============================================
-         1. CHECK WEBHOOK SECRET
-      =============================================== */
 
       const webhookSecret =
         process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -84,10 +44,6 @@ export const razorpaySubscriptionWebhook =
 
       }
 
-
-      /* ===============================================
-         2. GET RAZORPAY SIGNATURE
-      =============================================== */
 
       const razorpaySignature =
         req.headers[
@@ -113,26 +69,6 @@ export const razorpaySubscriptionWebhook =
       }
 
 
-      /* ===============================================
-         3. GET RAW REQUEST BODY
-
-         IMPORTANT:
-
-         req.body MUST be a Buffer here.
-
-         server.js will later use:
-
-         express.raw({
-           type: "application/json"
-         })
-
-         specifically for this webhook route.
-
-         Do NOT JSON.stringify a body that has already
-         been parsed by express.json() for signature
-         verification.
-      =============================================== */
-
       if (!Buffer.isBuffer(req.body)) {
 
         console.error(
@@ -155,17 +91,6 @@ export const razorpaySubscriptionWebhook =
         req.body;
 
 
-      /* ===============================================
-         4. CREATE EXPECTED SIGNATURE
-
-         HMAC SHA256:
-
-         raw webhook body
-
-         signed using:
-
-         RAZORPAY_WEBHOOK_SECRET
-      =============================================== */
 
       const expectedSignature =
 
@@ -180,10 +105,6 @@ export const razorpaySubscriptionWebhook =
 
           .digest("hex");
 
-
-      /* ===============================================
-         5. TIMING-SAFE SIGNATURE COMPARISON
-      =============================================== */
 
       const expectedBuffer =
         Buffer.from(
@@ -238,12 +159,6 @@ export const razorpaySubscriptionWebhook =
       );
 
 
-      /* ===============================================
-         6. PARSE VERIFIED WEBHOOK
-
-         Only parse AFTER signature verification.
-      =============================================== */
-
       let webhook;
 
 
@@ -282,28 +197,12 @@ export const razorpaySubscriptionWebhook =
       );
 
 
-      /* ===============================================
-         7. GET SUBSCRIPTION ENTITY
-
-         Subscription events normally contain:
-
-         payload.subscription.entity
-      =============================================== */
-
       const subscription =
 
         webhook?.payload
           ?.subscription
           ?.entity;
 
-
-      /*
-        Some payment-related webhook events may not
-        contain a subscription entity.
-
-        We only process subscription lifecycle events
-        in this controller.
-      */
 
       if (!subscription?.id) {
 
@@ -339,15 +238,6 @@ export const razorpaySubscriptionWebhook =
       );
 
 
-      /* ===============================================
-         8. FIND TIVION USER
-
-         We NEVER trust a user ID from the frontend.
-
-         Webhook identifies the account using the
-         Razorpay subscription ID stored in Neon.
-      =============================================== */
-
       const [user] = await sql`
 
         SELECT
@@ -372,14 +262,6 @@ export const razorpaySubscriptionWebhook =
 
       if (!user) {
 
-        /*
-          Return 200 intentionally.
-
-          Razorpay retries failed webhook deliveries.
-
-          If this is an old/unrecognized subscription,
-          retrying repeatedly won't help.
-        */
 
         console.warn(
 
@@ -414,22 +296,8 @@ export const razorpaySubscriptionWebhook =
         );
 
 
-      /* ===============================================
-         9. PROCESS WEBHOOK EVENT
-      =============================================== */
-
       switch (event) {
 
-
-        /* =============================================
-           SUBSCRIPTION ACTIVATED
-
-           User has an active subscription.
-
-           Tivion:
-
-           plan = pro
-        ============================================= */
 
         case "subscription.activated": {
 
@@ -474,14 +342,6 @@ export const razorpaySubscriptionWebhook =
         }
 
 
-        /* =============================================
-           SUBSCRIPTION CHARGED
-
-           A recurring payment was successfully charged.
-
-           Keep user Pro and refresh billing period.
-        ============================================= */
-
         case "subscription.charged": {
 
           await sql`
@@ -524,19 +384,6 @@ export const razorpaySubscriptionWebhook =
 
         }
 
-
-        /* =============================================
-           SUBSCRIPTION AUTHENTICATED
-
-           Initial payment/authentication succeeded.
-
-           We record the state.
-
-           If Razorpay reports the subscription as
-           active, Pro can be active as well.
-
-           Usually subscription.activated follows.
-        ============================================= */
 
         case "subscription.authenticated": {
 
@@ -593,22 +440,6 @@ export const razorpaySubscriptionWebhook =
         }
 
 
-        /* =============================================
-           SUBSCRIPTION PENDING
-
-           A charge/payment may require attention.
-
-           IMPORTANT:
-
-           Do NOT immediately remove Pro here.
-
-           A temporary payment issue should not
-           necessarily destroy access immediately.
-
-           We record the status and let later Razorpay
-           lifecycle events determine final access.
-        ============================================= */
-
         case "subscription.pending": {
 
           await sql`
@@ -649,20 +480,6 @@ export const razorpaySubscriptionWebhook =
         }
 
 
-        /* =============================================
-           SUBSCRIPTION HALTED
-
-           Razorpay has halted recurring charges,
-           usually after payment failures.
-
-           We mark subscription halted.
-
-           Access policy can later use current_period_end
-           if you want a grace-period model.
-
-           For now, we remove Pro access.
-        ============================================= */
-
         case "subscription.halted": {
 
           await sql`
@@ -699,21 +516,6 @@ export const razorpaySubscriptionWebhook =
 
         }
 
-
-        /* =============================================
-           SUBSCRIPTION CANCELLED
-
-           IMPORTANT:
-
-           Depending on how cancellation is configured,
-           a user may be entitled to access until the
-           end of their already-paid billing period.
-
-           If current_period_end is still in the future,
-           preserve Pro until that date.
-
-           Otherwise downgrade now.
-        ============================================= */
 
         case "subscription.cancelled": {
 
@@ -777,14 +579,6 @@ export const razorpaySubscriptionWebhook =
         }
 
 
-        /* =============================================
-           SUBSCRIPTION COMPLETED
-
-           All billing cycles are complete.
-
-           No future subscription access.
-        ============================================= */
-
         case "subscription.completed": {
 
           await sql`
@@ -828,13 +622,6 @@ export const razorpaySubscriptionWebhook =
         }
 
 
-        /* =============================================
-           SUBSCRIPTION PAUSED
-
-           If pause functionality is enabled later,
-           suspend Pro while paused.
-        ============================================= */
-
         case "subscription.paused": {
 
           await sql`
@@ -871,10 +658,6 @@ export const razorpaySubscriptionWebhook =
 
         }
 
-
-        /* =============================================
-           SUBSCRIPTION RESUMED
-        ============================================= */
 
         case "subscription.resumed": {
 
@@ -922,14 +705,6 @@ export const razorpaySubscriptionWebhook =
         }
 
 
-        /* =============================================
-           UNKNOWN / UNUSED EVENT
-
-           Always acknowledge valid Razorpay events.
-
-           This prevents unnecessary retries.
-        ============================================= */
-
         default: {
 
           console.log(
@@ -947,12 +722,6 @@ export const razorpaySubscriptionWebhook =
 
       }
 
-
-      /* ===============================================
-         10. ACKNOWLEDGE WEBHOOK
-
-         Razorpay expects a successful 2xx response.
-      =============================================== */
 
       return res.status(200).json({
 
