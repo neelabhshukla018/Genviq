@@ -54,24 +54,21 @@ const Banner = () => {
             rel="noopener noreferrer"
             className="inline-flex items-center mx-6 px-5 py-3 bg-black/90 backdrop-blur-sm rounded-xl border border-purple-400/40 shadow-lg hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-300 hover:scale-105 hover:border-purple-400/70 group cursor-pointer relative"
           >
-            {/* Shine Effect */}
+           
             <div className="absolute inset-0 overflow-hidden rounded-xl pointer-events-none">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-x-full group-hover:translate-x-full" />
             </div>
 
-            {/* Icon */}
             {item.icon && (
               <span className="text-xl mr-3 group-hover:scale-110 transition-transform duration-300">
                 {item.icon}
               </span>
             )}
 
-            {/* Text */}
             <span className="text-white font-semibold text-base tracking-wide group-hover:text-purple-200 transition-colors duration-300">
               {item.text}
             </span>
 
-            {/* Animated Dot */}
             <div className="ml-3 w-1.5 h-1.5 bg-purple-400 rounded-full group-hover:animate-pulse" />
           </a>
         ))}
