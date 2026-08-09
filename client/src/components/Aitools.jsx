@@ -14,7 +14,7 @@ const Aitools = () => {
   const cardRefs = useRef([]);
   const videoRefs = useRef([]);
 
-  // Detect mobile size
+
   useEffect(() => {
     const checkScreen = () => setIsMobile(window.innerWidth < 768);
     checkScreen();
@@ -30,7 +30,6 @@ const Aitools = () => {
     [user, navigate]
   );
 
-  // Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -62,7 +61,6 @@ const Aitools = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Smooth fade and gentle slide animation
   const cardVariants = {
     hidden: { 
       opacity: 0,
