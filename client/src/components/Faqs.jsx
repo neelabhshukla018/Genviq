@@ -79,7 +79,7 @@ const Faqs = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto mt-16">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
-          {/* Left Side - Image */}
+         
        
 <motion.div
   initial={{ opacity: 0, x: -100 }}
@@ -97,7 +97,7 @@ const Faqs = () => {
   </div>
 </motion.div>
 
-          {/* Right Side - FAQs */}
+        
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -120,7 +120,7 @@ const Faqs = () => {
                     onClick={() => toggleFAQ(index)}
                     whileHover={{ scale: 1.005 }}
                   >
-                    {/* Shine effect */}
+                   
                     <div className="absolute inset-0 overflow-hidden z-0 rounded-lg">
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 -translate-x-full group-hover:translate-x-full group-hover:duration-800" />
                     </div>
@@ -169,8 +169,6 @@ const Faqs = () => {
                 </motion.div>
               ))}
             </div>
-
-          
 
             
           </motion.div>
