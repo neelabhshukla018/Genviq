@@ -47,7 +47,6 @@ const Social = () => {
 }
   ];
 
-  // Intersection Observer for lazy video loading
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -85,7 +84,6 @@ const Social = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   }, []);
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -124,7 +122,7 @@ const Social = () => {
 
   return (
     <div className="px-4 sm:px-20 xl:px-32 py-28 bg-[#F6F6F6] relative overflow-hidden">
-      {/* Background elements */}
+    
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute top-20 left-10 w-64 h-64 bg-purple-300/20 rounded-full blur-[80px]"></div>
         <div className="absolute bottom-10 right-10 w-80 h-80 bg-purple-400/15 rounded-full blur-[80px]"></div>
@@ -154,7 +152,6 @@ const Social = () => {
         </motion.p>
       </div>
 
-      {/* Cards grid - 2 columns on phone, 4 on desktop */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -175,15 +172,14 @@ const Social = () => {
             onClick={() => handleSocialClick(platform.url)}
             className="group relative p-4 sm:p-6 rounded-2xl bg-black/95 backdrop-blur-sm border-2 border-gray-800 hover:border-purple-400 shadow-xl hover:shadow-[0_15px_40px_rgba(168,85,247,0.25)] transition-all duration-300 cursor-pointer overflow-hidden min-h-[280px] sm:min-h-[320px] flex flex-col"
           >
-            {/* Shine effect */}
+           
             <div className="absolute inset-0 overflow-hidden z-0 rounded-2xl pointer-events-none">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-x-full group-hover:translate-x-full" />
             </div>
 
-            {/* Gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-purple-600/5 group-hover:from-purple-600/3 group-hover:to-purple-600/8 transition-all duration-300 z-0 rounded-2xl pointer-events-none" />
 
-            {/* Video Background */}
+
             <div className="absolute inset-0 w-full h-full overflow-hidden z-0 rounded-2xl pointer-events-none">
               {inViewCards[index] ? (
                 <video
@@ -205,10 +201,10 @@ const Social = () => {
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-all duration-300"></div>
             </div>
 
-            {/* Card content */}
+    
             <div className="relative z-10 flex flex-col flex-1">
               <div className="flex items-start justify-between mb-3 sm:mb-4">
-                {/* Logo occupying full rectangular area */}
+                
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg backdrop-blur-sm border border-white/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:border-purple-300/60 overflow-hidden p-0 bg-transparent">
                   <img
                     src={`/images/${platform.name}.png`}
@@ -245,7 +241,6 @@ const Social = () => {
                 </p>
               </div>
 
-              {/* Instruction section */}
               <div className="mt-auto pt-3 sm:pt-4 border-t border-gray-700/50 group-hover:border-purple-400/30 transition-colors duration-300">
                 <p className="text-purple-300 text-xs sm:text-sm font-semibold flex items-center">
                   <span className="w-2 h-2 bg-purple-400 rounded-full mr-2 group-hover:animate-pulse"></span>
