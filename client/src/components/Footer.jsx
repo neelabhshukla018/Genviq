@@ -15,9 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
-  // ===========================
-  // Social Links
-  // ===========================
+
   const socialLinks = [
     {
       name: "github",
@@ -42,9 +40,6 @@ const Footer = () => {
     },
   ];
 
-  // ===========================
-  // Quick Links
-  // ===========================
   const quickLinks = [
     {
       name: "AI Tools",
@@ -60,9 +55,6 @@ const Footer = () => {
     },
   ];
 
-  // ===========================
-  // Support Links
-  // ===========================
   const supportLinks = [
     {
       name: "Contact Us",
@@ -77,9 +69,6 @@ const Footer = () => {
     return (
     <div className="relative overflow-hidden">
 
-      {/* =========================
-          Top CTA Section
-      ========================== */}
       <div className="relative bg-[#F6F6F6]">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
 
@@ -118,9 +107,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* =========================
-          Video Background
-      ========================== */}
       <div className="relative">
 
         {/* Background Video */}
@@ -136,13 +122,13 @@ const Footer = () => {
           </video>
         </div>
 
-        {/* Footer Content */}
+     
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
-          {/* Grid Starts Here */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">          {/* =========================
-              Brand Card
-          ========================== */}
+        
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">   
+            
+                 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -151,7 +137,7 @@ const Footer = () => {
           >
             <div className="bg-black/95 backdrop-blur-sm rounded-2xl p-6 border-2 border-gray-800 shadow-xl hover:shadow-[0_15px_40px_rgba(168,85,247,0.25)] transition-all duration-300">
 
-              {/* Logo */}
+             
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 overflow-hidden">
 
@@ -184,13 +170,13 @@ const Footer = () => {
                 </div>
               </div>
 
-              {/* Description */}
+           
               <p className="text-gray-300 text-sm mb-6 leading-7">
                 Building the next generation of AI tools to empower creators,
                 developers, students, and businesses worldwide.
               </p>
 
-              {/* Social Icons */}
+            
               <div className="flex gap-3">
                 {socialLinks.map((social) => (
                   <motion.a
@@ -208,9 +194,9 @@ const Footer = () => {
               </div>
 
             </div>
-          </motion.div>          {/* =========================
-              Quick Links
-          ========================== */}
+          </motion.div>         
+          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -245,9 +231,9 @@ const Footer = () => {
               </ul>
 
             </div>
-          </motion.div>          {/* =========================
-              Support
-          ========================== */}
+          </motion.div>         
+          
+        
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -282,9 +268,9 @@ const Footer = () => {
               </ul>
 
             </div>
-          </motion.div>          {/* =========================
-              Newsletter
-          ========================== */}
+          </motion.div>        
+          
+         
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -325,12 +311,10 @@ const Footer = () => {
             </div>
           </motion.div>
 
-          {/* End Grid */}
+         
           </div>        
           
-            {/* =========================
-              Bottom Footer
-          ========================== */}
+          
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -339,17 +323,17 @@ const Footer = () => {
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
 
-              {/* Copyright */}
+            
               <p className="text-white/80 text-sm text-center md:text-left">
                 © {new Date().getFullYear()} Tivion AI All rights reserved.
               </p>
 
-              {/* Developed By */}
+            
               <p className="text-white/80 text-sm text-center">
                 Developed with ❤️ by <span className="font-semibold">Neelabh Shukla</span>
               </p>
 
-              {/* Legal Links */}
+            
               <div className="flex flex-wrap justify-center gap-6 text-sm">
 
                 <motion.div whileHover={{ y: -2 }}>
