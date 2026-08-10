@@ -47,7 +47,7 @@ const Faqs = () => {
 
   return (
     <div className="px-4 sm:px-20 xl:px-32 py-20 bg-black relative overflow-hidden">
-      {/* Floating gradient elements - purple/blue theme for dark background */}
+      
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
         <div className="absolute top-20 left-10 w-80 h-80 bg-purple-500/10 rounded-full blur-[100px]"></div>
         <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px]"></div>
