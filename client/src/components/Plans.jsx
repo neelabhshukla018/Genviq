@@ -14,93 +14,27 @@ import {
   Loader2,
 } from 'lucide-react';
 
-/* =====================================================
-   USAGE CONTEXT
-
-   Neon is the source of truth for:
-
-   plan:
-   free | pro
-
-   subscriptionStatus:
-   inactive | created | authenticated | active | etc.
-
-   This allows this page to immediately know whether
-   the currently logged-in user already has Tivion Pro.
-===================================================== */
 
 import {
   useUsage,
 } from '../context/UsageContext';
 
 
-/* =====================================================
-   API URL
-
-   Local backend:
-
-   http://localhost:3000
-
-   Production:
-
-   Add:
-
-   VITE_API_URL=https://your-backend-url.com
-
-   IMPORTANT:
-
-   Your UsageContext currently uses VITE_BASE_URL,
-   while this payment file uses VITE_API_URL.
-
-   For now localhost fallback keeps development working.
-===================================================== */
-
 const API_URL =
   import.meta.env.VITE_BASE_URL ||
   "https://genviq-backend.onrender.com";
 
-/* =====================================================
-   ACTIVE SUBSCRIPTION STATUSES
-
-   These statuses mean that the user should be treated
-   as already subscribed to Tivion Pro.
-
-   We use this together with:
-
-   plan === "pro"
-
-   to prevent Razorpay Checkout from opening again.
-===================================================== */
-
+ 
 const ACTIVE_SUBSCRIPTION_STATUSES = [
   'active',
   'authenticated',
 ];
 
 
-/* =====================================================
-   LOAD RAZORPAY CHECKOUT
-
-   Razorpay Checkout is loaded dynamically.
-
-   This means:
-
-   - No Razorpay frontend npm package is required.
-   - Script is only needed when a FREE user upgrades.
-   - PRO users never need to load/open Checkout.
-===================================================== */
-
 const loadRazorpayScript = () => {
 
   return new Promise((resolve) => {
 
-
-    /* ===============================================
-       ALREADY LOADED
-
-       Avoid adding the same Razorpay script multiple
-       times if the user interacts with the page again.
-    =============================================== */
 
     if (window.Razorpay) {
 
@@ -110,11 +44,7 @@ const loadRazorpayScript = () => {
 
     }
 
-
-    /* ===============================================
-       CREATE SCRIPT
-    =============================================== */
-
+  
     const script =
       document.createElement(
         'script'
@@ -129,10 +59,6 @@ const loadRazorpayScript = () => {
       true;
 
 
-    /* ===============================================
-       SCRIPT LOADED
-    =============================================== */
-
     script.onload = () => {
 
       resolve(true);
@@ -140,20 +66,12 @@ const loadRazorpayScript = () => {
     };
 
 
-    /* ===============================================
-       SCRIPT FAILED
-    =============================================== */
-
     script.onerror = () => {
 
       resolve(false);
 
     };
 
-
-    /* ===============================================
-       ADD SCRIPT TO DOCUMENT
-    =============================================== */
 
     document.body.appendChild(
       script
@@ -164,27 +82,8 @@ const loadRazorpayScript = () => {
 };
 
 
-/* =====================================================
-   PLANS COMPONENT
-===================================================== */
-
 const Plans = () => {
 
-
-  /* ===================================================
-     CLERK AUTHENTICATION
-
-     Clerk handles authentication ONLY.
-
-     Razorpay handles subscription billing.
-
-     Neon stores:
-
-     plan
-     subscription_status
-     razorpay_subscription_id
-     billing period
-  =================================================== */
 
   const {
     getToken,
@@ -197,23 +96,6 @@ const Plans = () => {
   } = useUser();
 
 
-  /* ===================================================
-     Tivion PLAN / USAGE CONTEXT
-
-     UsageContext calls:
-
-     GET /api/user/usage
-
-     and gets the REAL plan from Neon.
-
-     Example after successful subscription:
-
-     plan = "pro"
-
-     subscriptionStatus = "active"
-
-     isPro = true
-  =================================================== */
 
   const {
     plan,
@@ -222,10 +104,6 @@ const Plans = () => {
     refreshUsage,
   } = useUsage();
 
-
-  /* ===================================================
-     PAYMENT STATE
-  =================================================== */
 
   const [
     loading,
@@ -245,26 +123,6 @@ const Plans = () => {
   ] = useState('');
 
 
-  /* ===================================================
-     CHECK WHETHER CURRENT USER HAS ACTIVE PRO
-
-     We primarily trust Neon:
-
-     plan === "pro"
-
-     And also make sure the subscription is in a valid
-     active/authenticated state.
-
-     Your current synchronized database row is:
-
-     plan = pro
-     subscription_status = active
-
-     Therefore:
-
-     hasActiveProSubscription = true
-  =================================================== */
-
   const hasActiveProSubscription =
 
     isPro &&
@@ -274,45 +132,8 @@ const Plans = () => {
     );
 
 
-  /* ===================================================
-     PRO BUTTON CLICK
-
-     FREE USER:
-
-     Click Upgrade
-          ↓
-     handleUpgrade()
-          ↓
-     Razorpay
-
-
-     PRO USER:
-
-     Click dimmed button
-          ↓
-     Alert
-          ↓
-     Razorpay DOES NOT OPEN
-          ↓
-     No duplicate subscription
-  =================================================== */
-
   const handleProButtonClick =
     async () => {
-
-
-      /* ===============================================
-         ALREADY ACTIVE PRO
-
-         IMPORTANT:
-
-         We intentionally DO NOT disable the HTML button.
-
-         A disabled button cannot fire onClick.
-
-         We want the button to LOOK dimmed but still
-         respond with an informative alert.
-      =============================================== */
 
       if (
         hasActiveProSubscription
@@ -327,17 +148,6 @@ const Plans = () => {
       }
 
 
-      /* ===============================================
-         FALLBACK
-
-         If Neon says plan=pro but status is temporarily
-         different, we still protect against accidentally
-         starting another subscription.
-
-         The backend also provides duplicate protection,
-         but preventing it here gives better UX.
-      =============================================== */
-
       if (isPro) {
 
         alert(
@@ -349,147 +159,20 @@ const Plans = () => {
       }
 
 
-      /* ===============================================
-         FREE USER
-
-         Continue to Razorpay upgrade flow.
-      =============================================== */
-
       await handleUpgrade();
 
     };
 
-
-  /* ===================================================
-     UPGRADE TO TIVION PRO
-
-     COMPLETE FLOW:
-
-     User clicks Upgrade
-
-          ↓
-
-     Frontend confirms user is not already Pro
-
-          ↓
-
-     Check Clerk login
-
-          ↓
-
-     Get Clerk authentication token
-
-          ↓
-
-     POST /api/subscription/create
-
-          ↓
-
-     BACKEND CHECKS:
-
-     Neon user
-          +
-     existing Razorpay subscription
-
-          ↓
-
-     CASE A:
-
-     Existing Razorpay subscription is ACTIVE
-
-          ↓
-
-     Backend synchronizes Neon:
-
-     plan = "pro"
-     subscription_status = "active"
-
-          ↓
-
-     Frontend refreshes UsageContext
-
-          ↓
-
-     NO CHECKOUT OPENS
-
-
-     CASE B:
-
-     User has no active subscription
-
-          ↓
-
-     Backend creates/reuses Razorpay subscription
-
-          ↓
-
-     Razorpay Checkout opens
-
-          ↓
-
-     Test payment / mandate succeeds
-
-          ↓
-
-     Razorpay returns:
-
-     razorpay_payment_id
-     razorpay_subscription_id
-     razorpay_signature
-
-          ↓
-
-     POST /api/subscription/verify
-
-          ↓
-
-     Backend verifies signature
-
-          ↓
-
-     Backend verifies subscription with Razorpay
-
-          ↓
-
-     Neon:
-
-     plan = "pro"
-     subscription_status = "active/authenticated"
-
-          ↓
-
-     refreshUsage()
-
-          ↓
-
-     UI becomes Pro
-  =================================================== */
 
   const handleUpgrade =
     async () => {
 
       try {
 
-
-        /* =============================================
-           RESET OLD UI MESSAGES
-        ============================================= */
-
         setError('');
 
         setSuccess('');
 
-
-        /* =============================================
-           FRONTEND DUPLICATE PRO PROTECTION
-
-           This check exists here AND in
-           handleProButtonClick intentionally.
-
-           Even if handleUpgrade() is called somewhere
-           else later, an existing Pro user should never
-           accidentally open another checkout.
-        ============================================= */
 
         if (isPro) {
 
@@ -502,10 +185,6 @@ const Plans = () => {
         }
 
 
-        /* =============================================
-           CHECK CLERK LOGIN
-        ============================================= */
-
         if (!isSignedIn) {
 
           setError(
@@ -516,30 +195,8 @@ const Plans = () => {
 
         }
 
-
-        /* =============================================
-           START LOADING
-        ============================================= */
-
         setLoading(true);
 
-
-        /* =============================================
-           GET CLERK SESSION TOKEN FIRST
-
-           We check the backend BEFORE loading Razorpay.
-
-           Why?
-
-           The backend may discover that an existing
-           Razorpay subscription is already active.
-
-           In that case:
-
-           - Neon gets synchronized
-           - User becomes Pro
-           - Razorpay Checkout is unnecessary
-        ============================================= */
 
         const token =
           await getToken();
@@ -553,24 +210,6 @@ const Plans = () => {
 
         }
 
-
-        /* =============================================
-           CREATE / CHECK RAZORPAY SUBSCRIPTION
-
-           Backend route:
-
-           POST /api/subscription/create
-
-           IMPORTANT:
-
-           We NEVER send ₹49 from the browser.
-
-           Backend uses the trusted:
-
-           RAZORPAY_PLAN_ID
-
-           configured in server/.env.
-        ============================================= */
 
         const createResponse =
           await fetch(
@@ -599,11 +238,6 @@ const Plans = () => {
 
           );
 
-
-        /* =============================================
-           READ BACKEND RESPONSE
-        ============================================= */
-
         const createData =
           await createResponse.json();
 
@@ -614,20 +248,6 @@ const Plans = () => {
         );
 
 
-        /* =============================================
-           SPECIAL CASE:
-
-           BACKEND SAYS USER IS ALREADY PRO
-
-           A 409 response can legitimately mean:
-
-           "You already have an active Tivion Pro
-           subscription."
-
-           That is NOT something for which we should
-           open Razorpay again.
-        ============================================= */
-
         if (
           createResponse.status === 409 &&
           createData?.alreadyPro === true
@@ -637,10 +257,6 @@ const Plans = () => {
             'Backend confirmed existing Pro subscription'
           );
 
-
-          /* ===========================================
-             REFRESH PLAN FROM NEON
-          =========================================== */
 
           if (refreshUsage) {
 
@@ -664,11 +280,6 @@ const Plans = () => {
           return;
 
         }
-
-
-        /* =============================================
-           NORMAL SERVER ERROR
-        ============================================= */
 
         if (!createResponse.ok) {
 
@@ -697,32 +308,6 @@ const Plans = () => {
 
         }
 
-
-        /* =============================================
-           EXISTING ACTIVE SUBSCRIPTION SYNCHRONIZED
-
-           This is the exact case we just fixed:
-
-           Razorpay:
-           active
-
-           Neon BEFORE:
-           free / created
-
-           Backend:
-           synchronizes Neon
-
-           Neon AFTER:
-           pro / active
-
-
-           IMPORTANT:
-
-           Backend intentionally does NOT need to return
-           a Razorpay public key here because Checkout
-           should NOT open.
-        ============================================= */
-
         if (
           createData?.alreadyPro === true ||
           createData?.plan === 'pro' ||
@@ -733,18 +318,6 @@ const Plans = () => {
             'Tivion Pro subscription synchronized:',
             createData
           );
-
-
-          /* ===========================================
-             REFRESH USAGE CONTEXT
-
-             No full page reload is required for the
-             context itself.
-
-             UsageContext fetches the updated Neon plan:
-
-             plan = pro
-          =========================================== */
 
           if (refreshUsage) {
 
@@ -770,15 +343,6 @@ const Plans = () => {
         }
 
 
-        /* =============================================
-           USER REALLY NEEDS CHECKOUT
-
-           Only NOW do we load Razorpay's browser script.
-
-           This prevents unnecessary Razorpay loading
-           for existing Pro users.
-        ============================================= */
-
         const loaded =
           await loadRazorpayScript();
 
@@ -792,18 +356,6 @@ const Plans = () => {
         }
 
 
-        /* =============================================
-           GET RAZORPAY SUBSCRIPTION ID
-
-           Supported backend response shapes:
-
-           subscription.id
-
-           subscriptionId
-
-           id
-        ============================================= */
-
         const subscriptionId =
 
           createData?.subscription?.id ||
@@ -813,21 +365,6 @@ const Plans = () => {
           createData?.id;
 
 
-        /* =============================================
-           GET PUBLIC RAZORPAY KEY
-
-           This is the PUBLIC Key ID only.
-
-           RAZORPAY_KEY_SECRET must NEVER be sent to
-           the frontend.
-
-           Supported response shapes:
-
-           keyId
-           key
-           razorpayKeyId
-        ============================================= */
-
         const razorpayKey =
 
           createData?.keyId ||
@@ -836,10 +373,6 @@ const Plans = () => {
 
           createData?.razorpayKeyId;
 
-
-        /* =============================================
-           VALIDATE SUBSCRIPTION ID
-        ============================================= */
 
         if (!subscriptionId) {
 
@@ -853,11 +386,6 @@ const Plans = () => {
           );
 
         }
-
-
-        /* =============================================
-           VALIDATE PUBLIC KEY
-        ============================================= */
 
         if (!razorpayKey) {
 
@@ -878,70 +406,15 @@ const Plans = () => {
           subscriptionId
         );
 
-
-        /* =============================================
-           CONTINUE IN PART 2
-
-           Next:
-
-           - Razorpay Checkout options
-           - payment success handler
-           - /verify request
-           - refreshUsage after Pro activation
-           - payment failure handling
-        ============================================= */
-
-                /* =============================================
-           RAZORPAY CHECKOUT OPTIONS
-
-           This point is reached ONLY when:
-
-           - User is signed in
-           - User is NOT already Pro
-           - Backend returned a valid subscription
-           - Backend returned Razorpay public Key ID
-           - Razorpay Checkout script loaded
-
-           Because server/.env currently uses:
-
-           RAZORPAY_KEY_ID=rzp_test_...
-
-           Checkout runs in TEST MODE.
-        ============================================= */
-
         const options = {
-
-
-          /* ===========================================
-             PUBLIC RAZORPAY KEY
-
-             Safe to use in frontend.
-
-             NEVER expose:
-             RAZORPAY_KEY_SECRET
-          =========================================== */
 
           key:
             razorpayKey,
 
 
-          /* ===========================================
-             RAZORPAY SUBSCRIPTION ID
-
-             Example:
-
-             sub_xxxxxxxxx
-
-             This was created/retrieved by our backend.
-          =========================================== */
-
           subscription_id:
             subscriptionId,
 
-
-          /* ===========================================
-             CHECKOUT INFORMATION
-          =========================================== */
 
           name:
             'Tivion',
@@ -949,44 +422,6 @@ const Plans = () => {
 
           description:
             'Tivion Pro - ₹49/month',
-
-
-          /* ===========================================
-             PAYMENT / MANDATE SUCCESS HANDLER
-
-             Razorpay Checkout returns:
-
-             razorpay_payment_id
-
-             razorpay_subscription_id
-
-             razorpay_signature
-
-
-             IMPORTANT:
-
-             We DO NOT trust frontend success alone.
-
-             We send all three values to our backend:
-
-             POST /api/subscription/verify
-
-             Backend then:
-
-             1. Verifies cryptographic signature
-
-             2. Checks subscription belongs to user
-
-             3. Fetches subscription from Razorpay
-
-             4. Checks Razorpay plan
-
-             5. Checks active/authenticated status
-
-             6. Updates Neon:
-
-                plan = pro
-          =========================================== */
 
           handler:
             async (response) => {
@@ -999,11 +434,6 @@ const Plans = () => {
                   response
                 );
 
-
-                /* =====================================
-                   SHOW VERIFYING STATE
-                ===================================== */
-
                 setLoading(true);
 
                 setError('');
@@ -1012,17 +442,6 @@ const Plans = () => {
                 setSuccess(
                   'Payment successful. Verifying your Tivion Pro subscription...'
                 );
-
-
-                /* =====================================
-                   GET FRESH CLERK TOKEN
-
-                   We intentionally request a fresh token
-                   instead of reusing the earlier token.
-
-                   Checkout may have remained open for
-                   some time.
-                ===================================== */
 
                 const verifyToken =
                   await getToken();
@@ -1035,11 +454,6 @@ const Plans = () => {
                   );
 
                 }
-
-
-                /* =====================================
-                   VERIFY SUBSCRIPTION WITH BACKEND
-                ===================================== */
 
                 const verifyResponse =
                   await fetch(
@@ -1079,11 +493,6 @@ const Plans = () => {
 
                   );
 
-
-                /* =====================================
-                   READ VERIFY RESPONSE
-                ===================================== */
-
                 const verifyData =
                   await verifyResponse.json();
 
@@ -1093,10 +502,6 @@ const Plans = () => {
                   verifyData
                 );
 
-
-                /* =====================================
-                   HTTP ERROR
-                ===================================== */
 
                 if (!verifyResponse.ok) {
 
@@ -1109,11 +514,6 @@ const Plans = () => {
                   );
 
                 }
-
-
-                /* =====================================
-                   APPLICATION ERROR
-                ===================================== */
 
                 if (
                   verifyData?.success === false
@@ -1129,20 +529,6 @@ const Plans = () => {
 
                 }
 
-
-                /* =====================================
-                   VERIFICATION SUCCESS
-
-                   Backend should now have:
-
-                   Neon:
-
-                   plan = "pro"
-
-                   subscription_status =
-                   "active" / "authenticated"
-                ===================================== */
-
                 console.log(
                   'Tivion Pro successfully activated'
                 );
@@ -1152,54 +538,11 @@ const Plans = () => {
                   'Welcome to Tivion Pro! Your subscription has been activated.'
                 );
 
-
-                /* =====================================
-                   REFRESH USAGE CONTEXT
-
-                   This is important.
-
-                   Instead of relying only on:
-
-                   window.location.reload()
-
-                   we immediately ask UsageContext to
-                   fetch the updated plan from Neon.
-
-                   GET /api/user/usage
-
-                         ↓
-
-                   plan = pro
-
-                         ↓
-
-                   isPro = true
-
-                         ↓
-
-                   UI automatically changes.
-                ===================================== */
-
                 if (refreshUsage) {
 
                   await refreshUsage();
 
                 }
-
-
-                /* =====================================
-                   OPTIONAL PAGE REFRESH
-
-                   UsageContext should already update
-                   React state.
-
-                   A short delayed refresh also ensures
-                   other components outside this context
-                   pick up the latest subscription state.
-
-                   We keep this because your current app
-                   may have other plan-dependent UI.
-                ===================================== */
 
                 setTimeout(() => {
 
@@ -1242,14 +585,6 @@ const Plans = () => {
             },
 
 
-          /* ===========================================
-             PREFILL USER DETAILS
-
-             These values come from Clerk.
-
-             They only improve checkout UX.
-          =========================================== */
-
           prefill: {
 
 
@@ -1268,23 +603,7 @@ const Plans = () => {
 
               '',
 
-
           },
-
-
-          /* ===========================================
-             NOTES
-
-             Helpful metadata in Razorpay dashboard.
-
-             IMPORTANT:
-
-             These notes are NOT used as proof that a
-             user paid.
-
-             Backend verification remains the source
-             of truth.
-          =========================================== */
 
           notes: {
 
@@ -1296,16 +615,7 @@ const Plans = () => {
             plan:
               'Monthly',
 
-
           },
-
-
-          /* ===========================================
-             CHECKOUT THEME
-
-             Keeping your existing yellow/gold Tivion
-             Pro styling.
-          =========================================== */
 
           theme: {
 
@@ -1313,13 +623,7 @@ const Plans = () => {
             color:
               '#F59E0B',
 
-
           },
-
-
-          /* ===========================================
-             CHECKOUT MODAL EVENTS
-          =========================================== */
 
           modal: {
 
@@ -1343,24 +647,10 @@ const Plans = () => {
 
         };
 
-
-        /* =============================================
-           CREATE RAZORPAY CHECKOUT INSTANCE
-        ============================================= */
-
         const razorpay =
           new window.Razorpay(
             options
           );
-
-
-        /* =============================================
-           PAYMENT FAILED EVENT
-
-           This handles Razorpay Checkout failures.
-
-           It does NOT mark the user Pro.
-        ============================================= */
 
         razorpay.on(
 
@@ -1395,23 +685,7 @@ const Plans = () => {
 
         );
 
-
-        /* =============================================
-           OPEN RAZORPAY CHECKOUT
-
-           This only happens for a FREE user who does
-           not already have an active subscription.
-        ============================================= */
-
         razorpay.open();
-
-
-        /* =============================================
-           CHECKOUT IS NOW OPEN
-
-           Remove loading spinner from the underlying
-           page while Razorpay modal handles the flow.
-        ============================================= */
 
         setLoading(false);
 
@@ -1419,11 +693,6 @@ const Plans = () => {
       } catch (
         upgradeError
       ) {
-
-
-        /* =============================================
-           UPGRADE FLOW ERROR
-        ============================================= */
 
         console.error(
           'Tivion Pro upgrade error:',
@@ -1451,38 +720,6 @@ const Plans = () => {
     };
 
 
-  /* =====================================================
-     JSX
-
-     From here we keep your existing UI structure:
-
-     OUR PLANS
-
-     Free Plan
-          +
-     Tivion Pro
-
-     The visual design is NOT being redesigned.
-
-     The important behavior change will be:
-
-     FREE:
-
-     [ ⚡ Upgrade to Tivion Pro ]
-
-
-     PRO:
-
-     [ 👑 Current Pro Subscription ]
-
-     The Pro button will:
-
-     - Look dimmed
-     - Remain clickable
-     - Show an alert when clicked
-     - Never open Razorpay again
-  ===================================================== */
-
   return (
 
     <div
@@ -1494,11 +731,6 @@ const Plans = () => {
         px-4
       "
     >
-
-
-      {/* =============================================
-          HEADING
-      ============================================== */}
 
       <div
         className="text-center"
@@ -1581,19 +813,6 @@ const Plans = () => {
 
       </div>
 
-
-      {/* =============================================
-          PRICING CARDS
-
-          Responsive behavior:
-
-          Mobile:
-          1 column
-
-          Tablet/Desktop:
-          2 columns
-      ============================================== */}
-
       <div
 
         className="
@@ -1607,11 +826,6 @@ const Plans = () => {
         "
 
       >
-
-
-        {/* ===========================================
-            FREE PLAN CARD
-        ============================================ */}
 
         <motion.div
 
@@ -1647,11 +861,6 @@ const Plans = () => {
 
         >
 
-
-          {/* =========================================
-              FREE ICON
-          ========================================== */}
-
           <div
 
             className="
@@ -1680,11 +889,6 @@ const Plans = () => {
             />
 
           </div>
-
-
-          {/* =========================================
-              FREE TITLE
-          ========================================== */}
 
           <h3
 
@@ -1716,14 +920,9 @@ const Plans = () => {
           </p>
 
 
-          {/* =========================================
-              FREE PRICE
-          ========================================== */}
-
           <div
             className="mt-7"
           >
-
 
             <span
 
@@ -1755,17 +954,6 @@ const Plans = () => {
 
 
           </div>
-
-
-          {/* =========================================
-              FREE FEATURES
-
-              CONTINUES IN PART 3
-          ========================================== */}
-
-                    {/* =========================================
-              FREE FEATURES
-          ========================================== */}
 
           <div
             className="
@@ -1847,20 +1035,6 @@ const Plans = () => {
 
           </div>
 
-
-          {/* =========================================
-              FREE PLAN CURRENT BUTTON
-
-              If user is NOT Pro:
-
-              This is their current plan.
-
-              If user IS Pro:
-
-              We simply show that Free is the basic
-              available tier, while Pro is current.
-          ========================================== */}
-
           <button
 
             type="button"
@@ -1892,35 +1066,6 @@ const Plans = () => {
 
 
         </motion.div>
-
-
-        {/* ===========================================
-             TIVION PRO CARD
-
-            This card reacts to the REAL plan coming
-            from Neon through UsageContext.
-
-            FREE USER:
-
-            isPro = false
-
-            Button:
-            Upgrade to Tivion Pro
-
-
-            PRO USER:
-
-            isPro = true
-
-            Button:
-            Current Pro Subscription
-
-            The button becomes visually dimmed but
-            remains clickable so we can show:
-
-            "You already have an active Tivion Pro
-            subscription."
-        ============================================ */}
 
         <motion.div
 
@@ -1972,11 +1117,6 @@ const Plans = () => {
 
         >
 
-
-          {/* =========================================
-              PRO CARD INNER
-          ========================================== */}
-
           <div
 
             className={`
@@ -2007,11 +1147,6 @@ const Plans = () => {
 
           >
 
-
-            {/* =======================================
-                BACKGROUND GLOW
-            ======================================== */}
-
             <div
 
               className="
@@ -2027,17 +1162,6 @@ const Plans = () => {
               "
 
             />
-
-
-            {/* =======================================
-                POPULAR / ACTIVE BADGE
-
-                FREE USER:
-                MOST POPULAR
-
-                PRO USER:
-                ACTIVE PLAN
-            ======================================== */}
 
             <div
 
@@ -2080,11 +1204,6 @@ const Plans = () => {
               }
 
             </div>
-
-
-            {/* =======================================
-                PRO ICON
-            ======================================== */}
 
             <div
 
@@ -2132,11 +1251,6 @@ const Plans = () => {
               />
 
             </div>
-
-
-            {/* =======================================
-                PRO TITLE
-            ======================================== */}
 
             <div
               className="relative"
@@ -2232,11 +1346,6 @@ const Plans = () => {
 
             </div>
 
-
-            {/* =======================================
-                PRO PRICE
-            ======================================== */}
-
             <div
 
               className="
@@ -2277,11 +1386,6 @@ const Plans = () => {
 
             </div>
 
-
-            {/* =======================================
-                BILLING NOTE
-            ======================================== */}
-
             <p
 
               className="
@@ -2297,10 +1401,6 @@ const Plans = () => {
 
             </p>
 
-
-            {/* =======================================
-                PRO FEATURES
-            ======================================== */}
 
             <div
 
@@ -2386,11 +1486,6 @@ const Plans = () => {
 
             </div>
 
-
-            {/* =======================================
-                SUCCESS MESSAGE
-            ======================================== */}
-
             {
               success && (
 
@@ -2419,11 +1514,6 @@ const Plans = () => {
               )
             }
 
-
-            {/* =======================================
-                ERROR MESSAGE
-            ======================================== */}
-
             {
               error && (
 
@@ -2451,35 +1541,6 @@ const Plans = () => {
 
               )
             }
-
-
-            {/* =======================================
-                PRO / UPGRADE BUTTON
-
-                IMPORTANT:
-
-                We only disable this button while an
-                actual request is processing.
-
-                We DO NOT use:
-
-                disabled={isPro}
-
-                because a disabled button cannot fire
-                onClick.
-
-                PRO USER:
-
-                Button looks dimmed
-                     ↓
-                Still clickable
-                     ↓
-                handleProButtonClick()
-                     ↓
-                Alert
-                     ↓
-                Razorpay never opens
-            ======================================== */}
 
             <button
 
@@ -2552,11 +1613,6 @@ const Plans = () => {
 
             >
 
-
-              {/* =====================================
-                  LOADING STATE
-              ====================================== */}
-
               {
                 loading ? (
 
@@ -2579,10 +1635,6 @@ const Plans = () => {
                 ) : isPro ? (
 
 
-                  /* =================================
-                     CURRENT PRO STATE
-                  ================================== */
-
                   <>
 
                     <Crown
@@ -2599,11 +1651,6 @@ const Plans = () => {
                   </>
 
                 ) : (
-
-
-                  /* =================================
-                     FREE USER UPGRADE STATE
-                  ================================== */
 
                   <>
 
@@ -2625,13 +1672,6 @@ const Plans = () => {
 
 
             </button>
-
-
-            {/* =======================================
-                PRO ACTIVE INFORMATION
-
-                Only visible for a Pro user.
-            ======================================== */}
 
             {
               isPro && (
@@ -2690,18 +1730,7 @@ const Plans = () => {
 
         </motion.div>
 
-
       </div>
-
-
-      {/* =============================================
-          PLAN STATUS INFORMATION
-
-          This small section uses the real Neon plan.
-
-          It also gives the user a clear indication that
-          their account has already updated after payment.
-      ============================================== */}
 
       {
         isSignedIn && (
@@ -2875,50 +1904,10 @@ const Plans = () => {
         )
       }
 
-
-      {/* =============================================
-          CONTINUES IN PART 4
-
-          Part 4 finishes:
-
-          - Remaining bottom content from Plans.jsx
-          - Any FAQ / information section
-          - Closing JSX
-          - export default Plans
-
-          IMPORTANT:
-
-          Do not add the final closing component braces
-          yourself yet.
-      ============================================== */}
-
-   
-
-
-      {/* =============================================
-          PRO USER MESSAGE
-
-          This only appears when Neon says:
-
-          plan = pro
-
-          It gives another clear visual confirmation
-          that the current account is subscribed.
-      ============================================== */}
-
-
-
     </div>
 
   );
 
 };
 
-
-/* =====================================================
-   EXPORT
-===================================================== */
-
 export default Plans;
-
-//i dont know what to do with it right now but surely i will do it
