@@ -47,7 +47,7 @@ const Hero = () => {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
-      {/* Clean Background Video Only - No Overlay */}
+     
       <div className="absolute inset-0 w-full h-full">
         <motion.div
           initial={{ opacity: 0 }}
@@ -76,13 +76,13 @@ const Hero = () => {
             <source src="/hero.mp4" type="video/mp4" />
           </video>
         </motion.div>
-        {/* Removed dark overlay for clear video */}
+       
       </div>
 
-      {/* Content - Text directly on video */}
+     
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 xl:py-28">
         
-        {/* Header Badge */}
+      
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -99,7 +99,7 @@ const Hero = () => {
           </span>
         </motion.div>
 
-        {/* Main Heading */}
+       
         <div className="text-center mb-12 lg:mb-16">
           <motion.div
             className="relative inline-block mb-6 lg:mb-8"
@@ -156,7 +156,7 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Features Grid */}
+       
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -169,7 +169,7 @@ const Hero = () => {
           <FloatingFeature icon={Brain} text="Smart Analysis" delay={1.5} />
         </motion.div>
 
-        {/* CTA Section */}
+      
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -201,14 +201,14 @@ const Hero = () => {
               }
             </motion.p>
             
-            {/* Buttons - Original Glass Effects Restored */}
+          
             <motion.div
               className="flex flex-row flex-wrap justify-center gap-3 sm:gap-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.9 }}
             >
-              {/* Get Started Button - Original Glass Morphism */}
+            
               <motion.button
                 whileHover={{ 
                   scale: 1.05,
@@ -242,7 +242,7 @@ const Hero = () => {
                   `
                 }}
               >
-                {/* Animated Glass Shine */}
+            
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-50"
                   animate={{
@@ -255,7 +255,7 @@ const Hero = () => {
                   }}
                 />
                 
-                {/* Floating Particles */}
+            
                 <motion.div
                   className="absolute -top-1 -right-1"
                   animate={{
@@ -299,7 +299,7 @@ const Hero = () => {
                 </span>
               </motion.button>
               
-              {/* Watch Demo Button - Original Glass Morphism */}
+            
               <motion.button
                 whileHover={{ 
                   scale: 1.05,
@@ -332,7 +332,7 @@ const Hero = () => {
                   `
                 }}
               >
-                {/* Holographic Shimmer */}
+            
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent"
                   animate={{
@@ -344,8 +344,7 @@ const Hero = () => {
                     ease: "easeInOut"
                   }}
                 />
-                
-                {/* Animated Border Glow */}
+              
                 <motion.div
                   className="absolute inset-0 rounded-2xl border border-transparent"
                   animate={{
@@ -376,7 +375,7 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Company Logos */}
+      
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -392,7 +391,7 @@ const Hero = () => {
             Trusted by innovative teams
           </motion.h4>
           
-          {/* Carousel */}
+      
           <div className="relative overflow-hidden py-4 lg:py-6">
             <motion.div
               className="flex gap-8 sm:gap-12 items-center"
@@ -422,7 +421,7 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Demo Modal */}
+      
       <AnimatePresence>
         {showDemo && (
           <motion.div
