@@ -109,7 +109,7 @@ const Footer = () => {
 
       <div className="relative">
 
-        {/* Background Video */}
+     
         <div className="absolute inset-0 w-full h-full">
           <video
             autoPlay
