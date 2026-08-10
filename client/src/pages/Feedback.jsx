@@ -57,7 +57,7 @@ const FeedbackPage = () => {
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-900 to-black flex flex-col relative">
-      {/* Video Background */}
+    
       <video 
         autoPlay 
         muted 
@@ -67,16 +67,13 @@ const FeedbackPage = () => {
         <source src="/videos/footer.mp4" type="video/mp4" />
       </video>
       
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
       
       <Navbar />
       
-      {/* Main Content */}
       <div className="flex-1 flex items-center justify-center p-6 relative z-10">
         <div className="max-w-6xl w-full">
           
-          {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-500/20 bg-yellow-500/10 text-xs mb-3">
               <MessageSquare className="w-3 h-3 text-yellow-400" />
@@ -90,10 +87,8 @@ const FeedbackPage = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             
-            {/* Left Column - Contact & Stats */}
             <div className="lg:col-span-1 space-y-6">
               
-              {/* Contact Methods */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -125,7 +120,6 @@ const FeedbackPage = () => {
                 </div>
               </motion.div>
 
-              {/* Quick Stats */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -148,7 +142,6 @@ const FeedbackPage = () => {
               </motion.div>
             </div>
 
-            {/* Feedback Form */}
             <div className="lg:col-span-3">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -157,7 +150,6 @@ const FeedbackPage = () => {
               >
                 <form onSubmit={handleSubmit} className="space-y-5">
                   
-                  {/* Rating Section */}
                   <div className="text-center bg-gray-800/50 p-5 rounded-xl border border-gray-700/30">
                     <label className="block text-sm font-medium text-gray-300 mb-3">
                       Rate your experience
@@ -187,7 +179,6 @@ const FeedbackPage = () => {
                     </div>
                   </div>
 
-                  {/* Form Fields */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input
                       type="text"
@@ -245,7 +236,6 @@ const FeedbackPage = () => {
                 </form>
               </motion.div>
 
-              {/* Footer */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -261,7 +251,6 @@ const FeedbackPage = () => {
         </div>
       </div>
 
-      {/* Success Modal */}
       <AnimatePresence>
         {showSuccess && (
           <motion.div
