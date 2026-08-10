@@ -27,26 +27,11 @@ import {
 } from '../context/UsageContext.jsx';
 
 
-/* =====================================================
-   AXIOS BASE URL
-===================================================== */
-
 axios.defaults.baseURL =
   import.meta.env.VITE_BASE_URL;
 
-
-/* =====================================================
-   BLOG TITLES
-===================================================== */
-
 const BlogTitles = () => {
 
-
-  /* =================================================
-     BLOG CATEGORIES
-
-     Existing categories preserved.
-  ================================================= */
 
   const blogCategories = [
 
@@ -67,11 +52,6 @@ const BlogTitles = () => {
     'Food',
 
   ];
-
-
-  /* =================================================
-     STATE
-  ================================================= */
 
   const [
     selectedCategory,
@@ -105,52 +85,10 @@ const BlogTitles = () => {
   ] = useState(false);
 
 
-  /* =================================================
-     CLERK AUTHENTICATION ONLY
-
-     Clerk is still used for:
-
-     - Sign in
-     - Authentication
-     - Getting auth token
-
-     Clerk Billing is NOT used.
-
-     We no longer use:
-
-     <Protect plan="pro_user">
-
-     Plan information comes from Neon.
-  ================================================= */
-
   const {
     getToken,
   } = useAuth();
 
-
-  /* =================================================
-     Tivion PLAN + BLOG TITLE USAGE
-
-     Source:
-
-     Neon Database
-          ↓
-     GET /api/user/usage
-          ↓
-     UsageContext
-          ↓
-     BlogTitles.jsx
-
-
-     FREE USER:
-
-     5 successful Blog Title generations
-
-
-     PRO USER:
-
-     Unlimited / quota bypass
-  ================================================= */
 
   const {
 
@@ -164,34 +102,6 @@ const BlogTitles = () => {
 
   } = useUsage();
 
-
-  /* =================================================
-     BLOG TITLE USAGE
-
-     UsageContext key:
-
-     blogTitle
-
-
-     Neon column:
-
-     blog_title_used
-
-
-     NEW FREE USER:
-
-     blog_title_used = 0
-
-     Therefore:
-
-     used      = 0
-     remaining = 5
-     limit     = 5
-
-     UI:
-
-     5/5
-  ================================================= */
 
   const blogTitleUsage =
     usage?.blogTitle || {
@@ -229,22 +139,6 @@ const BlogTitles = () => {
     );
 
 
-  /* =================================================
-     REMAINING CREDIT PERCENTAGE
-
-     5/5 = 100%
-
-     4/5 = 80%
-
-     3/5 = 60%
-
-     2/5 = 40%
-
-     1/5 = 20%
-
-     0/5 = 0%
-  ================================================= */
-
   const blogTitleUsagePercentage =
     blogTitleLimit > 0
 
@@ -267,20 +161,11 @@ const BlogTitles = () => {
 
       : 0;
 
-
-  /* =================================================
-     GENERATE BLOG TITLES
-  ================================================= */
-
   const onSubmitHandler =
     async (e) => {
 
       e.preventDefault();
 
-
-      /* ===============================================
-         INPUT VALIDATION
-      =============================================== */
 
       if (
         !input.trim()
@@ -293,35 +178,6 @@ const BlogTitles = () => {
         return;
 
       }
-
-
-      /* ===============================================
-         FRONTEND FREE QUOTA CHECK
-
-         This improves UX only.
-
-         Backend must ALSO enforce the quota.
-
-
-         FREE USER:
-
-         5/5 → allowed
-
-         4/5 → allowed
-
-         3/5 → allowed
-
-         2/5 → allowed
-
-         1/5 → allowed
-
-         0/5 → BLOCKED
-
-
-         PRO USER:
-
-         Always allowed.
-      =============================================== */
 
       if (
         !isPro &&
@@ -341,13 +197,6 @@ const BlogTitles = () => {
 
       try {
 
-        /* =============================================
-           START LOADING
-
-           Clear old content exactly when a new
-           generation begins.
-        ============================================= */
-
         setLoading(
           true
         );
@@ -362,12 +211,6 @@ const BlogTitles = () => {
           false
         );
 
-
-        /* =============================================
-           BUILD PROMPT
-
-           Existing prompt behavior preserved.
-        ============================================= */
 
 const prompt = `
 Generate exactly 10 SEO-friendly blog titles.
@@ -407,13 +250,6 @@ Example:
 10. Why AI Will Shape the Future
 `;
 
-
-        /* =============================================
-           GET CLERK TOKEN
-
-           Clerk = authentication only.
-        ============================================= */
-
         const token =
           await getToken();
 
@@ -425,65 +261,6 @@ Example:
           );
 
         }
-
-
-        /* =============================================
-           CALL EXISTING TIVION API
-
-           Existing endpoint preserved:
-
-           POST /api/ai/generate-blog-title
-
-
-           BACKEND FLOW SHOULD BE:
-
-           Authenticate
-                ↓
-           Get Neon user
-                ↓
-           Check users.plan
-                ↓
-
-           FREE?
-
-           Check:
-
-           blog_title_used < 5
-
-                ↓
-
-           Generate titles successfully
-
-                ↓
-
-           Save creation successfully
-
-                ↓
-
-           Increment ONLY:
-
-           blog_title_used
-
-                ↓
-
-           Return:
-
-           {
-             success: true,
-
-             content: "...",
-
-             usage: {
-
-               used: 1,
-
-               remaining: 4,
-
-               limit: 5
-
-             }
-           }
-        ============================================= */
 
         const {
           data,
@@ -510,70 +287,14 @@ Example:
 
         );
 
-
-        /* =============================================
-           SUCCESS
-        ============================================= */
-
         if (
           data.success
         ) {
-
-          /* ===========================================
-             SET GENERATED TITLES
-          =========================================== */
 
           setContent(
             data.content
           );
 
-
-          /* ===========================================
-             UPDATE ONLY BLOG TITLE USAGE
-
-             IMPORTANT:
-
-             Feature key MUST be:
-
-             "blogTitle"
-
-             NOT:
-
-             "blog"
-             "title"
-             "blogTitles"
-
-
-             Example:
-
-             BEFORE:
-
-             blogTitle: {
-
-               used: 0,
-
-               remaining: 5,
-
-               limit: 5
-
-             }
-
-
-             AFTER ONE SUCCESS:
-
-             blogTitle: {
-
-               used: 1,
-
-               remaining: 4,
-
-               limit: 5
-
-             }
-
-
-             Other tools remain unchanged.
-          =========================================== */
 
           if (
             data.usage &&
@@ -589,11 +310,6 @@ Example:
             );
 
           }
-
-
-          /* ===========================================
-             SUCCESS MESSAGE
-          =========================================== */
 
           if (isPro) {
 
@@ -626,10 +342,6 @@ Example:
 
         } else {
 
-          /* ===========================================
-             BACKEND success:false
-          =========================================== */
-
           toast.error(
 
             data.message ||
@@ -642,18 +354,13 @@ Example:
 
       } catch (error) {
 
-        /* =============================================
-           ERROR
-        ============================================= */
-
         console.error(
 
-          '❌ Blog title generation error:',
+          'Blog title generation error:',
 
           error
 
         );
-
 
         const status =
           error?.response?.status;
@@ -667,22 +374,6 @@ Example:
           error?.message ||
 
           'Failed to generate blog titles.';
-
-
-        /* =============================================
-           FREE LIMIT ERROR
-
-           Backend may return:
-
-           HTTP 403
-
-           {
-             success: false,
-
-             message:
-             "Free blog title generation limit reached."
-           }
-        ============================================= */
 
         if (
           status === 403
@@ -711,15 +402,6 @@ Example:
 
     };
 
-
-  /* =================================================
-     COPY GENERATED TITLES
-
-     IMPORTANT:
-
-     Copying generated content does NOT consume
-     another Blog Title credit.
-  ================================================= */
 
   const copyToClipboard =
     async () => {
@@ -782,10 +464,6 @@ Example:
     };
 
 
-  /* =================================================
-     UI
-  ================================================= */
-
   return (
 
     <div
@@ -806,10 +484,6 @@ Example:
         "
       >
 
-        {/* =============================================
-            HEADER
-        ============================================= */}
-
         <div
           className="
             text-center
@@ -817,33 +491,7 @@ Example:
           "
         >
 
-          {/* ===========================================
-              PLAN + BLOG TITLE QUOTA BADGE
-
-              OLD:
-
-              <Protect plan="pro_user">
-
-
-              NEW:
-
-              Neon users.plan
-                    ↓
-              UsageContext
-                    ↓
-              isPro
-
-
-              FREE:
-
-              FREE · 5/5 LEFT
-
-
-              PRO:
-
-              Tivion PRO · UNLIMITED
-          =========================================== */}
-
+       
           {isPro ? (
 
             <div
@@ -953,11 +601,6 @@ Example:
 
           )}
 
-
-          {/* ===========================================
-              ORIGINAL TITLE
-          =========================================== */}
-
           <h1
             className="
               text-2xl
@@ -986,11 +629,6 @@ Example:
             Create compelling blog titles with AI
 
           </p>
-
-
-          {/* ===========================================
-              FREE BLOG TITLE CREDIT PROGRESS
-          =========================================== */}
 
           {!isPro && (
 
@@ -1091,13 +729,6 @@ Example:
 
         </div>
 
-
-        {/* =============================================
-            MAIN GRID START
-
-            PART 2 CONTINUES DIRECTLY HERE
-        ============================================= */}
-
         <div
           className="
             grid
@@ -1105,21 +736,13 @@ Example:
             xl:grid-cols-2
             gap-4
           "
-        >          {/* ===========================================
-              LEFT PANEL
-          =========================================== */}
+        >        
 
           <div
             className="
               space-y-4
             "
           >
-
-            {/* =========================================
-                KEYWORD INPUT
-
-                Existing UI + functionality preserved.
-            ========================================= */}
 
             <div
               className="
@@ -1197,11 +820,6 @@ Example:
 
               </div>
 
-
-              {/* =======================================
-                  KEYWORD FIELD
-              ======================================= */}
-
               <input
 
                 onChange={
@@ -1242,11 +860,6 @@ Example:
 
               />
 
-
-              {/* =======================================
-                  KEYWORD INFO
-              ======================================= */}
-
               <div
                 className="
                   flex
@@ -1284,22 +897,6 @@ Example:
               </div>
 
             </div>
-
-
-            {/* =========================================
-                CATEGORY SELECTION
-
-                Existing categories preserved:
-
-                General
-                Technology
-                Business
-                Health
-                Lifestyle
-                Education
-                Travel
-                Food
-            ========================================= */}
 
             <div
               className="
@@ -1377,11 +974,6 @@ Example:
 
               </div>
 
-
-              {/* =======================================
-                  CATEGORY BUTTONS
-              ======================================= */}
-
               <div
                 className="
                   flex
@@ -1448,16 +1040,6 @@ Example:
 
               </div>
 
-
-              {/* =======================================
-                  SELECTED CATEGORY
-
-                  This is display only.
-
-                  Changing categories does NOT
-                  consume a credit.
-              ======================================= */}
-
               <div
                 className="
                   mt-3
@@ -1498,17 +1080,6 @@ Example:
               </div>
 
             </div>
-
-
-            {/* =========================================
-                FREE LIMIT WARNING
-
-                Only shown when:
-
-                FREE USER
-                    +
-                blogTitleRemaining = 0
-            ========================================= */}
 
             {!isPro &&
               blogTitleRemaining <= 0 && (
@@ -1597,36 +1168,6 @@ Example:
               )}
 
 
-            {/* =========================================
-                GENERATE TITLES BUTTON
-
-
-                FREE:
-
-                Generate Titles (5/5)
-
-                      ↓ success
-
-                Generate Titles (4/5)
-
-                      ↓
-
-                3/5
-                2/5
-                1/5
-                0/5
-
-
-                AT ZERO:
-
-                Free Limit Reached
-
-
-                PRO:
-
-                Generate Titles
-            ========================================= */}
-
             <button
 
               type="button"
@@ -1682,10 +1223,6 @@ Example:
 
               {loading ? (
 
-                /* =====================================
-                   LOADING
-                ===================================== */
-
                 <>
 
                   <Loader
@@ -1707,10 +1244,6 @@ Example:
 
               ) ? (
 
-                /* =====================================
-                   FREE LIMIT EXHAUSTED
-                ===================================== */
-
                 <>
 
                   <Crown
@@ -1726,10 +1259,6 @@ Example:
 
               ) : (
 
-                /* =====================================
-                   NORMAL GENERATE BUTTON
-                ===================================== */
-
                 <>
 
                   <Hash
@@ -1740,11 +1269,6 @@ Example:
                   />
 
                   Generate Titles
-
-
-                  {/* ===================================
-                      FREE COUNTER
-                  =================================== */}
 
                   {!isPro && (
 
@@ -1761,11 +1285,6 @@ Example:
                     </span>
 
                   )}
-
-
-                  {/* ===================================
-                      PRO INDICATOR
-                  =================================== */}
 
                   {isPro && (
 
@@ -1784,26 +1303,6 @@ Example:
               )}
 
             </button>
-
-
-            {/* =========================================
-                CREDIT RULE
-
-                Typing keyword:
-                ❌ NO CREDIT
-
-                Changing category:
-                ❌ NO CREDIT
-
-                Failed generation:
-                ❌ NO CREDIT
-
-                Successful generation:
-                ✅ EXACTLY 1 CREDIT
-
-                Copy generated titles:
-                ❌ NO EXTRA CREDIT
-            ========================================= */}
 
             {!isPro &&
               blogTitleRemaining > 0 && (
@@ -1825,15 +1324,6 @@ Example:
 
           </div>
 
-
-          {/* ===========================================
-              RIGHT PANEL
-
-              GENERATED TITLES
-
-              Existing UI preserved.
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -1845,10 +1335,6 @@ Example:
               p-4
             "
           >
-
-            {/* =========================================
-                RESULT HEADER
-            ========================================= */}
 
             <div
               className="
@@ -1924,15 +1410,6 @@ Example:
 
               </div>
 
-
-              {/* =======================================
-                  COPY BUTTON
-
-                  Existing functionality preserved.
-
-                  Copying does NOT use another credit.
-              ======================================= */}
-
               {content &&
                 !loading && (
 
@@ -1999,38 +1476,7 @@ Example:
 
             </div>
 
-
-            {/* =========================================
-                PART 3 CONTINUES DIRECTLY HERE
-
-                DO NOT CLOSE THE RIGHT PANEL.
-
-                NEXT:
-
-                - Creating Your Titles loading state
-
-                - No Titles Generated state
-
-                - Generated Markdown titles
-
-                - Existing Markdown styling
-
-                - Titles count
-
-                - Words count
-
-                - Category
-
-                - Updated 5/5 → 4/5 status
-            ========================================= */}            {/* =========================================
-                RESULT CONTENT
-            ========================================= */}
-
             {loading ? (
-
-              /* =======================================
-                 LOADING STATE
-              ======================================= */
 
               <div
                 className="
@@ -2096,11 +1542,6 @@ Example:
 
                 </p>
 
-
-                {/* =====================================
-                    LOADING PROGRESS
-                ===================================== */}
-
                 <div
                   className="
                     w-48
@@ -2125,11 +1566,6 @@ Example:
                   />
 
                 </div>
-
-
-                {/* =====================================
-                    GENERATION STEPS
-                ===================================== */}
 
                 <div
                   className="
@@ -2216,19 +1652,6 @@ Example:
 
                 </div>
 
-
-                {/* =====================================
-                    CREDIT MESSAGE
-
-                    IMPORTANT:
-
-                    Do not decrease the counter here.
-
-                    Credit decreases only after the
-                    backend successfully generates and
-                    saves the titles.
-                ===================================== */}
-
                 {!isPro && (
 
                   <p
@@ -2250,10 +1673,6 @@ Example:
               </div>
 
             ) : !content ? (
-
-              /* =======================================
-                 EMPTY STATE
-              ======================================= */
 
               <div
                 className="
@@ -2317,11 +1736,6 @@ Example:
                   to generate creative blog titles
 
                 </p>
-
-
-                {/* =====================================
-                    CURRENT ACCESS
-                ===================================== */}
 
                 <div
                   className="
@@ -2393,11 +1807,6 @@ Example:
 
                 </div>
 
-
-                {/* =====================================
-                    ZERO CREDIT MESSAGE
-                ===================================== */}
-
                 {!isPro &&
                   blogTitleRemaining <= 0 && (
 
@@ -2419,19 +1828,11 @@ Example:
 
             ) : (
 
-              /* =======================================
-                 SUCCESS RESULT
-              ======================================= */
-
               <div
                 className="
                   space-y-4
                 "
               >
-
-                {/* =====================================
-                    SUCCESS STATUS
-                ===================================== */}
 
                 <div
                   className="
@@ -2514,19 +1915,6 @@ Example:
 
                   </div>
 
-
-                  {/* ===================================
-                      UPDATED QUOTA BADGE
-
-                      Example:
-
-                      Before:
-                      5/5
-
-                      Successful generation:
-                      4/5
-                  =================================== */}
-
                   {isPro ? (
 
                     <div
@@ -2594,13 +1982,6 @@ Example:
 
                 </div>
 
-
-                {/* =====================================
-                    GENERATED BLOG TITLES
-
-                    Markdown rendering preserved.
-                ===================================== */}
-
                 <div
                   className="
                     bg-gray-700/30
@@ -2661,15 +2042,6 @@ Example:
 
                 </div>
 
-
-                {/* =====================================
-                    RESULT STATISTICS
-
-                    We calculate these only for display.
-
-                    They do NOT affect quota.
-                ===================================== */}
-
                 <div
                   className="
                     grid
@@ -2678,10 +2050,6 @@ Example:
                     gap-2
                   "
                 >
-
-                  {/* ===================================
-                      TITLES / LINES
-                  =================================== */}
 
                   <div
                     className="
@@ -2732,11 +2100,6 @@ Example:
 
                   </div>
 
-
-                  {/* ===================================
-                      WORD COUNT
-                  =================================== */}
-
                   <div
                     className="
                       text-center
@@ -2781,11 +2144,6 @@ Example:
 
                   </div>
 
-
-                  {/* ===================================
-                      CATEGORY
-                  =================================== */}
-
                   <div
                     className="
                       text-center
@@ -2826,11 +2184,6 @@ Example:
                   </div>
 
                 </div>
-
-
-                {/* =====================================
-                    KEYWORD INFORMATION
-                ===================================== */}
 
                 <div
                   className="
@@ -2890,11 +2243,6 @@ Example:
                   </p>
 
                 </div>
-
-
-                {/* =====================================
-                    RESULT READY + CURRENT USAGE
-                ===================================== */}
 
                 <div
                   className="
@@ -2995,18 +2343,6 @@ Example:
 
                 </div>
 
-
-                {/* =====================================
-                    COPY CREDIT RULE
-
-                    Generation already consumed exactly
-                    one credit after backend success.
-
-                    Copying these titles:
-
-                    ❌ does NOT consume another credit.
-                ===================================== */}
-
                 <p
                   className="
                     text-center
@@ -3028,32 +2364,6 @@ Example:
 
         </div>
 
-
-        {/* =============================================
-            MAIN TWO-COLUMN GRID CLOSED
-
-            DO NOT CLOSE THE PAGE/COMPONENT YET.
-
-            PART 4 CONTINUES DIRECTLY HERE WITH:
-
-            - Current Plan card
-            - Blog Title Usage card
-            - Generation Status card
-
-            - Free Plan information
-            - 5/5 progress display
-
-            - 0/5 exhausted state
-
-            - Tivion Pro unlimited state
-
-            - Final closing tags
-
-            - export default BlogTitles
-        ============================================= */}        {/* =============================================
-            BLOG TITLE TOOL INFORMATION
-        ============================================= */}
-
         <div
           className="
             grid
@@ -3064,10 +2374,6 @@ Example:
             mt-5
           "
         >
-
-          {/* ===========================================
-              CURRENT PLAN
-          =========================================== */}
 
           <div
             className="
@@ -3183,11 +2489,6 @@ Example:
 
           </div>
 
-
-          {/* ===========================================
-              BLOG TITLE USAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -3233,14 +2534,12 @@ Example:
 
               </div>
 
-
               <div
                 className="
                   flex-1
                   min-w-0
                 "
               >
-
                 <p
                   className="
                     text-[10px]
@@ -3292,11 +2591,6 @@ Example:
             </div>
 
           </div>
-
-
-          {/* ===========================================
-              GENERATION STATUS
-          =========================================== */}
 
           <div
             className="
@@ -3424,11 +2718,6 @@ Example:
 
         </div>
 
-
-        {/* =============================================
-            FREE PLAN INFORMATION
-        ============================================= */}
-
         {!isPro && (
 
           <div
@@ -3528,11 +2817,6 @@ Example:
 
               </div>
 
-
-              {/* =======================================
-                  REMAINING CREDITS
-              ======================================= */}
-
               <div
                 className="
                   shrink-0
@@ -3587,18 +2871,6 @@ Example:
 
                 </div>
 
-
-                {/* =====================================
-                    CREDIT PROGRESS
-
-                    5/5 = 100%
-                    4/5 = 80%
-                    3/5 = 60%
-                    2/5 = 40%
-                    1/5 = 20%
-                    0/5 = 0%
-                ===================================== */}
-
                 <div
                   className="
                     w-full
@@ -3630,7 +2902,6 @@ Example:
 
                 </div>
 
-
                 <p
                   className="
                     text-[9px]
@@ -3650,15 +2921,6 @@ Example:
           </div>
 
         )}
-
-
-        {/* =============================================
-            FREE LIMIT EXHAUSTED
-
-            ONLY:
-
-            FREE USER + 0/5
-        ============================================= */}
 
         {!isPro &&
           blogTitleRemaining <= 0 && (
@@ -3750,22 +3012,6 @@ Example:
 
           )}
 
-
-        {/* =============================================
-            PRO PLAN INFORMATION
-
-            PLAN SOURCE:
-
-            Neon:
-            users.plan = "pro"
-
-            NOT:
-
-            Clerk Billing
-            Clerk Protect
-            plan="pro_user"
-        ============================================= */}
-
         {isPro && (
 
           <div
@@ -3789,7 +3035,6 @@ Example:
                 gap-3
               "
             >
-
               <div
                 className="
                   w-10
@@ -3856,254 +3101,6 @@ Example:
 
         )}
 
-
-        {/* =============================================
-            BLOG TITLE QUOTA FLOW
-
-
-            NEW FREE USER
-
-            Neon:
-
-            blog_title_used = 0
-
-                    ↓
-
-            GET /api/user/usage
-
-                    ↓
-
-            UsageContext:
-
-            blogTitle: {
-
-              used: 0,
-
-              remaining: 5,
-
-              limit: 5
-
-            }
-
-                    ↓
-
-            BlogTitles.jsx:
-
-            FREE · 5/5 LEFT
-
-
-            =============================================
-
-            FIRST SUCCESSFUL GENERATION
-
-            POST:
-
-            /api/ai/generate-blog-title
-
-                    ↓
-
-            Clerk verifies authentication
-
-                    ↓
-
-            auth middleware reads Neon plan
-
-                    ↓
-
-            FREE USER:
-
-            Check:
-
-            blog_title_used < 5
-
-                    ↓
-
-            AI successfully generates titles
-
-                    ↓
-
-            Creation saved successfully
-
-                    ↓
-
-            Increment ONLY:
-
-            blog_title_used
-
-            0 → 1
-
-                    ↓
-
-            Backend returns:
-
-            usage: {
-
-              used: 1,
-
-              remaining: 4,
-
-              limit: 5
-
-            }
-
-                    ↓
-
-            Frontend:
-
-            updateFeatureUsage(
-
-              "blogTitle",
-
-              data.usage
-
-            )
-
-                    ↓
-
-            UI updates instantly:
-
-            5/5 → 4/5
-
-
-            =============================================
-
-            SECOND SUCCESS:
-
-            4/5 → 3/5
-
-
-            THIRD SUCCESS:
-
-            3/5 → 2/5
-
-
-            FOURTH SUCCESS:
-
-            2/5 → 1/5
-
-
-            FIFTH SUCCESS:
-
-            1/5 → 0/5
-
-
-            =============================================
-
-            AT 0/5:
-
-            Generate Titles button
-
-                    ↓
-
-            DISABLED
-
-
-            Backend must ALSO reject attempts
-
-                    ↓
-
-            HTTP 403
-
-            {
-              success: false,
-
-              message:
-              "Free blog title generation limit reached."
-            }
-
-
-            =============================================
-
-            IMPORTANT:
-
-            EACH TOOL IS COMPLETELY INDEPENDENT
-
-
-            Example:
-
-            User generates ONE Blog Title request.
-
-
-            BEFORE:
-
-            Article             5/5
-            Blog Title          5/5
-            Image               5/5
-            Background Removal  5/5
-            Object Removal      5/5
-            Resume Review       5/5
-
-
-            AFTER:
-
-            Article             5/5
-            Blog Title          4/5  ← ONLY THIS
-            Image               5/5
-            Background Removal  5/5
-            Object Removal      5/5
-            Resume Review       5/5
-
-
-            =============================================
-
-            CREDIT RULES
-
-
-            Enter keyword:
-
-            ❌ NO CREDIT
-
-
-            Change category:
-
-            ❌ NO CREDIT
-
-
-            Failed AI generation:
-
-            ❌ NO CREDIT
-
-
-            Database save failure:
-
-            ❌ NO CREDIT
-
-
-            Successful complete generation:
-
-            ✅ EXACTLY 1 BLOG TITLE CREDIT
-
-
-            Copy generated titles:
-
-            ❌ NO EXTRA CREDIT
-
-
-            =============================================
-
-            PRO USER
-
-
-            Neon:
-
-            users.plan = "pro"
-
-                    ↓
-
-            UsageContext:
-
-            isPro = true
-
-                    ↓
-
-            FREE blog title quota bypassed
-
-                    ↓
-
-            Tivion PRO · UNLIMITED
-
-        ============================================= */}
-
       </div>
 
     </div>
@@ -4112,12 +3109,4 @@ Example:
 
 };
 
-
-/* =====================================================
-   EXPORT
-===================================================== */
-
 export default BlogTitles;
-
-//blog title.jsx is considered as 
-//cosnidered as a things which is not mentioned here
