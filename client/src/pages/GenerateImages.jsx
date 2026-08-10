@@ -25,27 +25,10 @@ import {
   useUsage,
 } from '../context/UsageContext.jsx';
 
-
-/* =====================================================
-   AXIOS BASE URL
-===================================================== */
-
 axios.defaults.baseURL =
   import.meta.env.VITE_BASE_URL;
 
-
-/* =====================================================
-   GENERATE IMAGES
-===================================================== */
-
 const GenerateImages = () => {
-
-
-  /* =================================================
-     IMAGE STYLES
-
-     Existing styles preserved.
-  ================================================= */
 
   const ImageStyle = [
 
@@ -65,10 +48,6 @@ const GenerateImages = () => {
 
   ];
 
-
-  /* =================================================
-     STATE
-  ================================================= */
 
   const [
     selectedStyle,
@@ -107,53 +86,10 @@ const GenerateImages = () => {
     setDownloaded,
   ] = useState(false);
 
-
-  /* =================================================
-     CLERK AUTHENTICATION ONLY
-
-     Clerk handles:
-
-     - Sign in
-     - Authentication
-     - Auth token
-
-     Clerk Billing is NOT used.
-
-     NO:
-
-     <Protect plan="pro_user">
-
-     Plan information comes from Neon.
-  ================================================= */
-
   const {
     getToken,
   } = useAuth();
 
-
-  /* =================================================
-     Tivion PLAN + IMAGE GENERATION USAGE
-
-     Source:
-
-     Neon Database
-          ↓
-     GET /api/user/usage
-          ↓
-     UsageContext
-          ↓
-     GenerateImages.jsx
-
-
-     FREE USER:
-
-     5 successful image generations
-
-
-     PRO USER:
-
-     Unlimited / quota bypass
-  ================================================= */
 
   const {
 
@@ -168,33 +104,6 @@ const GenerateImages = () => {
   } = useUsage();
 
 
-  /* =================================================
-     IMAGE GENERATION USAGE
-
-     Neon column:
-
-     image_generation_used
-
-
-     UsageContext key:
-
-     image
-
-
-     New FREE user:
-
-     used      = 0
-
-     remaining = 5
-
-     limit     = 5
-
-
-     Therefore UI initially shows:
-
-     5/5
-  ================================================= */
-
   const imageUsage =
     usage?.image || {
 
@@ -206,14 +115,12 @@ const GenerateImages = () => {
 
     };
 
-
   const imageRemaining =
     Number(
 
       imageUsage.remaining ?? 5
 
     );
-
 
   const imageLimit =
     Number(
@@ -229,25 +136,6 @@ const GenerateImages = () => {
       imageUsage.used ?? 0
 
     );
-
-
-  /* =================================================
-     IMAGE CREDIT PERCENTAGE
-
-     This represents REMAINING credits.
-
-     5/5 = 100%
-
-     4/5 = 80%
-
-     3/5 = 60%
-
-     2/5 = 40%
-
-     1/5 = 20%
-
-     0/5 = 0%
-  ================================================= */
 
   const imageUsagePercentage =
     imageLimit > 0
@@ -271,20 +159,10 @@ const GenerateImages = () => {
 
       : 0;
 
-
-  /* =================================================
-     GENERATE IMAGE
-  ================================================= */
-
   const onSubmitHandler =
     async (e) => {
 
       e.preventDefault();
-
-
-      /* ===============================================
-         PROMPT VALIDATION
-      =============================================== */
 
       if (
         !input.trim()
@@ -297,35 +175,6 @@ const GenerateImages = () => {
         return;
 
       }
-
-
-      /* ===============================================
-         FRONTEND QUOTA CHECK
-
-         This is for UX.
-
-         Backend MUST perform the secure check too.
-
-
-         FREE:
-
-         5/5 → allowed
-
-         4/5 → allowed
-
-         3/5 → allowed
-
-         2/5 → allowed
-
-         1/5 → allowed
-
-         0/5 → blocked
-
-
-         PRO:
-
-         Always allowed.
-      =============================================== */
 
       if (
         !isPro &&
@@ -342,12 +191,7 @@ const GenerateImages = () => {
 
       }
 
-
       try {
-
-        /* =============================================
-           START LOADING
-        ============================================= */
 
         setLoading(
           true
@@ -358,34 +202,9 @@ const GenerateImages = () => {
           false
         );
 
-
-        /* =============================================
-           BUILD PROMPT
-
-           Existing functionality preserved.
-
-           Example:
-
-           input:
-           "a futuristic city"
-
-           selectedStyle:
-           "Anime"
-
-           final prompt:
-
-           Generate an image of a futuristic city
-           in the style Anime
-        ============================================= */
-
         const prompt =
 
           `Generate an image of ${input.trim()} in the style ${selectedStyle}`;
-
-
-        /* =============================================
-           GET CLERK AUTH TOKEN
-        ============================================= */
 
         const token =
           await getToken();
@@ -398,57 +217,6 @@ const GenerateImages = () => {
           );
 
         }
-
-
-        /* =============================================
-           CALL Tivion BACKEND
-
-           Existing endpoint preserved:
-
-           POST /api/ai/generate-image
-
-
-           Backend should:
-
-           1. Authenticate user
-
-           2. Read plan from Neon
-
-           3. If FREE:
-
-              Check:
-
-              image_generation_used < 5
-
-           4. Generate image
-
-           5. Upload generated image to Cloudinary
-
-           6. Save creation in Neon
-
-           7. ONLY AFTER SUCCESS:
-
-              increment image_generation_used
-
-           8. Return:
-
-              {
-                success: true,
-
-                content: "...",
-
-                usage: {
-
-                  used: 1,
-
-                  remaining: 4,
-
-                  limit: 5
-
-                }
-
-              }
-        ============================================= */
 
         const {
           data,
@@ -477,20 +245,9 @@ const GenerateImages = () => {
 
         );
 
-
-        /* =============================================
-           SUCCESS
-        ============================================= */
-
         if (
           data.success
         ) {
-
-          /* ===========================================
-             SET GENERATED IMAGE
-
-             Existing behavior preserved.
-          =========================================== */
 
           setContent(
             data.content
@@ -500,50 +257,6 @@ const GenerateImages = () => {
           setDownloaded(
             false
           );
-
-
-          /* ===========================================
-             UPDATE ONLY IMAGE GENERATION USAGE
-
-             FREE example:
-
-             Before:
-
-             image = {
-
-               used: 0,
-
-               remaining: 5,
-
-               limit: 5
-
-             }
-
-
-             Backend success:
-
-             image_generation_used:
-
-             0 → 1
-
-
-             Backend returns:
-
-             usage = {
-
-               used: 1,
-
-               remaining: 4,
-
-               limit: 5
-
-             }
-
-
-             Frontend:
-
-             5/5 → 4/5
-          =========================================== */
 
           if (
             data.usage &&
@@ -559,11 +272,6 @@ const GenerateImages = () => {
             );
 
           }
-
-
-          /* ===========================================
-             SUCCESS TOAST
-          =========================================== */
 
           if (isPro) {
 
@@ -596,10 +304,6 @@ const GenerateImages = () => {
 
         } else {
 
-          /* ===========================================
-             BACKEND RETURNED success:false
-          =========================================== */
-
           toast.error(
 
             data.message ||
@@ -612,10 +316,6 @@ const GenerateImages = () => {
 
       } catch (error) {
 
-        /* =============================================
-           ERROR
-        ============================================= */
-
         console.error(
 
           'Image generation error:',
@@ -624,10 +324,8 @@ const GenerateImages = () => {
 
         );
 
-
         const status =
           error?.response?.status;
-
 
         const message =
 
@@ -637,22 +335,6 @@ const GenerateImages = () => {
           error?.message ||
 
           'Failed to generate image. Please try again.';
-
-
-        /* =============================================
-           QUOTA / ACCESS ERROR
-
-           Example backend response:
-
-           HTTP 403
-
-           {
-             success: false,
-
-             message:
-             "Free image generation limit reached."
-           }
-        ============================================= */
 
         if (
           status === 403
@@ -665,11 +347,6 @@ const GenerateImages = () => {
           return;
 
         }
-
-
-        /* =============================================
-           GENERAL ERROR
-        ============================================= */
 
         toast.error(
           message
@@ -684,18 +361,6 @@ const GenerateImages = () => {
       }
 
     };
-
-
-  /* =================================================
-     DOWNLOAD GENERATED IMAGE
-
-     Existing functionality preserved.
-
-     IMPORTANT:
-
-     Downloading an already-generated image
-     does NOT consume another image credit.
-  ================================================= */
 
   const downloadImage =
     async () => {
@@ -726,7 +391,6 @@ const GenerateImages = () => {
           );
 
         }
-
 
         const blob =
           await response.blob();
@@ -810,11 +474,6 @@ const GenerateImages = () => {
 
     };
 
-
-  /* =================================================
-     UI
-  ================================================= */
-
   return (
 
     <div
@@ -835,32 +494,12 @@ const GenerateImages = () => {
         "
       >
 
-        {/* =============================================
-            HEADER
-        ============================================= */}
-
         <div
           className="
             text-center
             mb-6
           "
         >
-
-          {/* ===========================================
-              PLAN + IMAGE GENERATION BADGE
-
-              FREE:
-
-              FREE · 5/5 LEFT
-
-
-              PRO:
-
-              Tivion PRO · UNLIMITED
-
-
-              Clerk Protect is completely removed.
-          =========================================== */}
 
           {isPro ? (
 
@@ -947,8 +586,7 @@ const GenerateImages = () => {
                   }
                 `}
               />
-
-
+              
               <span
                 className={`
                   font-medium
