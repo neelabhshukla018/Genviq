@@ -35,25 +35,23 @@ const Community = () => {
   };
 
   const imageLikeToggle = async (creationId) => {
-    // Find the creation to get current state
     const creation = creations.find(c => c.id === creationId);
     if (!creation) return;
 
     const wasLiked = creation.likes.includes(currentUser?.id);
     const currentLikeCount = creation.likes.length;
 
-    // Optimistic update - update local state immediately
     setCreations(prevCreations => 
       prevCreations.map(creation => {
         if (creation.id === creationId) {
           if (wasLiked) {
-            // Remove like
+         
             return {
               ...creation,
               likes: creation.likes.filter(id => id !== currentUser?.id)
             };
           } else {
-            // Add like
+          
             return {
               ...creation,
               likes: [...creation.likes, currentUser?.id]
@@ -64,7 +62,6 @@ const Community = () => {
       })
     );
 
-    // Also update selected creation if it's the one being liked
     if (selectedCreation && selectedCreation.id === creationId) {
       setSelectedCreation(prev => {
         if (!prev) return prev;
@@ -88,15 +85,15 @@ const Community = () => {
           Authorization: `Bearer ${await getToken()}`,
         },
       });
-      // No need to refetch - we've already updated locally
+     
     } catch (error) {
-      // Revert optimistic update on error
+    
       setCreations(prevCreations => 
         prevCreations.map(creation => {
           if (creation.id === creationId) {
             return {
               ...creation,
-              likes: creation.likes // revert to original
+              likes: creation.likes 
             };
           }
           return creation;
@@ -108,7 +105,7 @@ const Community = () => {
           if (!prev) return prev;
           return {
             ...prev,
-            likes: creation.likes // revert to original
+            likes: creation.likes 
           };
         });
       }
@@ -189,7 +186,7 @@ const Community = () => {
     return date.toLocaleDateString();
   };
 
-  // Keyboard navigation
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!selectedCreation) return;
@@ -239,7 +236,7 @@ const Community = () => {
     <>
       <div className="h-full overflow-y-scroll p-6 bg-gradient-to-br from-gray-900 to-black">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
+         
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-500/20 bg-yellow-500/10 text-xs mb-3">
               <Users className="w-3 h-3 text-yellow-400 fill-yellow-400" />
@@ -253,7 +250,6 @@ const Community = () => {
             </p>
           </div>
 
-          {/* Creations Grid */}
           <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-yellow-500/20 p-4">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
@@ -289,7 +285,7 @@ const Community = () => {
                       className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                     
-                    {/* Overlay */}
+                   
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="absolute bottom-0 left-0 right-0 p-3">
                         <p className="text-xs text-white mb-2 line-clamp-2">
@@ -322,7 +318,7 @@ const Community = () => {
                       </div>
                     </div>
 
-                    {/* Always visible info */}
+                 
                     <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded-full p-1">
                       <div className="flex items-center gap-1 px-2 py-1">
                         <Heart
@@ -336,7 +332,7 @@ const Community = () => {
                       </div>
                     </div>
 
-                    {/* Creator badge */}
+                 
                     <div className="absolute top-2 left-2 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1">
                       <div className="flex items-center gap-1">
                         <User className="w-3 h-3 text-yellow-400" />
@@ -351,7 +347,7 @@ const Community = () => {
             )}
           </div>
 
-          {/* Info Card */}
+      
           <div className="mt-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl border border-yellow-500/20 p-4">
             <div className="flex items-center gap-3">
               <Crown className="w-5 h-5 text-yellow-400" />
@@ -366,7 +362,7 @@ const Community = () => {
         </div>
       </div>
 
-      {/* Full Screen Modal */}
+    
       {selectedCreation && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center">
@@ -378,7 +374,7 @@ const Community = () => {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Navigation Buttons */}
+         
             {creations.length > 1 && (
               <>
                 <button
@@ -396,7 +392,7 @@ const Community = () => {
               </>
             )}
 
-            {/* Image Container */}
+          
             <div className="relative w-full h-full flex items-center justify-center">
               <img
                 src={selectedCreation.content}
@@ -404,10 +400,10 @@ const Community = () => {
                 className="max-w-full max-h-full object-contain rounded-lg"
               />
               
-              {/* Image Info Overlay */}
+           
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-lg">
                 <div className="max-w-4xl mx-auto">
-                  {/* Creator Info */}
+                
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center">
                       <User className="w-4 h-4 text-black" />
