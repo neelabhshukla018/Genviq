@@ -76,7 +76,6 @@ const App = () => {
         <Route path="/feedback" element={<Feedback />} />
       </Routes>
 
-      {/* Add Vercel Analytics*/}
       <Analytics />
       <HelpButton />
     </div>
