@@ -37,12 +37,6 @@ import {
 axios.defaults.baseURL =
   import.meta.env.VITE_BASE_URL;
 
-/* =====================================================
-   AI TOOL USAGE CONFIG
-
-   Context keys must match UsageContext.jsx exactly.
-===================================================== */
-
 const usageTools = [
   {
     key: "article",
@@ -89,10 +83,6 @@ const usageTools = [
 
 const Dashboard = () => {
 
-  /* =================================================
-     STATE
-  ================================================= */
-
   const [
     creations,
     setCreations,
@@ -103,14 +93,6 @@ const Dashboard = () => {
     setLoadingCreations,
   ] = useState(false);
 
-  /* =================================================
-     CLERK
-
-     Authentication + user identity ONLY.
-
-     Clerk Billing is no longer used.
-  ================================================= */
-
   const {
     getToken,
   } = useAuth();
@@ -119,36 +101,14 @@ const Dashboard = () => {
     user,
   } = useUser();
 
-  /* =================================================
-     NEON PLAN + USAGE
-
-     Source:
-
-     Neon
-       ↓
-     GET /api/user/usage
-       ↓
-     UsageContext
-       ↓
-     Dashboard
-  ================================================= */
-
   const {
     isPro,
     usage,
     loading: usageLoading,
   } = useUsage();
 
-  /* =================================================
-     ROUTER
-  ================================================= */
-
   const navigate =
     useNavigate();
-
-  /* =================================================
-     GET DASHBOARD CREATIONS
-  ================================================= */
 
   const getDashboardData =
     async () => {
@@ -212,10 +172,6 @@ const Dashboard = () => {
       }
     };
 
-  /* =================================================
-     FEEDBACK
-  ================================================= */
-
   const handleFeedbackClick =
     () => {
 
@@ -225,21 +181,11 @@ const Dashboard = () => {
 
     };
 
-  /* =================================================
-     LOAD DASHBOARD
-  ================================================= */
-
   useEffect(() => {
 
     getDashboardData();
 
   }, []);
-
-  /* =================================================
-     TOTAL FREE CREDITS
-
-     6 tools × 5 = 30 total initial credits.
-  ================================================= */
 
   const totalLimit =
     usageTools.reduce(
@@ -281,10 +227,6 @@ const Dashboard = () => {
       0
     );
 
-  /* =================================================
-     UI
-  ================================================= */
-
   return (
 
     <div
@@ -298,10 +240,6 @@ const Dashboard = () => {
         to-black
       "
     >
-
-      {/* =================================================
-          HEADER
-      ================================================= */}
 
       <div
         className="
@@ -350,8 +288,6 @@ const Dashboard = () => {
 
         </div>
 
-        {/* FEEDBACK */}
-
         <button
           onClick={
             handleFeedbackClick
@@ -391,10 +327,6 @@ const Dashboard = () => {
 
       </div>
 
-      {/* =================================================
-          TOP STATS
-      ================================================= */}
-
       <div
         className="
           grid
@@ -405,10 +337,6 @@ const Dashboard = () => {
           mb-6
         "
       >
-
-        {/* =================================================
-            TOTAL CREATIONS
-        ================================================= */}
 
         <div
           className="
@@ -482,12 +410,6 @@ const Dashboard = () => {
           </div>
 
         </div>
-
-        {/* =================================================
-            ACTIVE PLAN
-
-            NOW FROM NEON — NOT CLERK BILLING
-        ================================================= */}
 
         <div
           className="
@@ -606,10 +528,6 @@ const Dashboard = () => {
 
         </div>
 
-        {/* =================================================
-            AVAILABLE AI CREDITS
-        ================================================= */}
-
         <div
           className="
             flex
@@ -685,10 +603,6 @@ const Dashboard = () => {
         </div>
 
       </div>
-
-      {/* =================================================
-          FREE USAGE / TOOL CREDITS
-      ================================================= */}
 
       <div
         className="
@@ -793,10 +707,6 @@ const Dashboard = () => {
             )}
 
         </div>
-
-        {/* =================================================
-            SIX INDEPENDENT TOOL COUNTERS
-        ================================================= */}
 
         <div
           className="
@@ -1017,8 +927,6 @@ const Dashboard = () => {
 
                   </div>
 
-                  {/* USAGE BAR */}
-
                   {!isPro && (
 
                     <div
@@ -1066,10 +974,6 @@ const Dashboard = () => {
 
       </div>
 
-      {/* =================================================
-          RECENT CREATIONS
-      ================================================= */}
-
       {!loadingCreations ? (
 
         <div
@@ -1111,8 +1015,6 @@ const Dashboard = () => {
 
             </p>
 
-            {/* MOBILE FEEDBACK */}
-
             <button
               onClick={
                 handleFeedbackClick
@@ -1151,10 +1053,6 @@ const Dashboard = () => {
 
           </div>
 
-          {/* =================================================
-              CREATIONS LIST
-          ================================================= */}
-
           {creations.length > 0 ? (
 
             creations.map(
@@ -1169,10 +1067,6 @@ const Dashboard = () => {
             )
 
           ) : (
-
-            /* =================================================
-               EMPTY STATE
-            ================================================= */
 
             <div
               className="
@@ -1259,10 +1153,6 @@ const Dashboard = () => {
         </div>
 
       ) : (
-
-        /* =================================================
-           LOADING
-        ================================================= */
 
         <div
           className="
