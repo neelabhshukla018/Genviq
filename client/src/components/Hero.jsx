@@ -122,6 +122,7 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
+            
             <motion.h2
               className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-4 lg:mb-6"
               initial={{ y: 20, opacity: 0 }}
