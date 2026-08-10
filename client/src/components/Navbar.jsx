@@ -18,7 +18,7 @@ const Navbar = () => {
   const [hoveredDropdown, setHoveredDropdown] = useState(null);
   const [dropdownTimeout, setDropdownTimeout] = useState(null);
 
-  // Handle scroll and resize events
+
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
@@ -43,7 +43,7 @@ const Navbar = () => {
     };
   }, [lastScrollY]);
 
-  // Clear timeout on unmount
+
   useEffect(() => {
     return () => {
       if (dropdownTimeout) {
@@ -52,12 +52,12 @@ const Navbar = () => {
     };
   }, [dropdownTimeout]);
 
-  // Handle GitHub navigation
+
   const handleGitHubClick = () => {
     window.open('https://github.com/neelabhshukla018', '_blank', 'noopener,noreferrer');
   };
 
-  // Navigation items for right side
+
   const rightNavItems = [
     { 
       label: 'Star us', 
@@ -69,7 +69,7 @@ const Navbar = () => {
     { label: 'Contact us', path: '/contact', external: false },
   ];
 
-  // Dropdown items for left side
+
   const dropdownItems = {
     product: [
       { label: 'Features', path: '/product/feature' },
@@ -96,7 +96,7 @@ const Navbar = () => {
     ]
   };
 
-  // Handle navigation click
+
   const handleNavClick = (item) => {
     if (item.external) {
       handleGitHubClick();
@@ -108,7 +108,7 @@ const Navbar = () => {
     }
   };
 
-  // Handle dropdown item click
+
   const handleDropdownItemClick = (item) => {
     if (item.external) {
       window.open(item.path, '_blank', 'noopener,noreferrer');
@@ -120,7 +120,7 @@ const Navbar = () => {
     }
   };
 
-  // Handle dropdown hover with proper timing
+
   const handleDropdownEnter = (key) => {
     if (dropdownTimeout) {
       clearTimeout(dropdownTimeout);
@@ -153,9 +153,9 @@ const Navbar = () => {
         } transition-all duration-300`}
       >
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-          {/* Left Section - Logo & Dropdowns */}
+
           <div className="flex items-center space-x-8">
-            {/* Logo with Name */}
+
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -170,7 +170,7 @@ const Navbar = () => {
               </div>
             </motion.div>
 
-            {/* Desktop Dropdowns */}
+
             {!isMobile && (
               <div className="flex items-center space-x-6">
                 {Object.entries(dropdownItems).map(([key, items]) => (
@@ -190,7 +190,7 @@ const Navbar = () => {
                       }`} />
                     </motion.button>
                     
-                    {/* Dropdown Menu */}
+                
                     <div 
                       className={`absolute top-full left-0 mt-2 w-48 backdrop-blur-2xl bg-black/40 border border-white/20 rounded-lg shadow-2xl p-2 z-50 ${
                         hoveredDropdown === key ? 'block' : 'hidden'
@@ -214,9 +214,9 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Right Section - Navigation & Auth */}
+         
           <div className="flex items-center space-x-6">
-            {/* Desktop Navigation */}
+         
             {!isMobile && (
               <>
                 {rightNavItems.map((item) => (
@@ -260,7 +260,7 @@ const Navbar = () => {
               </>
             )}
 
-            {/* Mobile Menu Button */}
+         
             {isMobile && (
               <motion.button
                 whileHover={{ scale: 1.1 }}
@@ -275,7 +275,7 @@ const Navbar = () => {
         </div>
       </motion.div>
 
-      {/* Mobile Menu */}
+     
       <AnimatePresence>
         {isMobile && mobileMenuOpen && (
           <motion.div
@@ -286,7 +286,7 @@ const Navbar = () => {
             className="fixed top-0 left-0 w-full z-40 backdrop-blur-2xl bg-black/60 border-b border-white/10 pt-16"
           >
             <div className="p-6 space-y-4">
-              {/* Right Side Items */}
+             
               <div className="space-y-3">
                 {rightNavItems.map((item) => (
                   <button
@@ -306,7 +306,7 @@ const Navbar = () => {
                 ))}
               </div>
 
-              {/* Left Side Dropdowns */}
+            
               <div className="pt-4 border-t border-white/10 space-y-3">
                 {Object.entries(dropdownItems).map(([key, items]) => (
                   <div key={key}>
@@ -337,7 +337,7 @@ const Navbar = () => {
                 ))}
               </div>
               
-              {/* Auth Section */}
+           
               <div className="pt-4 border-t border-white/10">
                 {user ? (
                   <div className="flex justify-center p-3 cursor-pointer">
