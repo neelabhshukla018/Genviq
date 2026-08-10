@@ -6,7 +6,7 @@ const HelpButton = () => {
 
   const handleClick = () => {
     if (location.pathname === "/feedback") {
-      navigate(-1); // Go back to previous page
+      navigate(-1); 
     } else {
       navigate("/feedback");
     }
