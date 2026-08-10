@@ -27,10 +27,6 @@ import {
   useUsage,
 } from '../context/UsageContext.jsx';
 
-/* =====================================================
-   SIDEBAR NAVIGATION
-===================================================== */
-
 const navItems = [
   {
     to: '/ai',
@@ -81,26 +77,11 @@ const navItems = [
   },
 ];
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
 const Sidebar = ({
   sidebar,
   setSidebar,
 }) => {
 
-  /* =================================================
-     CLERK
-
-     Clerk is ONLY used for:
-
-     - User identity
-     - Profile
-     - Sign out
-
-     NO Clerk Billing.
-  ================================================= */
 
   const {
     user,
@@ -111,18 +92,7 @@ const Sidebar = ({
     openUserProfile,
   } = useClerk();
 
-  /* =================================================
-     Tivion PLAN + USAGE
-
-     Comes from:
-
-     Neon
-       ↓
-     GET /api/user/usage
-       ↓
-     UsageContext
-  ================================================= */
-
+ 
   const {
     plan,
     isPro,
@@ -130,25 +100,7 @@ const Sidebar = ({
     loading,
   } = useUsage();
 
-  /* =================================================
-     CALCULATE TOTAL FREE USAGE
-
-     There are 6 tools.
-
-     Each tool has 5 free uses.
-
-     Total:
-     6 × 5 = 30
-
-     Example:
-
-     Brand-new user:
-     30 / 30 remaining
-
-     After using one Blog Title:
-     29 / 30 remaining
-  ================================================= */
-
+ 
   const usageItems = [
     usage?.article,
     usage?.blogTitle,
@@ -192,10 +144,6 @@ const Sidebar = ({
         )
       : 0;
 
-  /* =================================================
-     LOGOUT
-  ================================================= */
-
   const handleSignOut =
     async () => {
       await signOut();
@@ -230,10 +178,6 @@ const Sidebar = ({
         shadow-purple-500/10
       `}
     >
-
-      {/* =================================================
-          USER HEADER
-      ================================================= */}
 
       <div
         className="
@@ -277,8 +221,6 @@ const Sidebar = ({
               "
             >
 
-              {/* USER AVATAR */}
-
               <div
                 className="
                   relative
@@ -321,8 +263,6 @@ const Sidebar = ({
 
               </div>
 
-              {/* USER INFO */}
-
               <div
                 className="
                   flex-1
@@ -342,12 +282,6 @@ const Sidebar = ({
                     user.firstName ||
                     'Tivion User'}
                 </p>
-
-                {/* =======================================
-                    PLAN FROM NEON
-
-                    NO <Protect plan="pro_user">
-                ======================================= */}
 
                 {loading ? (
 
@@ -421,10 +355,6 @@ const Sidebar = ({
         )}
 
       </div>
-
-      {/* =================================================
-          NAVIGATION
-      ================================================= */}
 
       <div
         className="
@@ -506,8 +436,6 @@ const Sidebar = ({
 
                   <>
 
-                    {/* ICON */}
-
                     <div
                       className={`
                         w-8
@@ -560,8 +488,6 @@ const Sidebar = ({
 
                     </div>
 
-                    {/* LABEL */}
-
                     <span
                       className={`
                         font-medium
@@ -583,8 +509,6 @@ const Sidebar = ({
                     >
                       {label}
                     </span>
-
-                    {/* ACTIVE DOT */}
 
                     {isActive && (
 
@@ -616,10 +540,6 @@ const Sidebar = ({
 
       </div>
 
-      {/* =================================================
-          FOOTER
-      ================================================= */}
-
       <div
         className="
           p-4
@@ -640,10 +560,6 @@ const Sidebar = ({
             border-gray-700/30
           "
         >
-
-          {/* =============================================
-              STATUS + LOGOUT
-          ============================================= */}
 
           <div
             className="
@@ -733,8 +649,6 @@ const Sidebar = ({
 
             </div>
 
-            {/* LOGOUT */}
-
             <button
               onClick={
                 handleSignOut
@@ -769,10 +683,6 @@ const Sidebar = ({
             </button>
 
           </div>
-
-          {/* =============================================
-              USAGE / AI POWER
-          ============================================= */}
 
           <div
             className="
@@ -843,19 +753,6 @@ const Sidebar = ({
 
             </div>
 
-            {/* =============================================
-                USAGE BAR
-
-                FREE:
-                Based on total remaining credits.
-
-                New account:
-                30/30 = 100%
-
-                PRO:
-                Always full.
-            ============================================= */}
-
             <div
               className="
                 w-full
@@ -900,8 +797,6 @@ const Sidebar = ({
               />
 
             </div>
-
-            {/* FREE PLAN INFO */}
 
             {!loading &&
               !isPro && (
