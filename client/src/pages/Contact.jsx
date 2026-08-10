@@ -123,13 +123,13 @@ const Contact = () => {
   <div className="min-h-screen bg-black text-white relative overflow-hidden">
     <Navbar />
 
-    {/* Background Glow */}
+   
     <div className="absolute inset-0 pointer-events-none">
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-600/10 rounded-full blur-[100px]" />
     </div>
 
-    {/* Background Video */}
+  
     <div className="fixed bottom-0 left-0 w-full h-1/2 z-0">
       <video
         autoPlay
@@ -143,8 +143,6 @@ const Contact = () => {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent backdrop-blur-[2px]" />
     </div>
-
-    {/* Success / Error Popup */}
 
     <AnimatePresence>
       {showPopup && (
@@ -220,7 +218,6 @@ const Contact = () => {
       )}
     </AnimatePresence>
 
-    {/* Hero Section */}
 
     <section className="relative pt-32 pb-20 px-4 sm:px-20 xl:px-32 z-10">
 
@@ -251,8 +248,7 @@ const Contact = () => {
 
       </motion.div>
 
-      {/* Contact Cards */}
-
+  
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-20">
 
         {contactInfo.map((item, index) => (
@@ -297,7 +293,7 @@ const Contact = () => {
 
     <div className="grid lg:grid-cols-2 gap-12 items-start">
 
-      {/* Contact Form */}
+     
 
       <motion.div
         initial={{ opacity: 0, scale: .96 }}
@@ -394,8 +390,6 @@ const Contact = () => {
 
       </motion.div>
 
-      {/* Right Side */}
-
       <motion.div
         initial={{ opacity:0,y:50 }}
         whileInView={{ opacity:1,y:0 }}
@@ -412,8 +406,6 @@ const Contact = () => {
           your AI generations, subscriptions or features,
           our team is always ready to help.
         </p>
-
-        {/* Quick Help */}
 
         <div className="rounded-2xl bg-gray-900/60 border border-white/10 backdrop-blur-md p-6">
 
