@@ -2492,11 +2492,6 @@ const RemoveBackground = () => {
 
           </div>
 
-
-          {/* ===========================================
-              BACKGROUND REMOVAL USAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -2597,11 +2592,6 @@ const RemoveBackground = () => {
             </div>
 
           </div>
-
-
-          {/* ===========================================
-              PROCESSING STATUS
-          =========================================== */}
 
           <div
             className="
@@ -2725,10 +2715,6 @@ const RemoveBackground = () => {
         </div>
 
 
-        {/* =============================================
-            FREE PLAN INFORMATION
-        ============================================= */}
-
         {!isPro && (
 
           <div
@@ -2827,10 +2813,6 @@ const RemoveBackground = () => {
               </div>
 
 
-              {/* =======================================
-                  REMAINING CREDITS
-              ======================================= */}
-
               <div
                 className="
                   shrink-0
@@ -2883,18 +2865,6 @@ const RemoveBackground = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    PROGRESS BAR
-
-                    5/5 = 100%
-                    4/5 = 80%
-                    3/5 = 60%
-                    2/5 = 40%
-                    1/5 = 20%
-                    0/5 = 0%
-                ===================================== */}
-
                 <div
                   className="
                     w-full
@@ -2943,11 +2913,6 @@ const RemoveBackground = () => {
           </div>
 
         )}
-
-
-        {/* =============================================
-            FREE LIMIT EXHAUSTED
-        ============================================= */}
 
         {!isPro &&
           backgroundRemaining <= 0 && (
@@ -3033,18 +2998,6 @@ const RemoveBackground = () => {
 
           )}
 
-
-        {/* =============================================
-            PRO PLAN INFORMATION
-
-            IMPORTANT:
-
-            Plan comes from Neon:
-
-            users.plan = "pro"
-
-            NOT Clerk Billing.
-        ============================================= */}
 
         {isPro && (
 
@@ -3134,169 +3087,6 @@ const RemoveBackground = () => {
 
         )}
 
-
-        {/* =============================================
-            BACKGROUND REMOVAL QUOTA FLOW
-
-            NEW FREE USER
-
-            Neon:
-
-            background_removal_used = 0
-
-                    ↓
-
-            UsageContext:
-
-            backgroundRemoval: {
-              used: 0,
-              remaining: 5,
-              limit: 5
-            }
-
-                    ↓
-
-            UI:
-
-            FREE · 5/5 LEFT
-
-
-            =============================================
-
-            SUCCESSFUL BACKGROUND REMOVAL
-
-            POST /api/ai/remove-image-background
-
-                    ↓
-
-            Authenticate with Clerk
-
-                    ↓
-
-            Read plan + usage from Neon
-
-                    ↓
-
-            FREE USER:
-
-            Check:
-
-            background_removal_used < 5
-
-                    ↓
-
-            Remove background successfully
-
-                    ↓
-
-            Upload/save result successfully
-
-                    ↓
-
-            Increment exactly once:
-
-            background_removal_used
-
-            0 → 1
-
-                    ↓
-
-            Backend returns:
-
-            usage: {
-              used: 1,
-              remaining: 4,
-              limit: 5
-            }
-
-                    ↓
-
-            Frontend:
-
-            updateFeatureUsage(
-              "backgroundRemoval",
-              data.usage
-            )
-
-                    ↓
-
-            UI:
-
-            5/5 → 4/5
-
-
-            =============================================
-
-            FINAL FLOW:
-
-            5/5
-             ↓ success
-            4/5
-             ↓ success
-            3/5
-             ↓ success
-            2/5
-             ↓ success
-            1/5
-             ↓ success
-            0/5
-
-                    ↓
-
-            Free Limit Reached
-
-                    ↓
-
-            Remove Background disabled
-
-
-            =============================================
-
-            CREDIT RULES:
-
-            Select image
-            ❌ no credit
-
-            Preview image
-            ❌ no credit
-
-            Failed AI/API processing
-            ❌ no credit
-
-            Failed upload
-            ❌ no credit
-
-            Successful background removal
-            ✅ exactly 1 credit
-
-            Download existing result
-            ❌ no extra credit
-
-
-            =============================================
-
-            PRO USER:
-
-            Neon:
-
-            users.plan = "pro"
-
-                    ↓
-
-            UsageContext:
-
-            isPro = true
-
-                    ↓
-
-            Quota check bypassed
-
-                    ↓
-
-            Tivion PRO · UNLIMITED
-
-        ============================================= */}
-
       </div>
 
     </div>
@@ -3305,9 +3095,5 @@ const RemoveBackground = () => {
 
 };
 
-
-/* =====================================================
-   EXPORT
-===================================================== */
 
 export default RemoveBackground;
