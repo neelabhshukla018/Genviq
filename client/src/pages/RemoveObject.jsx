@@ -1349,29 +1349,6 @@ const RemoveObject = () => {
 
               )}
 
-
-            {/* =========================================
-                REMOVE OBJECT BUTTON
-
-                FREE:
-
-                Remove Object (5/5)
-
-                successful request
-                     ↓
-                Remove Object (4/5)
-
-                ...
-
-                0/5
-                     ↓
-                Free Limit Reached
-
-                PRO:
-
-                Remove Object
-            ========================================= */}
-
             <button
 
               type="button"
@@ -1427,10 +1404,6 @@ const RemoveObject = () => {
               "
             >
 
-              {/* =======================================
-                  LOADING
-              ======================================= */}
-
               {loading ? (
 
                 <>
@@ -1449,9 +1422,6 @@ const RemoveObject = () => {
 
               ) : (
 
-                /* =====================================
-                   FREE LIMIT EXHAUSTED
-                ===================================== */
 
                 !isPro &&
                 objectRemaining <= 0
@@ -1473,10 +1443,6 @@ const RemoveObject = () => {
 
               ) : (
 
-                /* =====================================
-                   NORMAL BUTTON
-                ===================================== */
-
                 <>
 
                   <Scissors
@@ -1487,11 +1453,6 @@ const RemoveObject = () => {
                   />
 
                   Remove Object
-
-
-                  {/* ===================================
-                      FREE COUNTER
-                  =================================== */}
 
                   {!isPro && (
 
@@ -1510,10 +1471,6 @@ const RemoveObject = () => {
                   )}
 
 
-                  {/* ===================================
-                      PRO INDICATOR
-                  =================================== */}
-
                   {isPro && (
 
                     <Crown
@@ -1531,23 +1488,6 @@ const RemoveObject = () => {
               )}
 
             </button>
-
-
-            {/* =========================================
-                CREDIT EXPLANATION
-
-                Selecting image:
-                NO CREDIT
-
-                Typing object:
-                NO CREDIT
-
-                Failed operation:
-                NO CREDIT
-
-                Successful object removal:
-                1 CREDIT
-            ========================================= */}
 
             {!isPro &&
               objectRemaining > 0 && (
@@ -1569,12 +1509,6 @@ const RemoveObject = () => {
 
           </div>
 
-
-          {/* ===========================================
-              RIGHT PANEL
-              PROCESSED IMAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -1586,10 +1520,6 @@ const RemoveObject = () => {
               p-4
             "
           >
-
-            {/* =========================================
-                RESULT HEADER
-            ========================================= */}
 
             <div
               className="
@@ -1664,14 +1594,6 @@ const RemoveObject = () => {
                 </div>
 
               </div>
-
-
-              {/* =======================================
-                  DOWNLOAD BUTTON
-
-                  Existing download functionality
-                  preserved.
-              ======================================= */}
 
               {content && (
 
