@@ -636,13 +636,6 @@ const ReviewResume = () => {
 
         </div>
 
-
-        {/* =============================================
-            MAIN GRID START
-
-            PART 2 CONTINUES DIRECTLY FROM HERE
-        ============================================= */}
-
         <div
           className="
             grid
@@ -650,19 +643,13 @@ const ReviewResume = () => {
             xl:grid-cols-2
             gap-4
           "
-        >          {/* ===========================================
-              LEFT PANEL
-          =========================================== */}
+        >          
 
           <div
             className="
               space-y-4
             "
           >
-
-            {/* =========================================
-                UPLOAD RESUME CARD
-            ========================================= */}
 
             <div
               className="
@@ -675,10 +662,6 @@ const ReviewResume = () => {
                 p-4
               "
             >
-
-              {/* =======================================
-                  UPLOAD HEADER
-              ======================================= */}
 
               <div
                 className="
@@ -744,11 +727,6 @@ const ReviewResume = () => {
 
               </div>
 
-
-              {/* =======================================
-                  FILE INPUT
-              ======================================= */}
-
               <input
 
                 onChange={
@@ -788,16 +766,6 @@ const ReviewResume = () => {
                 required
 
               />
-
-
-              {/* =======================================
-                  PDF PREVIEW
-
-                  Same preview concept:
-                  - Filename
-                  - File size
-                  - View Original PDF
-              ======================================= */}
 
               {resumePreview && (
 
@@ -912,11 +880,6 @@ const ReviewResume = () => {
 
                     </div>
 
-
-                    {/* =================================
-                        VIEW ORIGINAL PDF
-                    ================================= */}
-
                     <a
 
                       href={
@@ -967,11 +930,6 @@ const ReviewResume = () => {
 
               )}
 
-
-              {/* =======================================
-                  FILE FORMAT INFO
-              ======================================= */}
-
               <div
                 className="
                   flex
@@ -993,12 +951,7 @@ const ReviewResume = () => {
 
                 </p>
 
-
-                {/* =====================================
-                    CREDIT INFO
-                ===================================== */}
-
-                {isPro ? (
+               {isPro ? (
 
                   <span
                     className="
