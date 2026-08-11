@@ -294,10 +294,6 @@ Requirements:
           }
 
 
-          /* ===========================================
-             SUCCESS MESSAGE
-          =========================================== */
-
           if (isPro) {
 
             toast.success(
@@ -305,13 +301,6 @@ Requirements:
             );
 
           } else {
-
-            /*
-              Calculate the expected new remaining
-              value for the toast.
-
-              Prefer backend value whenever available.
-            */
 
             const newRemaining =
               data?.usage?.remaining ??
@@ -329,9 +318,6 @@ Requirements:
 
         } else {
 
-          /* ===========================================
-             BACKEND RETURNED success:false
-          =========================================== */
 
           toast.error(
 
@@ -345,9 +331,6 @@ Requirements:
 
       } catch (error) {
 
-        /* =============================================
-           ERROR LOG
-        ============================================= */
 
         console.error(
 
@@ -357,10 +340,6 @@ Requirements:
 
         );
 
-
-        /* =============================================
-           EXTRACT BACKEND ERROR
-        ============================================= */
 
         const status =
           error?.response?.status;
@@ -376,15 +355,6 @@ Requirements:
           'Failed to generate article.';
 
 
-        /* =============================================
-           QUOTA EXHAUSTED
-
-           Backend should return 403 when free
-           quota is exhausted.
-
-           We show the backend message directly.
-        ============================================= */
-
         if (
           status === 403
         ) {
@@ -397,20 +367,12 @@ Requirements:
 
         }
 
-
-        /* =============================================
-           GENERAL ERROR
-        ============================================= */
-
         toast.error(
           message
         );
 
       } finally {
 
-        /* =============================================
-           STOP LOADING
-        ============================================= */
 
         setLoading(false);
 
@@ -418,10 +380,6 @@ Requirements:
 
     };
 
-
-  /* =================================================
-     COPY ARTICLE
-  ================================================= */
 
   const copyToClipboard =
     async () => {
@@ -479,10 +437,6 @@ Requirements:
     };
 
 
-  /* =================================================
-     UI
-  ================================================= */
-
   return (
 
     <div
@@ -504,10 +458,6 @@ Requirements:
         "
       >
 
-        {/* =============================================
-            HEADER
-        ============================================= */}
-
         <div
           className="
             text-center
@@ -515,18 +465,6 @@ Requirements:
           "
         >
 
-          {/* ===========================================
-              NEON PLAN + ARTICLE USAGE BADGE
-
-              NO CLERK BILLING
-              NO <Protect plan="pro_user">
-
-              FREE:
-              FREE · 5/5 LEFT
-
-              PRO:
-              Tivion PRO · UNLIMITED
-          =========================================== */}
 
           {isPro ? (
 
@@ -638,10 +576,6 @@ Requirements:
           )}
 
 
-          {/* ===========================================
-              TITLE
-          =========================================== */}
-
           <h1
             className="
               text-2xl
@@ -671,10 +605,6 @@ Requirements:
 
           </p>
 
-
-          {/* ===========================================
-              FREE USAGE INDICATOR
-          =========================================== */}
 
           {!isPro && (
 
@@ -776,10 +706,6 @@ Requirements:
         </div>
 
 
-        {/* =============================================
-            MAIN GRID START
-        ============================================= */}
-
         <div
           className="
             grid
@@ -789,19 +715,11 @@ Requirements:
           "
         >
 
-                    {/* ===========================================
-              LEFT PANEL
-          =========================================== */}
-
           <div
             className="
               space-y-4
             "
           >
-
-            {/* =========================================
-                ARTICLE TOPIC
-            ========================================= */}
 
             <div
               className="
@@ -815,8 +733,7 @@ Requirements:
               "
             >
 
-              {/* TOPIC HEADER */}
-
+             
               <div
                 className="
                   flex
@@ -882,10 +799,6 @@ Requirements:
               </div>
 
 
-              {/* =========================================
-                  TOPIC INPUT
-              ========================================= */}
-
               <input
 
                 onChange={(e) =>
@@ -920,17 +833,6 @@ Requirements:
                 required
 
               />
-
-
-              {/* =========================================
-                  SMALL CREDIT INFO
-
-                  FREE:
-                  Shows remaining article credits.
-
-                  PRO:
-                  Shows unlimited.
-              ========================================= */}
 
               <div
                 className="
@@ -1004,10 +906,6 @@ Requirements:
             </div>
 
 
-            {/* =========================================
-                ARTICLE LENGTH
-            ========================================= */}
-
             <div
               className="
                 bg-gradient-to-br
@@ -1019,8 +917,6 @@ Requirements:
                 p-4
               "
             >
-
-              {/* LENGTH HEADER */}
 
               <div
                 className="
@@ -1086,10 +982,6 @@ Requirements:
 
               </div>
 
-
-              {/* =========================================
-                  LENGTH OPTIONS
-              ========================================= */}
 
               <div
                 className="
@@ -1187,8 +1079,6 @@ Requirements:
                           />
 
 
-                          {/* LENGTH INFO */}
-
                           <div>
 
                             <h3
@@ -1227,8 +1117,6 @@ Requirements:
 
                         </div>
 
-
-                        {/* SELECTED LABEL */}
 
                         {selectedLength.text ===
                           item.text && (
@@ -1273,16 +1161,6 @@ Requirements:
 
             </div>
 
-
-            {/* =========================================
-                FREE LIMIT REACHED WARNING
-
-                Only visible when:
-
-                plan = FREE
-                AND
-                articleRemaining = 0
-            ========================================= */}
 
             {!isPro &&
               articleRemaining <= 0 && (
