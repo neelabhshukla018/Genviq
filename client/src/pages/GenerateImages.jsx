@@ -586,7 +586,7 @@ const GenerateImages = () => {
                   }
                 `}
               />
-              
+
               <span
                 className={`
                   font-medium
@@ -608,13 +608,6 @@ const GenerateImages = () => {
             </div>
 
           )}
-
-
-          {/* ===========================================
-              TITLE
-
-              Existing UI preserved.
-          =========================================== */}
 
           <h1
             className="
@@ -644,11 +637,6 @@ const GenerateImages = () => {
             Create stunning images with AI
 
           </p>
-
-
-          {/* ===========================================
-              FREE IMAGE GENERATION PROGRESS
-          =========================================== */}
 
           {!isPro && (
 
@@ -749,13 +737,6 @@ const GenerateImages = () => {
 
         </div>
 
-
-        {/* =============================================
-            MAIN GRID START
-
-            PART 2 CONTINUES DIRECTLY HERE
-        ============================================= */}
-
         <div
           className="
             grid
@@ -763,19 +744,13 @@ const GenerateImages = () => {
             xl:grid-cols-2
             gap-4
           "
-        >          {/* ===========================================
-              LEFT PANEL
-          =========================================== */}
+        >         
 
           <div
             className="
               space-y-4
             "
           >
-
-            {/* =========================================
-                IMAGE DESCRIPTION INPUT
-            ========================================= */}
 
             <div
               className="
@@ -853,11 +828,6 @@ const GenerateImages = () => {
 
               </div>
 
-
-              {/* =======================================
-                  PROMPT TEXTAREA
-              ======================================= */}
-
               <textarea
 
                 onChange={
@@ -900,11 +870,6 @@ const GenerateImages = () => {
 
               />
 
-
-              {/* =======================================
-                  PROMPT INFO
-              ======================================= */}
-
               <div
                 className="
                   flex
@@ -942,21 +907,6 @@ const GenerateImages = () => {
               </div>
 
             </div>
-
-
-            {/* =========================================
-                STYLE SELECTION
-
-                Existing styles preserved:
-
-                Realistic
-                Ghibli
-                Anime
-                Cartoon
-                Fantasy
-                3D
-                Portrait
-            ========================================= */}
 
             <div
               className="
@@ -1018,7 +968,6 @@ const GenerateImages = () => {
 
                   </h2>
 
-
                   <p
                     className="
                       text-xs
@@ -1033,11 +982,6 @@ const GenerateImages = () => {
                 </div>
 
               </div>
-
-
-              {/* =======================================
-                  STYLE BUTTONS
-              ======================================= */}
 
               <div
                 className="
@@ -1103,11 +1047,6 @@ const GenerateImages = () => {
 
               </div>
 
-
-              {/* =======================================
-                  CURRENT STYLE
-              ======================================= */}
-
               <div
                 className="
                   mt-3
@@ -1148,21 +1087,6 @@ const GenerateImages = () => {
               </div>
 
             </div>
-
-
-            {/* =========================================
-                PUBLIC TOGGLE
-
-                Existing functionality preserved.
-
-                publish = false
-                → Private
-
-                publish = true
-                → Public
-
-                This does NOT affect image credits.
-            ========================================= */}
 
             <div
               className="
@@ -1234,7 +1158,6 @@ const GenerateImages = () => {
                       "
                     />
 
-
                     <span
                       className="
                         absolute
@@ -1282,11 +1205,6 @@ const GenerateImages = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    VISIBILITY STATUS
-                ===================================== */}
-
                 <span
                   className={`
                     text-[10px]
@@ -1323,17 +1241,6 @@ const GenerateImages = () => {
               </div>
 
             </div>
-
-
-            {/* =========================================
-                FREE LIMIT WARNING
-
-                Only shown when:
-
-                FREE USER
-                    +
-                0/5 image credits
-            ========================================= */}
 
             {!isPro &&
               imageRemaining <= 0 && (
@@ -1421,36 +1328,6 @@ const GenerateImages = () => {
 
               )}
 
-
-            {/* =========================================
-                GENERATE IMAGE BUTTON
-
-                FREE:
-
-                Generate Image (5/5)
-
-                      ↓ success
-
-                Generate Image (4/5)
-
-                      ↓
-
-                3/5
-                2/5
-                1/5
-                0/5
-
-
-                AT ZERO:
-
-                Free Limit Reached
-
-
-                PRO:
-
-                Generate Image
-            ========================================= */}
-
             <button
 
               type="button"
@@ -1506,10 +1383,6 @@ const GenerateImages = () => {
 
               {loading ? (
 
-                /* =====================================
-                   LOADING
-                ===================================== */
-
                 <>
 
                   <Loader
@@ -1531,10 +1404,6 @@ const GenerateImages = () => {
 
               ) ? (
 
-                /* =====================================
-                   FREE LIMIT EXHAUSTED
-                ===================================== */
-
                 <>
 
                   <Crown
@@ -1550,10 +1419,6 @@ const GenerateImages = () => {
 
               ) : (
 
-                /* =====================================
-                   NORMAL GENERATE BUTTON
-                ===================================== */
-
                 <>
 
                   <Image
@@ -1564,11 +1429,6 @@ const GenerateImages = () => {
                   />
 
                   Generate Image
-
-
-                  {/* ===================================
-                      FREE COUNTER
-                  =================================== */}
 
                   {!isPro && (
 
@@ -1585,11 +1445,6 @@ const GenerateImages = () => {
                     </span>
 
                   )}
-
-
-                  {/* ===================================
-                      PRO INDICATOR
-                  =================================== */}
 
                   {isPro && (
 
@@ -1608,29 +1463,6 @@ const GenerateImages = () => {
               )}
 
             </button>
-
-
-            {/* =========================================
-                CREDIT RULE
-
-                Typing prompt:
-                NO CREDIT
-
-                Changing style:
-                NO CREDIT
-
-                Changing Public/Private:
-                NO CREDIT
-
-                Failed generation:
-                NO CREDIT
-
-                Successful generation:
-                EXACTLY 1 CREDIT
-
-                Download:
-                NO EXTRA CREDIT
-            ========================================= */}
 
             {!isPro &&
               imageRemaining > 0 && (
@@ -1652,14 +1484,6 @@ const GenerateImages = () => {
 
           </div>
 
-
-          {/* ===========================================
-              RIGHT PANEL
-              GENERATED IMAGE
-
-              Your original right panel starts here.
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -1671,10 +1495,6 @@ const GenerateImages = () => {
               p-4
             "
           >
-
-            {/* =========================================
-                GENERATED IMAGE HEADER
-            ========================================= */}
 
             <div
               className="
@@ -1750,16 +1570,6 @@ const GenerateImages = () => {
 
               </div>
 
-
-              {/* =======================================
-                  DOWNLOAD BUTTON
-
-                  Same functionality as your original.
-
-                  Downloading does NOT consume
-                  another generation credit.
-              ======================================= */}
-
               {content && (
 
                 <button
@@ -1825,30 +1635,7 @@ const GenerateImages = () => {
 
             </div>
 
-
-            {/* =========================================
-                PART 3 CONTINUES DIRECTLY HERE
-
-                DO NOT CLOSE RIGHT PANEL YET.
-
-                NEXT:
-
-                - Creating Your Image loading state
-                - No Image Generated state
-                - Generated image
-                - Style
-                - Public / Private
-                - AI Generated
-                - Updated 5/5 → 4/5 badge
-            ========================================= */}            {/* =========================================
-                RESULT CONTENT
-            ========================================= */}
-
             {loading ? (
-
-              /* =======================================
-                 LOADING STATE
-              ======================================= */
 
               <div
                 className="
@@ -1914,11 +1701,6 @@ const GenerateImages = () => {
 
                 </p>
 
-
-                {/* =====================================
-                    LOADING PROGRESS
-                ===================================== */}
-
                 <div
                   className="
                     w-48
@@ -1943,11 +1725,6 @@ const GenerateImages = () => {
                   />
 
                 </div>
-
-
-                {/* =====================================
-                    GENERATION STEPS
-                ===================================== */}
 
                 <div
                   className="
@@ -2034,17 +1811,6 @@ const GenerateImages = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    CREDIT INFO
-
-                    Credit must NOT decrease while
-                    generation is still processing.
-
-                    It decreases only after backend
-                    success.
-                ===================================== */}
-
                 {!isPro && (
 
                   <p
@@ -2066,10 +1832,6 @@ const GenerateImages = () => {
               </div>
 
             ) : !content ? (
-
-              /* =======================================
-                 EMPTY STATE
-              ======================================= */
 
               <div
                 className="
@@ -2133,11 +1895,6 @@ const GenerateImages = () => {
                   generate your AI image
 
                 </p>
-
-
-                {/* =====================================
-                    CURRENT ACCESS
-                ===================================== */}
 
                 <div
                   className="
@@ -2209,11 +1966,6 @@ const GenerateImages = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    LIMIT REACHED MESSAGE
-                ===================================== */}
-
                 {!isPro &&
                   imageRemaining <= 0 && (
 
@@ -2235,19 +1987,11 @@ const GenerateImages = () => {
 
             ) : (
 
-              /* =======================================
-                 SUCCESS RESULT
-              ======================================= */
-
               <div
                 className="
                   space-y-4
                 "
               >
-
-                {/* =====================================
-                    SUCCESS STATUS
-                ===================================== */}
 
                 <div
                   className="
@@ -2330,19 +2074,6 @@ const GenerateImages = () => {
 
                   </div>
 
-
-                  {/* ===================================
-                      UPDATED IMAGE USAGE
-
-                      Example:
-
-                      Before generation:
-                      5/5
-
-                      After successful generation:
-                      4/5
-                  =================================== */}
-
                   {isPro ? (
 
                     <div
@@ -2410,14 +2141,6 @@ const GenerateImages = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    GENERATED IMAGE
-
-                    Existing main result functionality
-                    preserved.
-                ===================================== */}
-
                 <div
                   className="
                     bg-gray-700/30
@@ -2449,17 +2172,6 @@ const GenerateImages = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    IMAGE INFORMATION
-
-                    Existing information preserved:
-
-                    - Style
-                    - Visibility
-                    - AI Generated
-                ===================================== */}
-
                 <div
                   className="
                     grid
@@ -2468,10 +2180,6 @@ const GenerateImages = () => {
                     gap-2
                   "
                 >
-
-                  {/* ===================================
-                      STYLE
-                  =================================== */}
 
                   <div
                     className="
@@ -2510,11 +2218,6 @@ const GenerateImages = () => {
                     </div>
 
                   </div>
-
-
-                  {/* ===================================
-                      VISIBILITY
-                  =================================== */}
 
                   <div
                     className="
@@ -2561,11 +2264,6 @@ const GenerateImages = () => {
 
                   </div>
 
-
-                  {/* ===================================
-                      GENERATION TYPE
-                  =================================== */}
-
                   <div
                     className="
                       text-center
@@ -2605,11 +2303,6 @@ const GenerateImages = () => {
                   </div>
 
                 </div>
-
-
-                {/* =====================================
-                    PROMPT INFORMATION
-                ===================================== */}
 
                 <div
                   className="
@@ -2669,11 +2362,6 @@ const GenerateImages = () => {
                   </p>
 
                 </div>
-
-
-                {/* =====================================
-                    RESULT READY / USAGE
-                ===================================== */}
 
                 <div
                   className="
@@ -2774,20 +2462,6 @@ const GenerateImages = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    DOWNLOAD INFO
-
-                    IMPORTANT:
-
-                    User already spent the credit when
-                    image generation succeeded.
-
-                    Clicking Download:
-
-                    ❌ must NOT decrement usage again.
-                ===================================== */}
-
                 <p
                   className="
                     text-center
@@ -2809,66 +2483,6 @@ const GenerateImages = () => {
 
         </div>
 
-
-        {/* =============================================
-            MAIN TWO-COLUMN GRID CLOSED
-
-            DO NOT CLOSE:
-
-            max-w-7xl container
-            outer page
-            component
-
-            PART 4 CONTINUES DIRECTLY HERE.
-
-            PART 4 WILL CONTAIN:
-
-            1. Current Plan card
-
-               Free Plan
-                  OR
-               Tivion Pro
-
-
-            2. Image Generation Usage card
-
-               5/5 Remaining
-                    ↓
-               4/5 Remaining
-                    ↓
-               ...
-                    ↓
-               0/5 Remaining
-
-
-            3. Generation Status card
-
-               Waiting for Prompt
-               Ready to Generate
-               Generating...
-               Completed
-
-
-            4. Free plan information
-
-
-            5. Credit progress bar
-
-
-            6. 0/5 exhausted state
-
-
-            7. Tivion Pro state
-
-
-            8. Final closing tags
-
-
-            9. export default GenerateImages
-        ============================================= */}        {/* =============================================
-            IMAGE GENERATION TOOL INFORMATION
-        ============================================= */}
-
         <div
           className="
             grid
@@ -2879,10 +2493,6 @@ const GenerateImages = () => {
             mt-5
           "
         >
-
-          {/* ===========================================
-              CURRENT PLAN
-          =========================================== */}
 
           <div
             className="
@@ -2998,11 +2608,6 @@ const GenerateImages = () => {
 
           </div>
 
-
-          {/* ===========================================
-              IMAGE GENERATION USAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -3107,11 +2712,6 @@ const GenerateImages = () => {
             </div>
 
           </div>
-
-
-          {/* ===========================================
-              GENERATION STATUS
-          =========================================== */}
 
           <div
             className="
@@ -3239,11 +2839,6 @@ const GenerateImages = () => {
 
         </div>
 
-
-        {/* =============================================
-            FREE PLAN INFORMATION
-        ============================================= */}
-
         {!isPro && (
 
           <div
@@ -3343,11 +2938,6 @@ const GenerateImages = () => {
 
               </div>
 
-
-              {/* =======================================
-                  REMAINING IMAGE CREDITS
-              ======================================= */}
-
               <div
                 className="
                   shrink-0
@@ -3402,18 +2992,6 @@ const GenerateImages = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    CREDIT PROGRESS
-
-                    5/5 = 100%
-                    4/5 = 80%
-                    3/5 = 60%
-                    2/5 = 40%
-                    1/5 = 20%
-                    0/5 = 0%
-                ===================================== */}
-
                 <div
                   className="
                     w-full
@@ -3465,15 +3043,6 @@ const GenerateImages = () => {
           </div>
 
         )}
-
-
-        {/* =============================================
-            FREE LIMIT EXHAUSTED
-
-            Appears only at:
-
-            FREE + 0/5
-        ============================================= */}
 
         {!isPro &&
           imageRemaining <= 0 && (
@@ -3560,24 +3129,6 @@ const GenerateImages = () => {
             </div>
 
           )}
-
-
-        {/* =============================================
-            PRO PLAN INFORMATION
-
-            IMPORTANT:
-
-            This is controlled by:
-
-            Neon:
-            users.plan = "pro"
-
-            NOT:
-
-            Clerk Protect
-            Clerk Billing
-            plan="pro_user"
-        ============================================= */}
 
         {isPro && (
 
@@ -3669,263 +3220,6 @@ const GenerateImages = () => {
 
         )}
 
-
-        {/* =============================================
-            IMAGE GENERATION QUOTA FLOW
-
-
-            NEW FREE USER
-
-            Neon:
-
-            image_generation_used = 0
-
-                    ↓
-
-            UsageContext:
-
-            image: {
-
-              used: 0,
-
-              remaining: 5,
-
-              limit: 5
-
-            }
-
-                    ↓
-
-            UI:
-
-            FREE · 5/5 LEFT
-
-
-            =============================================
-
-            USER GENERATES IMAGE
-
-            POST:
-
-            /api/ai/generate-image
-
-                    ↓
-
-            Clerk Authentication
-
-                    ↓
-
-            auth middleware
-
-                    ↓
-
-            Read plan from Neon
-
-                    ↓
-
-            FREE USER?
-
-            Check:
-
-            image_generation_used < 5
-
-                    ↓ YES
-
-            Generate image using AI
-
-                    ↓
-
-            Image generation succeeds
-
-                    ↓
-
-            Cloudinary upload succeeds
-
-                    ↓
-
-            Save creation succeeds
-
-                    ↓
-
-            Increment:
-
-            image_generation_used
-
-            0 → 1
-
-                    ↓
-
-            Backend returns:
-
-            usage: {
-
-              used: 1,
-
-              remaining: 4,
-
-              limit: 5
-
-            }
-
-                    ↓
-
-            Frontend:
-
-            updateFeatureUsage(
-
-              "image",
-
-              data.usage
-
-            )
-
-                    ↓
-
-            UI immediately updates:
-
-            5/5 → 4/5
-
-
-            =============================================
-
-            EACH TOOL IS INDEPENDENT
-
-            Example after generating ONE image:
-
-            Image Generation:
-
-            4/5
-
-
-            Write Article:
-
-            5/5
-
-
-            Blog Title:
-
-            5/5
-
-
-            Background Removal:
-
-            5/5
-
-
-            Object Removal:
-
-            5/5
-
-
-            Resume Review:
-
-            5/5
-
-
-            =============================================
-
-            FINAL IMAGE FLOW:
-
-            5/5
-
-             ↓ successful generation
-
-            4/5
-
-             ↓ successful generation
-
-            3/5
-
-             ↓ successful generation
-
-            2/5
-
-             ↓ successful generation
-
-            1/5
-
-             ↓ successful generation
-
-            0/5
-
-                    ↓
-
-            FREE LIMIT REACHED
-
-                    ↓
-
-            Generate Image button disabled
-
-
-            =============================================
-
-            CREDIT RULES
-
-
-            Enter prompt:
-
-            ❌ NO CREDIT
-
-
-            Change style:
-
-            ❌ NO CREDIT
-
-
-            Change Public / Private:
-
-            ❌ NO CREDIT
-
-
-            AI generation fails:
-
-            ❌ NO CREDIT
-
-
-            Cloudinary upload fails:
-
-            ❌ NO CREDIT
-
-
-            Database save fails:
-
-            ❌ NO CREDIT
-
-
-            Successful complete generation:
-
-            ✅ EXACTLY 1 CREDIT
-
-
-            Download generated image:
-
-            ❌ NO EXTRA CREDIT
-
-
-            =============================================
-
-            PRO USER
-
-            Neon:
-
-            users.plan = "pro"
-
-                    ↓
-
-            UsageContext:
-
-            isPro = true
-
-                    ↓
-
-            FREE quota bypassed
-
-                    ↓
-
-            Tivion PRO · UNLIMITED
-
-        ============================================= */}
-
       </div>
 
     </div>
@@ -3933,10 +3227,5 @@ const GenerateImages = () => {
   );
 
 };
-
-
-/* =====================================================
-   EXPORT
-===================================================== */
 
 export default GenerateImages;
