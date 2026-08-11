@@ -2504,22 +2504,6 @@ const RemoveObject = () => {
         </div>
 
 
-        {/* =============================================
-            MAIN GRID ENDS ABOVE
-
-            PART 4 CONTINUES HERE WITH:
-
-            - Current Plan card
-            - Object Removal Usage card
-            - Processing Status card
-            - Free plan information
-            - Pro plan information
-            - Final closing tags
-            - export default RemoveObject
-        ============================================= */}        {/* =============================================
-            OBJECT REMOVAL TOOL INFORMATION
-        ============================================= */}
-
         <div
           className="
             grid
@@ -2530,10 +2514,6 @@ const RemoveObject = () => {
             mt-5
           "
         >
-
-          {/* ===========================================
-              CURRENT PLAN
-          =========================================== */}
 
           <div
             className="
@@ -2650,10 +2630,6 @@ const RemoveObject = () => {
           </div>
 
 
-          {/* ===========================================
-              OBJECT REMOVAL USAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -2758,11 +2734,6 @@ const RemoveObject = () => {
             </div>
 
           </div>
-
-
-          {/* ===========================================
-              PROCESSING STATUS
-          =========================================== */}
 
           <div
             className="
@@ -2888,15 +2859,6 @@ const RemoveObject = () => {
           </div>
 
         </div>
-
-
-        {/* =============================================
-            FREE PLAN INFORMATION
-
-            Only shown when Neon says:
-
-            plan = "free"
-        ============================================= */}
 
         {!isPro && (
 
