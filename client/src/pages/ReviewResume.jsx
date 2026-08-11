@@ -185,11 +185,6 @@ const ReviewResume = () => {
 
       e.preventDefault();
 
-
-      /* ===============================================
-         FILE VALIDATION
-      =============================================== */
-
       if (!input) {
 
         toast.error(
@@ -200,29 +195,6 @@ const ReviewResume = () => {
 
       }
 
-
-      /* ===============================================
-         FRONTEND FREE QUOTA CHECK
-
-         IMPORTANT:
-
-         This is only for better UX.
-
-         The backend still performs the REAL
-         security/quota validation.
-
-         FREE:
-
-         5/5 → allowed
-         4/5 → allowed
-         ...
-         1/5 → allowed
-         0/5 → blocked
-
-         PRO:
-
-         Always allowed.
-      =============================================== */
 
       if (
         !isPro &&
@@ -239,27 +211,11 @@ const ReviewResume = () => {
 
       }
 
-
       try {
-
-        /* =============================================
-           START LOADING
-        ============================================= */
 
         setLoading(true);
 
-
-        /*
-          Clear previous analysis before
-          analyzing another resume.
-        */
-
         setContent('');
-
-
-        /* =============================================
-           CREATE FORM DATA
-        ============================================= */
 
         const formData =
           new FormData();
@@ -269,11 +225,6 @@ const ReviewResume = () => {
           'resume',
           input
         );
-
-
-        /* =============================================
-           GET CLERK AUTH TOKEN
-        ============================================= */
 
         const token =
           await getToken();
@@ -287,25 +238,6 @@ const ReviewResume = () => {
 
         }
 
-
-        /* =============================================
-           CALL Tivion BACKEND
-
-           Backend:
-
-           POST /api/ai/resume-review
-
-           Backend performs:
-
-           1. Authentication
-           2. Neon plan check
-           3. Resume quota check
-           4. PDF extraction
-           5. AI resume analysis
-           6. Save creation
-           7. Increment resume_analysis_used
-           8. Return updated usage
-        ============================================= */
 
         const {
           data,
@@ -329,44 +261,14 @@ const ReviewResume = () => {
         );
 
 
-        /* =============================================
-           SUCCESS
-        ============================================= */
-
         if (
           data.success
         ) {
-
-          /* ===========================================
-             SET RESUME ANALYSIS
-          =========================================== */
 
           setContent(
             data.content
           );
 
-
-          /* ===========================================
-             UPDATE ONLY RESUME REVIEW USAGE
-
-             Backend FREE response example:
-
-             usage: {
-               used: 1,
-               remaining: 4,
-               limit: 5
-             }
-
-             UsageContext immediately changes:
-
-             Resume Review:
-             5/5
-              ↓
-             4/5
-
-             Dashboard + Sidebar also receive
-             the same shared state instantly.
-          =========================================== */
 
           if (
             data.usage &&
@@ -384,10 +286,6 @@ const ReviewResume = () => {
           }
 
 
-          /* ===========================================
-             SUCCESS MESSAGE
-          =========================================== */
-
           if (isPro) {
 
             toast.success(
@@ -395,11 +293,6 @@ const ReviewResume = () => {
             );
 
           } else {
-
-            /*
-              Prefer the exact value returned
-              by the backend.
-            */
 
             const newRemaining =
               data?.usage?.remaining ??
@@ -417,10 +310,6 @@ const ReviewResume = () => {
 
         } else {
 
-          /* ===========================================
-             BACKEND RETURNED success:false
-          =========================================== */
-
           toast.error(
 
             data.message ||
@@ -433,10 +322,6 @@ const ReviewResume = () => {
 
       } catch (error) {
 
-        /* =============================================
-           ERROR LOG
-        ============================================= */
-
         console.error(
 
           'Resume review error:',
@@ -444,11 +329,6 @@ const ReviewResume = () => {
           error
 
         );
-
-
-        /* =============================================
-           EXTRACT BACKEND ERROR
-        ============================================= */
 
         const status =
           error?.response?.status;
@@ -463,11 +343,6 @@ const ReviewResume = () => {
 
           'Resume analysis failed.';
 
-
-        /* =============================================
-           QUOTA EXHAUSTED
-        ============================================= */
-
         if (
           status === 403
         ) {
@@ -481,19 +356,11 @@ const ReviewResume = () => {
         }
 
 
-        /* =============================================
-           GENERAL ERROR
-        ============================================= */
-
         toast.error(
           message
         );
 
       } finally {
-
-        /* =============================================
-           STOP LOADING
-        ============================================= */
 
         setLoading(false);
 
@@ -501,10 +368,6 @@ const ReviewResume = () => {
 
     };
 
-
-  /* =================================================
-     UI
-  ================================================= */
 
   return (
 
