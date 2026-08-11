@@ -2678,10 +2678,6 @@ const ReviewResume = () => {
               </div>
 
 
-              {/* =======================================
-                  CREDIT DISPLAY
-              ======================================= */}
-
               <div
                 className="
                   shrink-0
@@ -2737,15 +2733,6 @@ const ReviewResume = () => {
                 </div>
 
 
-                {/* =====================================
-                    USAGE PROGRESS BAR
-
-                    5/5 = 100%
-                    4/5 = 80%
-                    ...
-                    0/5 = 0%
-                ===================================== */}
-
                 <div
                   className="
                     w-full
@@ -2785,16 +2772,6 @@ const ReviewResume = () => {
 
         )}
 
-
-        {/* =============================================
-            PRO PLAN INFORMATION
-
-            Visible when Neon says:
-
-            plan = "pro"
-
-            Clerk Billing is NOT involved.
-        ============================================= */}
 
         {isPro && (
 
@@ -2886,62 +2863,6 @@ const ReviewResume = () => {
         )}
 
 
-        {/* =============================================
-            QUOTA ARCHITECTURE
-
-            FRONTEND:
-
-            UsageContext
-                  ↓
-            usage.resumeReview
-                  ↓
-            5/5 → 4/5 → 3/5 → 2/5 → 1/5 → 0/5
-
-
-            BACKEND:
-
-            POST /api/ai/resume-review
-                  ↓
-            Check authentication
-                  ↓
-            Read plan from Neon
-                  ↓
-            If FREE:
-            Check resume_analysis_used < 5
-                  ↓
-            Analyze resume successfully
-                  ↓
-            Increment resume_analysis_used
-                  ↓
-            Return:
-
-            usage: {
-              used: 1,
-              remaining: 4,
-              limit: 5
-            }
-
-
-            IMPORTANT:
-
-            Uploading/selecting a PDF:
-            NO CREDIT USED
-
-            Failed PDF extraction:
-            NO CREDIT USED
-
-            Failed AI analysis:
-            NO CREDIT USED
-
-            Successful analysis:
-            1 CREDIT USED
-
-
-            PRO:
-
-            Quota bypassed.
-        ============================================= */}
-
       </div>
 
     </div>
@@ -2950,9 +2871,5 @@ const ReviewResume = () => {
 
 };
 
-
-/* =====================================================
-   EXPORT
-===================================================== */
 
 export default ReviewResume;
