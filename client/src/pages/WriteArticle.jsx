@@ -2343,20 +2343,6 @@ Requirements:
 
         </div>
 
-
-        {/* =============================================
-            MAIN GRID ENDS ABOVE
-
-            PART 4 WILL CONTINUE HERE WITH:
-            - Usage / feature stats section
-            - Free vs Pro information
-            - Final component closing tags
-            - export default WriteArticle
-        ============================================= */}
-                {/* =============================================
-            ARTICLE TOOL INFORMATION
-        ============================================= */}
-
         <div
           className="
             grid
@@ -2368,9 +2354,6 @@ Requirements:
           "
         >
 
-          {/* ===========================================
-              CURRENT PLAN
-          =========================================== */}
 
           <div
             className="
@@ -2486,11 +2469,6 @@ Requirements:
 
           </div>
 
-
-          {/* ===========================================
-              ARTICLE USAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -2597,10 +2575,6 @@ Requirements:
           </div>
 
 
-          {/* ===========================================
-              SELECTED LENGTH
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -2696,13 +2670,6 @@ Requirements:
           </div>
 
         </div>
-
-
-        {/* =============================================
-            FREE PLAN INFORMATION
-
-            This section disappears for Pro users.
-        ============================================= */}
 
         {!isPro && (
 
@@ -2804,11 +2771,6 @@ Requirements:
 
               </div>
 
-
-              {/* =======================================
-                  CREDIT DISPLAY
-              ======================================= */}
-
               <div
                 className="
                   shrink-0
@@ -2903,14 +2865,6 @@ Requirements:
 
         )}
 
-
-        {/* =============================================
-            PRO PLAN INFORMATION
-
-            Only visible when Neon says:
-
-            plan = "pro"
-        ============================================= */}
 
         {isPro && (
 
