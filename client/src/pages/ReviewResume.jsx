@@ -1141,7 +1141,6 @@ const ReviewResume = () => {
               "
             >
 
-
               {loading ? (
 
                 <>
@@ -1159,10 +1158,6 @@ const ReviewResume = () => {
                 </>
 
               ) : (
-
-                /* =====================================
-                   FREE LIMIT EXHAUSTED
-                ===================================== */
 
                 !isPro &&
                 resumeRemaining <= 0
@@ -1184,10 +1179,6 @@ const ReviewResume = () => {
 
               ) : (
 
-                /* =====================================
-                   NORMAL ANALYZE BUTTON
-                ===================================== */
-
                 <>
 
                   <FileText
@@ -1198,11 +1189,6 @@ const ReviewResume = () => {
                   />
 
                   Analyze Resume
-
-
-                  {/* ===================================
-                      FREE COUNTER
-                  =================================== */}
 
                   {!isPro && (
 
@@ -1220,10 +1206,6 @@ const ReviewResume = () => {
 
                   )}
 
-
-                  {/* ===================================
-                      PRO INDICATOR
-                  =================================== */}
 
                   {isPro && (
 
@@ -1243,22 +1225,6 @@ const ReviewResume = () => {
 
             </button>
 
-
-            {/* =========================================
-                CREDIT EXPLANATION
-
-                This is important:
-
-                Selecting/uploading a PDF does NOT
-                consume a credit.
-
-                Failed analysis does NOT consume one.
-
-                Only a successful backend operation
-                should increment:
-
-                resume_analysis_used
-            ========================================= */}
 
             {!isPro &&
               resumeRemaining > 0 && (
@@ -1280,12 +1246,6 @@ const ReviewResume = () => {
 
           </div>
 
-
-          {/* ===========================================
-              RIGHT PANEL
-              ANALYSIS RESULTS
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -1297,10 +1257,6 @@ const ReviewResume = () => {
               p-4
             "
           >
-
-            {/* =========================================
-                RESULTS HEADER
-            ========================================= */}
 
             <div
               className="
@@ -1377,12 +1333,6 @@ const ReviewResume = () => {
               </div>
 
 
-              {/* =======================================
-                  CURRENT STATUS
-
-                  Appears after successful analysis.
-              ======================================= */}
-
               {content &&
                 !loading && (
 
@@ -1419,20 +1369,6 @@ const ReviewResume = () => {
             </div>
 
 
-            {/* =========================================
-                PART 3 CONTINUES HERE
-
-                NEXT:
-
-                - Loading animation
-                - Empty "No Analysis Yet" state
-                - Markdown analysis result
-                - Current 4/5 usage display
-            ========================================= */}
-                        {/* =========================================
-                RESULT CONTENT AREA
-            ========================================= */}
-
             <div
               className="
                 min-h-[500px]
@@ -1445,9 +1381,6 @@ const ReviewResume = () => {
               "
             >
 
-              {/* =======================================
-                  LOADING STATE
-              ======================================= */}
 
               {loading ? (
 
@@ -1462,10 +1395,6 @@ const ReviewResume = () => {
                     text-center
                   "
                 >
-
-                  {/* ===================================
-                      LOADING ICON
-                  =================================== */}
 
                   <div
                     className="
@@ -1525,10 +1454,6 @@ const ReviewResume = () => {
                   </div>
 
 
-                  {/* ===================================
-                      LOADING TEXT
-                  =================================== */}
-
                   <h3
                     className="
                       text-lg
@@ -1559,10 +1484,6 @@ const ReviewResume = () => {
 
                   </p>
 
-
-                  {/* ===================================
-                      PROGRESS BAR
-                  =================================== */}
 
                   <div
                     className="
