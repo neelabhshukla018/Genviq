@@ -1002,17 +1002,6 @@ const ReviewResume = () => {
 
             </div>
 
-
-            {/* =========================================
-                FREE LIMIT REACHED WARNING
-
-                Only visible when:
-
-                plan = FREE
-                AND
-                resumeRemaining = 0
-            ========================================= */}
-
             {!isPro &&
               resumeRemaining <= 0 && (
 
@@ -1100,26 +1089,6 @@ const ReviewResume = () => {
               )}
 
 
-            {/* =========================================
-                ANALYZE RESUME BUTTON
-
-                FREE WITH CREDITS:
-
-                Analyze Resume (5/5)
-
-                After successful analysis:
-
-                Analyze Resume (4/5)
-
-                FREE AT ZERO:
-
-                Free Limit Reached
-
-                PRO:
-
-                Analyze Resume
-            ========================================= */}
-
             <button
 
               type="button"
@@ -1172,9 +1141,6 @@ const ReviewResume = () => {
               "
             >
 
-              {/* =======================================
-                  LOADING
-              ======================================= */}
 
               {loading ? (
 
