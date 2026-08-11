@@ -1168,31 +1168,6 @@ const RemoveBackground = () => {
 
               )}
 
-
-            {/* =========================================
-                REMOVE BACKGROUND BUTTON
-
-                FREE NEW USER:
-
-                Remove Background (5/5)
-
-                        ↓ success
-
-                Remove Background (4/5)
-
-                        ↓
-
-                3/5 → 2/5 → 1/5 → 0/5
-
-                AT ZERO:
-
-                Free Limit Reached
-
-                PRO:
-
-                Remove Background
-            ========================================= */}
-
             <button
 
               type="button"
@@ -1246,10 +1221,6 @@ const RemoveBackground = () => {
               "
             >
 
-              {/* =======================================
-                  LOADING
-              ======================================= */}
-
               {loading ? (
 
                 <>
@@ -1267,10 +1238,6 @@ const RemoveBackground = () => {
                 </>
 
               ) : (
-
-                /* =====================================
-                   FREE LIMIT EXHAUSTED
-                ===================================== */
 
                 !isPro &&
                 backgroundRemaining <= 0
@@ -1292,10 +1259,6 @@ const RemoveBackground = () => {
 
               ) : (
 
-                /* =====================================
-                   NORMAL BUTTON
-                ===================================== */
-
                 <>
 
                   <Eraser
@@ -1306,11 +1269,6 @@ const RemoveBackground = () => {
                   />
 
                   Remove Background
-
-
-                  {/* ===================================
-                      FREE COUNTER
-                  =================================== */}
 
                   {!isPro && (
 
@@ -1327,11 +1285,6 @@ const RemoveBackground = () => {
                     </span>
 
                   )}
-
-
-                  {/* ===================================
-                      PRO INDICATOR
-                  =================================== */}
 
                   {isPro && (
 
@@ -1350,23 +1303,6 @@ const RemoveBackground = () => {
               )}
 
             </button>
-
-
-            {/* =========================================
-                CREDIT EXPLANATION
-
-                Selecting/uploading image:
-                NO CREDIT
-
-                Failed processing:
-                NO CREDIT
-
-                Successful background removal:
-                1 CREDIT
-
-                Downloading result:
-                NO EXTRA CREDIT
-            ========================================= */}
 
             {!isPro &&
               backgroundRemaining > 0 && (
@@ -1388,12 +1324,6 @@ const RemoveBackground = () => {
 
           </div>
 
-
-          {/* ===========================================
-              RIGHT PANEL
-              PROCESSED IMAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -1405,10 +1335,6 @@ const RemoveBackground = () => {
               p-4
             "
           >
-
-            {/* =========================================
-                RESULT HEADER
-            ========================================= */}
 
             <div
               className="
@@ -1483,16 +1409,6 @@ const RemoveBackground = () => {
                 </div>
 
               </div>
-
-
-              {/* =======================================
-                  DOWNLOAD BUTTON
-
-                  Only shown when processed image exists.
-
-                  Download does NOT consume another
-                  usage credit.
-              ======================================= */}
 
               {content && (
 
