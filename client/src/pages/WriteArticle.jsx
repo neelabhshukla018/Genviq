@@ -1249,19 +1249,6 @@ Requirements:
               )}
 
 
-            {/* =========================================
-                GENERATE BUTTON
-
-                FREE WITH CREDITS:
-                Generate Article (5/5)
-
-                FREE AT ZERO:
-                Free Limit Reached
-
-                PRO:
-                Generate Article
-            ========================================= */}
-
             <button
 
               type="button"
@@ -1306,10 +1293,6 @@ Requirements:
               "
             >
 
-              {/* =======================================
-                  LOADING
-              ======================================= */}
-
               {loading ? (
 
                 <>
@@ -1327,10 +1310,6 @@ Requirements:
                 </>
 
               ) : (
-
-                /* =====================================
-                   FREE LIMIT EXHAUSTED
-                ===================================== */
 
                 !isPro &&
                 articleRemaining <= 0
@@ -1352,10 +1331,6 @@ Requirements:
 
               ) : (
 
-                /* =====================================
-                   NORMAL GENERATE BUTTON
-                ===================================== */
-
                 <>
 
                   <Zap
@@ -1366,9 +1341,6 @@ Requirements:
                   />
 
                   Generate Article
-
-
-                  {/* FREE COUNTER */}
 
                   {!isPro && (
 
@@ -1385,9 +1357,6 @@ Requirements:
                     </span>
 
                   )}
-
-
-                  {/* PRO INDICATOR */}
 
                   {isPro && (
 
@@ -1407,10 +1376,6 @@ Requirements:
 
             </button>
 
-
-            {/* =========================================
-                GENERATION CREDIT EXPLANATION
-            ========================================= */}
 
             {!isPro &&
               articleRemaining > 0 && (
@@ -1433,11 +1398,6 @@ Requirements:
           </div>
 
 
-          {/* ===========================================
-              RIGHT PANEL
-              GENERATED ARTICLE RESULT
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -1450,9 +1410,6 @@ Requirements:
             "
           >
 
-            {/* =========================================
-                RESULT HEADER
-            ========================================= */}
 
             <div
               className="
@@ -1528,10 +1485,6 @@ Requirements:
 
               </div>
 
-
-              {/* =========================================
-                  COPY BUTTON
-              ========================================= */}
 
               {content &&
                 !loading && (
