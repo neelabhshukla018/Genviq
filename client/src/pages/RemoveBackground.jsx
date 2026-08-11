@@ -26,25 +26,11 @@ import {
   useUsage,
 } from '../context/UsageContext.jsx';
 
-
-/* =====================================================
-   AXIOS BASE URL
-===================================================== */
-
 axios.defaults.baseURL =
   import.meta.env.VITE_BASE_URL;
 
 
-/* =====================================================
-   REMOVE BACKGROUND
-===================================================== */
-
 const RemoveBackground = () => {
-
-
-  /* =================================================
-     STATE
-  ================================================= */
 
   const [
     input,
@@ -76,42 +62,9 @@ const RemoveBackground = () => {
   ] = useState('');
 
 
-  /* =================================================
-     CLERK AUTHENTICATION ONLY
-
-     Clerk handles:
-
-     - Sign in
-     - Authentication
-     - Auth token
-
-     Clerk Billing is NOT used.
-  ================================================= */
-
   const {
     getToken,
   } = useAuth();
-
-
-  /* =================================================
-     Tivion PLAN + BACKGROUND REMOVAL USAGE
-
-     Source of truth:
-
-     Neon
-       ↓
-     GET /api/user/usage
-       ↓
-     UsageContext
-       ↓
-     RemoveBackground
-
-     FREE:
-     5 successful background removals
-
-     PRO:
-     Unlimited / quota bypass
-  ================================================= */
 
   const {
     isPro,
@@ -123,20 +76,6 @@ const RemoveBackground = () => {
     hasCredits,
   } = useUsage();
 
-
-  /* =================================================
-     BACKGROUND REMOVAL USAGE
-
-     New FREE user:
-
-     used      = 0
-     remaining = 5
-     limit     = 5
-
-     Therefore UI initially shows:
-
-     FREE · 5/5 LEFT
-  ================================================= */
 
   const backgroundUsage =
     usage?.backgroundRemoval || {
@@ -168,17 +107,6 @@ const RemoveBackground = () => {
     );
 
 
-  /* =================================================
-     USAGE PERCENTAGE
-
-     5/5 = 100%
-     4/5 = 80%
-     3/5 = 60%
-     2/5 = 40%
-     1/5 = 20%
-     0/5 = 0%
-  ================================================= */
-
   const backgroundUsagePercentage =
     backgroundLimit > 0
 
@@ -202,10 +130,6 @@ const RemoveBackground = () => {
       : 0;
 
 
-  /* =================================================
-     HANDLE IMAGE FILE
-  ================================================= */
-
   const handleFileChange =
     (e) => {
 
@@ -218,11 +142,6 @@ const RemoveBackground = () => {
         return;
 
       }
-
-
-      /* ===============================================
-         IMAGE VALIDATION
-      =============================================== */
 
       if (
         !file.type.startsWith(
@@ -242,11 +161,6 @@ const RemoveBackground = () => {
 
       }
 
-
-      /* ===============================================
-         REMOVE PREVIOUS PREVIEW URL
-      =============================================== */
-
       if (imagePreview) {
 
         URL.revokeObjectURL(
@@ -255,19 +169,9 @@ const RemoveBackground = () => {
 
       }
 
-
-      /* ===============================================
-         SAVE IMAGE
-      =============================================== */
-
       setInput(
         file
       );
-
-
-      /* ===============================================
-         CREATE LOCAL PREVIEW
-      =============================================== */
 
       const previewUrl =
         URL.createObjectURL(
@@ -280,13 +184,6 @@ const RemoveBackground = () => {
       );
 
 
-      /* ===============================================
-         CLEAR PREVIOUS RESULT
-
-         When user chooses another image,
-         old processed result should disappear.
-      =============================================== */
-
       setContent('');
 
 
@@ -297,19 +194,10 @@ const RemoveBackground = () => {
     };
 
 
-  /* =================================================
-     REMOVE IMAGE BACKGROUND
-  ================================================= */
-
   const onSubmitHandler =
     async (e) => {
 
       e.preventDefault();
-
-
-      /* ===============================================
-         IMAGE VALIDATION
-      =============================================== */
 
       if (!input) {
 
@@ -321,31 +209,6 @@ const RemoveBackground = () => {
         return;
 
       }
-
-
-      /* ===============================================
-         FRONTEND FREE QUOTA CHECK
-
-         IMPORTANT:
-
-         This check is for UX only.
-
-         Backend must still perform the REAL
-         secure quota validation.
-
-         FREE:
-
-         5/5 → allowed
-         4/5 → allowed
-         3/5 → allowed
-         2/5 → allowed
-         1/5 → allowed
-         0/5 → blocked
-
-         PRO:
-
-         Always allowed.
-      =============================================== */
 
       if (
         !isPro &&
@@ -366,10 +229,6 @@ const RemoveBackground = () => {
 
       try {
 
-        /* =============================================
-           START LOADING
-        ============================================= */
-
         setLoading(
           true
         );
@@ -379,11 +238,6 @@ const RemoveBackground = () => {
           false
         );
 
-
-        /* =============================================
-           CREATE FORM DATA
-        ============================================= */
-
         const formData =
           new FormData();
 
@@ -392,11 +246,6 @@ const RemoveBackground = () => {
           'image',
           input
         );
-
-
-        /* =============================================
-           GET CLERK AUTH TOKEN
-        ============================================= */
 
         const token =
           await getToken();
@@ -409,36 +258,7 @@ const RemoveBackground = () => {
           );
 
         }
-
-
-        /* =============================================
-           CALL Tivion BACKEND
-
-           POST:
-
-           /api/ai/remove-image-background
-
-           Backend should:
-
-           1. Authenticate user
-
-           2. Read plan from Neon
-
-           3. For FREE user check:
-              background_removal_used < 5
-
-           4. Remove background
-
-           5. Upload processed image
-
-           6. Save creation
-
-           7. Increment background_removal_used
-              ONLY after successful operation
-
-           8. Return updated usage
-        ============================================= */
-
+      
         const {
           data,
         } = await axios.post(
@@ -460,18 +280,9 @@ const RemoveBackground = () => {
 
         );
 
-
-        /* =============================================
-           SUCCESS
-        ============================================= */
-
         if (
           data.success
         ) {
-
-          /* ===========================================
-             SET PROCESSED IMAGE
-          =========================================== */
 
           setContent(
             data.content
@@ -482,33 +293,6 @@ const RemoveBackground = () => {
             false
           );
 
-
-          /* ===========================================
-             UPDATE ONLY BACKGROUND REMOVAL USAGE
-
-             Expected backend FREE response:
-
-             usage: {
-
-               used: 1,
-
-               remaining: 4,
-
-               limit: 5
-
-             }
-
-             UsageContext immediately changes:
-
-             backgroundRemoval:
-
-             5/5
-              ↓
-             4/5
-
-             Because UsageContext is shared,
-             Sidebar/Dashboard can update too.
-          =========================================== */
 
           if (
             data.usage &&
@@ -524,11 +308,6 @@ const RemoveBackground = () => {
             );
 
           }
-
-
-          /* ===========================================
-             SUCCESS MESSAGE
-          =========================================== */
 
           if (isPro) {
 
