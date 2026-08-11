@@ -2017,10 +2017,6 @@ const ReviewResume = () => {
                   "
                 >
 
-                  {/* ===================================
-                      EMPTY ICON
-                  =================================== */}
-
                   <div
                     className="
                       w-16
@@ -2076,10 +2072,6 @@ const ReviewResume = () => {
 
                   </p>
 
-
-                  {/* ===================================
-                      PLAN / USAGE INFO
-                  =================================== */}
 
                   <div
                     className="
@@ -2152,10 +2144,6 @@ const ReviewResume = () => {
                   </div>
 
 
-                  {/* ===================================
-                      ZERO CREDIT MESSAGE
-                  =================================== */}
-
                   {!isPro &&
                     resumeRemaining <= 0 && (
 
@@ -2179,10 +2167,6 @@ const ReviewResume = () => {
 
             </div>
 
-
-            {/* =========================================
-                RESULT FOOTER
-            ========================================= */}
 
             <div
               className="
@@ -2241,24 +2225,6 @@ const ReviewResume = () => {
 
         </div>
 
-
-        {/* =============================================
-            MAIN GRID ENDS ABOVE
-
-            PART 4 CONTINUES HERE WITH:
-
-            - Current Plan card
-            - Resume Usage card
-            - File Status card
-            - Free plan information
-            - Pro plan information
-            - Final closing tags
-            - export default ReviewResume
-        ============================================= */}
-                {/* =============================================
-            RESUME TOOL INFORMATION
-        ============================================= */}
-
         <div
           className="
             grid
@@ -2269,10 +2235,6 @@ const ReviewResume = () => {
             mt-5
           "
         >
-
-          {/* ===========================================
-              CURRENT PLAN
-          =========================================== */}
 
           <div
             className="
@@ -2388,11 +2350,6 @@ const ReviewResume = () => {
 
           </div>
 
-
-          {/* ===========================================
-              RESUME REVIEW USAGE
-          =========================================== */}
-
           <div
             className="
               bg-gradient-to-br
@@ -2497,11 +2454,6 @@ const ReviewResume = () => {
             </div>
 
           </div>
-
-
-          {/* ===========================================
-              FILE STATUS
-          =========================================== */}
 
           <div
             className="
@@ -2625,12 +2577,6 @@ const ReviewResume = () => {
 
         </div>
 
-
-        {/* =============================================
-            FREE PLAN INFORMATION
-
-            Only visible for FREE users.
-        ============================================= */}
 
         {!isPro && (
 
