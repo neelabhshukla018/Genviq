@@ -1484,7 +1484,6 @@ const ReviewResume = () => {
 
                   </p>
 
-
                   <div
                     className="
                       w-48
@@ -1511,10 +1510,6 @@ const ReviewResume = () => {
                   </div>
 
 
-                  {/* ===================================
-                      ANALYSIS STEPS
-                  =================================== */}
-
                   <div
                     className="
                       flex
@@ -1527,7 +1522,7 @@ const ReviewResume = () => {
                     "
                   >
 
-                    {/* READING */}
+            
 
                     <div
                       className="
@@ -1556,8 +1551,6 @@ const ReviewResume = () => {
                     </div>
 
 
-                    {/* ANALYZING */}
-
                     <div
                       className="
                         text-center
@@ -1584,9 +1577,6 @@ const ReviewResume = () => {
                       </span>
 
                     </div>
-
-
-                    {/* GENERATING */}
 
                     <div
                       className="
@@ -1618,16 +1608,6 @@ const ReviewResume = () => {
                   </div>
 
 
-                  {/* ===================================
-                      CREDIT INFORMATION WHILE LOADING
-
-                      We do NOT reduce the frontend
-                      counter here.
-
-                      Counter changes only after
-                      successful backend response.
-                  =================================== */}
-
                   {!isPro && (
 
                     <p
@@ -1649,9 +1629,6 @@ const ReviewResume = () => {
 
               ) : content ? (
 
-                /* =====================================
-                   SUCCESSFUL ANALYSIS RESULT
-                ===================================== */
 
                 <div
                   className="
@@ -1659,9 +1636,6 @@ const ReviewResume = () => {
                   "
                 >
 
-                  {/* ===================================
-                      SUCCESS HEADER
-                  =================================== */}
 
                   <div
                     className="
@@ -1742,11 +1716,6 @@ const ReviewResume = () => {
                       </div>
 
                     </div>
-
-
-                    {/* =================================
-                        CURRENT PLAN / REMAINING CREDITS
-                    ================================= */}
 
                     {isPro ? (
 
