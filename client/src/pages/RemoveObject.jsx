@@ -245,26 +245,6 @@ const RemoveObject = () => {
       }
 
 
-      /* ===============================================
-         FRONTEND FREE QUOTA CHECK
-
-         This improves UX.
-
-         Backend MUST still perform the actual
-         secure quota check.
-
-         FREE:
-
-         5/5 → allowed
-         ...
-         1/5 → allowed
-         0/5 → blocked
-
-         PRO:
-
-         Always allowed.
-      =============================================== */
-
       if (
         !isPro &&
         !hasCredits(
@@ -280,12 +260,7 @@ const RemoveObject = () => {
 
       }
 
-
       try {
-
-        /* =============================================
-           START LOADING
-        ============================================= */
 
         setLoading(
           true
@@ -296,10 +271,6 @@ const RemoveObject = () => {
           false
         );
 
-
-        /* =============================================
-           CREATE FORM DATA
-        ============================================= */
 
         const formData =
           new FormData();
@@ -317,10 +288,6 @@ const RemoveObject = () => {
         );
 
 
-        /* =============================================
-           GET CLERK AUTH TOKEN
-        ============================================= */
-
         const token =
           await getToken();
 
@@ -333,26 +300,6 @@ const RemoveObject = () => {
 
         }
 
-
-        /* =============================================
-           CALL Tivion BACKEND
-
-           POST:
-
-           /api/ai/remove-image-object
-
-           Backend should:
-
-           1. Authenticate user
-           2. Read plan from Neon
-           3. Check object_removal_used
-           4. Block FREE user at 5/5 used
-           5. Process image
-           6. Upload result
-           7. Save creation
-           8. Increment usage ONLY after success
-           9. Return updated usage
-        ============================================= */
 
         const {
           data,
@@ -376,17 +323,10 @@ const RemoveObject = () => {
         );
 
 
-        /* =============================================
-           SUCCESS
-        ============================================= */
-
         if (
           data.success
         ) {
 
-          /* ===========================================
-             SET PROCESSED IMAGE
-          =========================================== */
 
           setContent(
             data.content
@@ -397,27 +337,6 @@ const RemoveObject = () => {
             false
           );
 
-
-          /* ===========================================
-             UPDATE OBJECT REMOVAL COUNTER
-
-             Expected FREE backend response:
-
-             usage: {
-               used: 1,
-               remaining: 4,
-               limit: 5
-             }
-
-             UsageContext:
-
-             objectRemoval
-                  ↓
-             5/5 → 4/5
-
-             Shared state means Sidebar/Dashboard
-             can update immediately too.
-          =========================================== */
 
           if (
             data.usage &&
@@ -434,10 +353,6 @@ const RemoveObject = () => {
 
           }
 
-
-          /* ===========================================
-             SUCCESS TOAST
-          =========================================== */
 
           if (isPro) {
 
@@ -476,10 +391,6 @@ const RemoveObject = () => {
 
       } catch (error) {
 
-        /* =============================================
-           ERROR
-        ============================================= */
-
         console.error(
 
           'Object Removal Error:',
@@ -502,10 +413,6 @@ const RemoveObject = () => {
 
           'Object removal failed.';
 
-
-        /* =============================================
-           QUOTA / ACCESS ERROR
-        ============================================= */
 
         if (
           status === 403
