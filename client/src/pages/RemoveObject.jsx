@@ -205,11 +205,6 @@ const RemoveObject = () => {
 
       e.preventDefault();
 
-
-      /* ===============================================
-         IMAGE VALIDATION
-      =============================================== */
-
       if (!input) {
 
         toast.error(
@@ -220,10 +215,6 @@ const RemoveObject = () => {
 
       }
 
-
-      /* ===============================================
-         OBJECT VALIDATION
-      =============================================== */
 
       if (
         !object.trim()
@@ -237,21 +228,6 @@ const RemoveObject = () => {
 
       }
 
-
-      /* ===============================================
-         ONE OBJECT NAME VALIDATION
-
-         Existing behavior preserved.
-
-         Examples:
-
-         watch       ✅
-         spoon       ✅
-         car         ✅
-
-         red car     ❌
-         wrist watch ❌
-      =============================================== */
 
       if (
         object
