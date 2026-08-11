@@ -1991,10 +1991,6 @@ const RemoveBackground = () => {
                     "
                   >
 
-                    {/* =================================
-                        ORIGINAL IMAGE
-                    ================================= */}
-
                     <div
                       className="
                         text-center
@@ -2066,11 +2062,6 @@ const RemoveBackground = () => {
 
                     </div>
 
-
-                    {/* =================================
-                        BACKGROUND REMOVED
-                    ================================= */}
-
                     <div
                       className="
                         text-center
@@ -2107,14 +2098,6 @@ const RemoveBackground = () => {
                         </span>
 
                       </div>
-
-
-                      {/* =================================
-                          CHECKERBOARD-LIKE BACKDROP
-
-                          Helps transparent PNG result
-                          remain visually understandable.
-                      ================================= */}
 
                       <div
                         className="
@@ -2163,11 +2146,6 @@ const RemoveBackground = () => {
 
                 )}
 
-
-                {/* =====================================
-                    FULL PROCESSED IMAGE
-                ===================================== */}
-
                 <div
                   className="
                     bg-gray-700/30
@@ -2209,11 +2187,6 @@ const RemoveBackground = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    RESULT INFORMATION
-                ===================================== */}
-
                 <div
                   className="
                     grid
@@ -2221,10 +2194,6 @@ const RemoveBackground = () => {
                     gap-2
                   "
                 >
-
-                  {/* ===================================
-                      STATUS
-                  =================================== */}
 
                   <div
                     className="
@@ -2262,11 +2231,6 @@ const RemoveBackground = () => {
                     </div>
 
                   </div>
-
-
-                  {/* ===================================
-                      PROCESSING TYPE
-                  =================================== */}
 
                   <div
                     className="
@@ -2306,11 +2270,6 @@ const RemoveBackground = () => {
                   </div>
 
                 </div>
-
-
-                {/* =====================================
-                    RESULT READY INFO
-                ===================================== */}
 
                 <div
                   className="
@@ -2389,13 +2348,6 @@ const RemoveBackground = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    DOWNLOAD INFO
-
-                    Downloading does not reduce usage.
-                ===================================== */}
-
                 <p
                   className="
                     text-center
@@ -2417,27 +2369,6 @@ const RemoveBackground = () => {
 
         </div>
 
-
-        {/* =============================================
-            MAIN TWO-COLUMN GRID CLOSED
-
-            DO NOT CLOSE OUTER PAGE YET.
-
-            PART 4 CONTINUES HERE WITH:
-
-            - Current Plan
-            - Background Removal Usage
-            - Processing Status
-            - Free plan information
-            - 5/5 progress
-            - 0/5 exhausted state
-            - Tivion Pro state
-            - Final closing tags
-            - export default RemoveBackground
-        ============================================= */}        {/* =============================================
-            BACKGROUND REMOVAL TOOL INFORMATION
-        ============================================= */}
-
         <div
           className="
             grid
@@ -2448,10 +2379,6 @@ const RemoveBackground = () => {
             mt-5
           "
         >
-
-          {/* ===========================================
-              CURRENT PLAN
-          =========================================== */}
 
           <div
             className="
