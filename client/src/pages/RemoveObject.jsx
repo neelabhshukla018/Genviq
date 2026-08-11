@@ -2338,11 +2338,6 @@ const RemoveObject = () => {
 
                 )}
 
-
-                {/* =====================================
-                    FULL SIZE PROCESSED IMAGE
-                ===================================== */}
-
                 <div
                   className="
                     bg-gray-700/30
@@ -2373,13 +2368,6 @@ const RemoveObject = () => {
                   />
 
                 </div>
-
-
-                {/* =====================================
-                    IMAGE INFO
-
-                    Existing two cards preserved.
-                ===================================== */}
 
                 <div
                   className="
@@ -2465,11 +2453,6 @@ const RemoveObject = () => {
                   </div>
 
                 </div>
-
-
-                {/* =====================================
-                    REMOVED OBJECT INFO
-                ===================================== */}
 
                 <div
                   className="
