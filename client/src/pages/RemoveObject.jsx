@@ -1056,11 +1056,6 @@ const RemoveObject = () => {
 
               )}
 
-
-              {/* =======================================
-                  IMAGE FORMAT + CREDIT INFO
-              ======================================= */}
-
               <div
                 className="
                   flex
@@ -1134,11 +1129,6 @@ const RemoveObject = () => {
 
             </div>
 
-
-            {/* =========================================
-                OBJECT DESCRIPTION
-            ========================================= */}
-
             <div
               className="
                 bg-gradient-to-br
@@ -1150,10 +1140,6 @@ const RemoveObject = () => {
                 p-4
               "
             >
-
-              {/* =======================================
-                  OBJECT HEADER
-              ======================================= */}
 
               <div
                 className="
@@ -1219,15 +1205,6 @@ const RemoveObject = () => {
 
               </div>
 
-
-              {/* =======================================
-                  OBJECT INPUT
-
-                  Existing behavior preserved:
-
-                  One object name only.
-              ======================================= */}
-
               <textarea
 
                 onChange={
@@ -1285,16 +1262,6 @@ const RemoveObject = () => {
 
             </div>
 
-
-            {/* =========================================
-                FREE LIMIT REACHED WARNING
-
-                Visible only:
-
-                FREE
-                +
-                0/5 remaining
-            ========================================= */}
 
             {!isPro &&
               objectRemaining <= 0 && (
