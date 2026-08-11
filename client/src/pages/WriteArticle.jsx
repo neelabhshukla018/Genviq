@@ -29,23 +29,12 @@ import {
 } from '../context/UsageContext.jsx';
 
 
-/* =====================================================
-   AXIOS BASE URL
-===================================================== */
-
 axios.defaults.baseURL =
   import.meta.env.VITE_BASE_URL;
 
 
-/* =====================================================
-   WRITE ARTICLE
-===================================================== */
-
 const WriteArticle = () => {
 
-  /* =================================================
-     ARTICLE LENGTH OPTIONS
-  ================================================= */
 
   const articleLength = [
 
@@ -79,10 +68,6 @@ const WriteArticle = () => {
   ];
 
 
-  /* =================================================
-     STATE
-  ================================================= */
-
   const [
     selectedLength,
     setSelectedLength,
@@ -115,41 +100,10 @@ const WriteArticle = () => {
   ] = useState(false);
 
 
-  /* =================================================
-     CLERK AUTHENTICATION
-
-     Clerk is ONLY responsible for:
-
-     - Authentication
-     - Auth token
-
-     Clerk Billing is NOT used.
-  ================================================= */
-
   const {
     getToken,
   } = useAuth();
 
-
-  /* =================================================
-     Tivion PLAN + ARTICLE USAGE
-
-     Source of truth:
-
-     Neon
-       ↓
-     GET /api/user/usage
-       ↓
-     UsageContext
-       ↓
-     WriteArticle
-
-     FREE:
-     5 successful article generations
-
-     PRO:
-     Unlimited / quota bypass
-  ================================================= */
 
   const {
     isPro,
@@ -161,16 +115,6 @@ const WriteArticle = () => {
     hasCredits,
   } = useUsage();
 
-
-  /* =================================================
-     ARTICLE USAGE
-
-     New FREE account:
-
-     used      = 0
-     remaining = 5
-     limit     = 5
-  ================================================= */
 
   const articleUsage =
     usage?.article || {
@@ -202,17 +146,6 @@ const WriteArticle = () => {
     );
 
 
-  /* =================================================
-     ARTICLE USAGE PERCENTAGE
-
-     5/5 → 100%
-     4/5 → 80%
-     3/5 → 60%
-     2/5 → 40%
-     1/5 → 20%
-     0/5 → 0%
-  ================================================= */
-
   const articleUsagePercentage =
     articleLimit > 0
 
@@ -232,19 +165,11 @@ const WriteArticle = () => {
       : 0;
 
 
-  /* =================================================
-     GENERATE ARTICLE
-  ================================================= */
-
   const onSubmitHandler =
     async (e) => {
 
       e.preventDefault();
 
-
-      /* ===============================================
-         TOPIC VALIDATION
-      =============================================== */
 
       if (
         !input.trim()
@@ -258,29 +183,6 @@ const WriteArticle = () => {
 
       }
 
-
-      /* ===============================================
-         FRONTEND FREE QUOTA CHECK
-
-         IMPORTANT:
-
-         This is only for better UX.
-
-         The backend still performs the REAL
-         security/quota validation.
-
-         FREE:
-
-         5/5 → allowed
-         4/5 → allowed
-         ...
-         1/5 → allowed
-         0/5 → blocked
-
-         PRO:
-
-         Always allowed.
-      =============================================== */
 
       if (
         !isPro &&
@@ -298,24 +200,11 @@ const WriteArticle = () => {
 
       try {
 
-        /* =============================================
-           START LOADING
-        ============================================= */
 
         setLoading(true);
 
 
-        /*
-          Clear previous article before
-          generating a new one.
-        */
-
         setContent('');
-
-
-        /* =============================================
-           BUILD ARTICLE PROMPT
-        ============================================= */
 
         const prompt = `
 Write a professional, engaging and well-structured article.
@@ -337,10 +226,6 @@ Requirements:
 `;
 
 
-        /* =============================================
-           GET CLERK AUTH TOKEN
-        ============================================= */
-
         const token =
           await getToken();
 
@@ -353,24 +238,6 @@ Requirements:
 
         }
 
-
-        /* =============================================
-           CALL Tivion BACKEND
-
-           Backend:
-
-           POST /api/ai/generate-article
-
-           Backend performs:
-
-           1. Authentication
-           2. Neon plan check
-           3. Article quota check
-           4. AI generation
-           5. Save creation
-           6. Increment article_generation_used
-           7. Return updated usage
-        ============================================= */
 
         const {
           data,
@@ -401,44 +268,15 @@ Requirements:
         );
 
 
-        /* =============================================
-           SUCCESS
-        ============================================= */
-
         if (
           data.success
         ) {
 
-          /* ===========================================
-             SET GENERATED ARTICLE
-          =========================================== */
 
           setContent(
             data.content
           );
 
-
-          /* ===========================================
-             UPDATE ONLY ARTICLE USAGE
-
-             Backend FREE response example:
-
-             usage: {
-               used: 1,
-               remaining: 4,
-               limit: 5
-             }
-
-             UsageContext immediately changes:
-
-             Article:
-             5/5
-              ↓
-             4/5
-
-             Dashboard + Sidebar also receive
-             the same shared state instantly.
-          =========================================== */
 
           if (
             data.usage &&
