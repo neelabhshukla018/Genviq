@@ -334,10 +334,6 @@ const RemoveBackground = () => {
 
         } else {
 
-          /* ===========================================
-             BACKEND RETURNED success:false
-          =========================================== */
-
           toast.error(
 
             data.message ||
@@ -349,10 +345,6 @@ const RemoveBackground = () => {
         }
 
       } catch (error) {
-
-        /* =============================================
-           ERROR
-        ============================================= */
 
         console.error(
 
@@ -377,10 +369,6 @@ const RemoveBackground = () => {
           'Background removal failed.';
 
 
-        /* =============================================
-           QUOTA / ACCESS ERROR
-        ============================================= */
-
         if (
           status === 403
         ) {
@@ -393,11 +381,6 @@ const RemoveBackground = () => {
           return;
 
         }
-
-
-        /* =============================================
-           GENERAL ERROR
-        ============================================= */
 
         toast.error(
           message
@@ -412,16 +395,6 @@ const RemoveBackground = () => {
       }
 
     };
-
-
-  /* =================================================
-     DOWNLOAD PROCESSED IMAGE
-
-     Existing functionality preserved.
-
-     Downloading the already-generated image
-     does NOT consume another credit.
-  ================================================= */
 
   const downloadImage =
     async () => {
