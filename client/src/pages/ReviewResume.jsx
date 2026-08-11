@@ -389,29 +389,12 @@ const ReviewResume = () => {
         "
       >
 
-        {/* =============================================
-            HEADER
-        ============================================= */}
-
         <div
           className="
             text-center
             mb-6
           "
         >
-
-          {/* ===========================================
-              NEON PLAN + RESUME USAGE BADGE
-
-              NO CLERK BILLING
-              NO <Protect plan="pro_user">
-
-              FREE:
-              FREE · 5/5 LEFT
-
-              PRO:
-              Tivion PRO · UNLIMITED
-          =========================================== */}
 
           {isPro ? (
 
@@ -524,10 +507,6 @@ const ReviewResume = () => {
           )}
 
 
-          {/* ===========================================
-              TITLE
-          =========================================== */}
-
           <h1
             className="
               text-2xl
@@ -557,10 +536,6 @@ const ReviewResume = () => {
 
           </p>
 
-
-          {/* ===========================================
-              FREE USAGE INDICATOR
-          =========================================== */}
 
           {!isPro && (
 
