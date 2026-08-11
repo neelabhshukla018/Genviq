@@ -1548,13 +1548,6 @@ Requirements:
             </div>
 
 
-            {/* =========================================
-                LOADING / EMPTY / RESULT STARTS NEXT
-            ========================================= */}
-                        {/* =========================================
-                RESULT CONTENT AREA
-            ========================================= */}
-
             <div
               className="
                 min-h-[500px]
@@ -1567,9 +1560,6 @@ Requirements:
               "
             >
 
-              {/* =======================================
-                  LOADING STATE
-              ======================================= */}
 
               {loading ? (
 
@@ -1585,7 +1575,6 @@ Requirements:
                   "
                 >
 
-                  {/* ANIMATED LOADER */}
 
                   <div
                     className="
@@ -1675,8 +1664,6 @@ Requirements:
                   </p>
 
 
-                  {/* LOADING STEPS */}
-
                   <div
                     className="
                       mt-6
@@ -1747,9 +1734,6 @@ Requirements:
 
               ) : content ? (
 
-                /* =====================================
-                   GENERATED ARTICLE
-                ===================================== */
 
                 <div
                   className="
@@ -1757,10 +1741,6 @@ Requirements:
                     sm:p-6
                   "
                 >
-
-                  {/* ===================================
-                      SUCCESS INDICATOR
-                  =================================== */}
 
                   <div
                     className="
@@ -1843,8 +1823,6 @@ Requirements:
                     </div>
 
 
-                    {/* CURRENT PLAN / CREDIT */}
-
                     {isPro ? (
 
                       <div
@@ -1911,19 +1889,6 @@ Requirements:
                     )}
 
                   </div>
-
-
-                  {/* ===================================
-                      MARKDOWN ARTICLE
-
-                      react-markdown renders:
-                      # headings
-                      ## headings
-                      paragraphs
-                      lists
-                      bold text
-                      etc.
-                  =================================== */}
 
                   <div
                     className="
