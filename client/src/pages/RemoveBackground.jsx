@@ -474,7 +474,6 @@ const RemoveBackground = () => {
           true
         );
 
-
         toast.success(
           'Image downloaded successfully!'
         );
@@ -510,11 +509,6 @@ const RemoveBackground = () => {
 
     };
 
-
-  /* =================================================
-     UI
-  ================================================= */
-
   return (
 
     <div
@@ -535,34 +529,12 @@ const RemoveBackground = () => {
         "
       >
 
-        {/* =============================================
-            HEADER
-        ============================================= */}
-
         <div
           className="
             text-center
             mb-6
           "
         >
-
-          {/* ===========================================
-              PLAN + BACKGROUND REMOVAL BADGE
-
-              NO:
-
-              <Protect plan="pro_user">
-
-              NO Clerk Billing.
-
-              FREE:
-
-              FREE · 5/5 LEFT
-
-              PRO:
-
-              Tivion PRO · UNLIMITED
-          =========================================== */}
 
           {isPro ? (
 
@@ -673,11 +645,6 @@ const RemoveBackground = () => {
 
           )}
 
-
-          {/* ===========================================
-              TITLE
-          =========================================== */}
-
           <h1
             className="
               text-2xl
@@ -706,11 +673,6 @@ const RemoveBackground = () => {
             Remove backgrounds from images with AI
 
           </p>
-
-
-          {/* ===========================================
-              FREE USAGE PROGRESS
-          =========================================== */}
 
           {!isPro && (
 
@@ -811,13 +773,6 @@ const RemoveBackground = () => {
 
         </div>
 
-
-        {/* =============================================
-            MAIN GRID START
-
-            PART 2 CONTINUES DIRECTLY HERE
-        ============================================= */}
-
         <div
           className="
             grid
@@ -825,19 +780,13 @@ const RemoveBackground = () => {
             xl:grid-cols-2
             gap-4
           "
-        >          {/* ===========================================
-              LEFT PANEL
-          =========================================== */}
+        >          
 
           <div
             className="
               space-y-4
             "
           >
-
-            {/* =========================================
-                UPLOAD IMAGE CARD
-            ========================================= */}
 
             <div
               className="
@@ -850,10 +799,6 @@ const RemoveBackground = () => {
                 p-4
               "
             >
-
-              {/* =======================================
-                  UPLOAD HEADER
-              ======================================= */}
 
               <div
                 className="
@@ -919,11 +864,6 @@ const RemoveBackground = () => {
 
               </div>
 
-
-              {/* =======================================
-                  FILE INPUT
-              ======================================= */}
-
               <input
 
                 onChange={
@@ -963,11 +903,6 @@ const RemoveBackground = () => {
                 required
 
               />
-
-
-              {/* =======================================
-                  UPLOADED IMAGE PREVIEW
-              ======================================= */}
 
               {imagePreview && (
 
@@ -1074,11 +1009,6 @@ const RemoveBackground = () => {
 
               )}
 
-
-              {/* =======================================
-                  FORMAT + CREDIT INFO
-              ======================================= */}
-
               <div
                 className="
                   flex
@@ -1151,19 +1081,6 @@ const RemoveBackground = () => {
               </div>
 
             </div>
-
-
-            {/* =========================================
-                FREE LIMIT REACHED WARNING
-
-                Only visible when:
-
-                plan = FREE
-
-                AND
-
-                backgroundRemaining = 0
-            ========================================= */}
 
             {!isPro &&
               backgroundRemaining <= 0 && (
