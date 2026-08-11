@@ -2113,10 +2113,6 @@ const RemoveObject = () => {
                   </div>
 
 
-                  {/* ===================================
-                      UPDATED USAGE
-                  =================================== */}
-
                   {isPro ? (
 
                     <div
@@ -2184,13 +2180,6 @@ const RemoveObject = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    BEFORE / AFTER COMPARISON
-
-                    Original UI functionality preserved.
-                ===================================== */}
-
                 {imagePreview && (
 
                   <div
@@ -2201,10 +2190,6 @@ const RemoveObject = () => {
                       mb-4
                     "
                   >
-
-                    {/* =================================
-                        ORIGINAL IMAGE
-                    ================================= */}
 
                     <div
                       className="
@@ -2277,10 +2262,6 @@ const RemoveObject = () => {
 
                     </div>
 
-
-                    {/* =================================
-                        PROCESSED IMAGE
-                    ================================= */}
 
                     <div
                       className="
