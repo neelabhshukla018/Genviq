@@ -2960,10 +2960,6 @@ const RemoveObject = () => {
               </div>
 
 
-              {/* =======================================
-                  REMAINING CREDIT DISPLAY
-              ======================================= */}
-
               <div
                 className="
                   shrink-0
@@ -3019,17 +3015,6 @@ const RemoveObject = () => {
                 </div>
 
 
-                {/* =====================================
-                    CREDIT PROGRESS BAR
-
-                    5/5 = 100%
-                    4/5 = 80%
-                    3/5 = 60%
-                    2/5 = 40%
-                    1/5 = 20%
-                    0/5 = 0%
-                ===================================== */}
-
                 <div
                   className="
                     w-full
@@ -3082,24 +3067,6 @@ const RemoveObject = () => {
 
         )}
 
-
-        {/* =============================================
-            FREE LIMIT EXHAUSTED INFO
-
-            This appears after:
-
-            5/5
-             ↓
-            4/5
-             ↓
-            3/5
-             ↓
-            2/5
-             ↓
-            1/5
-             ↓
-            0/5
-        ============================================= */}
 
         {!isPro &&
           objectRemaining <= 0 && (
@@ -3187,22 +3154,6 @@ const RemoveObject = () => {
 
           )}
 
-
-        {/* =============================================
-            PRO PLAN INFORMATION
-
-            IMPORTANT:
-
-            This depends on:
-
-            Neon users.plan = "pro"
-
-            NOT:
-
-            Clerk Protect
-            Clerk Billing
-            Clerk plan="pro_user"
-        ============================================= */}
 
         {isPro && (
 
@@ -3294,187 +3245,6 @@ const RemoveObject = () => {
 
         )}
 
-
-        {/* =============================================
-            FINAL OBJECT REMOVAL QUOTA FLOW
-
-
-            NEW FREE USER
-
-            Neon:
-
-            object_removal_used = 0
-
-                    ↓
-
-            UsageContext:
-
-            objectRemoval: {
-
-              used: 0,
-
-              remaining: 5,
-
-              limit: 5
-
-            }
-
-                    ↓
-
-            UI:
-
-            FREE · 5/5 LEFT
-
-
-            =============================================
-
-            USER CLICKS REMOVE OBJECT
-
-                    ↓
-
-            POST /api/ai/remove-image-object
-
-                    ↓
-
-            auth middleware
-
-                    ↓
-
-            Neon plan check
-
-                    ↓
-
-            FREE USER?
-
-            Check:
-
-            object_removal_used < 5
-
-                    ↓ YES
-
-            Process image
-
-                    ↓
-
-            Object removed successfully
-
-                    ↓
-
-            Upload processed result
-
-                    ↓
-
-            Save creation
-
-                    ↓
-
-            Increment:
-
-            object_removal_used
-
-            0 → 1
-
-                    ↓
-
-            Backend returns:
-
-            usage: {
-
-              used: 1,
-
-              remaining: 4,
-
-              limit: 5
-
-            }
-
-                    ↓
-
-            updateFeatureUsage(
-
-              "objectRemoval",
-
-              data.usage
-
-            )
-
-                    ↓
-
-            UI immediately becomes:
-
-            FREE · 4/5 LEFT
-
-
-            =============================================
-
-            AFTER FIVE SUCCESSFUL OPERATIONS:
-
-            used      = 5
-
-            remaining = 0
-
-            UI:
-
-            FREE · 0/5 LEFT
-
-                    ↓
-
-            Remove Object button disabled
-
-                    ↓
-
-            FREE LIMIT REACHED
-
-
-            =============================================
-
-            IMPORTANT:
-
-            Selecting an image:
-
-            ❌ DO NOT increment
-
-
-            Entering an object:
-
-            ❌ DO NOT increment
-
-
-            Backend processing fails:
-
-            ❌ DO NOT increment
-
-
-            Cloudinary/upload fails:
-
-            ❌ DO NOT increment
-
-
-            Successful object removal:
-
-            ✅ increment exactly ONCE
-
-
-            =============================================
-
-            PRO USER:
-
-            users.plan = "pro"
-
-                    ↓
-
-            isPro = true
-
-                    ↓
-
-            Quota bypassed
-
-                    ↓
-
-            Tivion PRO · UNLIMITED
-
-        ============================================= */}
-
       </div>
 
     </div>
@@ -3483,9 +3253,5 @@ const RemoveObject = () => {
 
 };
 
-
-/* =====================================================
-   EXPORT
-===================================================== */
 
 export default RemoveObject;
