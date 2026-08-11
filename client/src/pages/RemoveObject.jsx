@@ -1660,27 +1660,7 @@ const RemoveObject = () => {
 
             </div>
 
-
-            {/* =========================================
-                PART 3 CONTINUES DIRECTLY HERE
-
-                NEXT:
-
-                - Removing Object loading state
-                - No Image Processed state
-                - Before / After comparison
-                - Full processed image
-                - Result status
-                - Updated 4/5 display
-            ========================================= */}            {/* =========================================
-                RESULT CONTENT
-            ========================================= */}
-
             {loading ? (
-
-              /* =======================================
-                 LOADING STATE
-              ======================================= */
 
               <div
                 className="
@@ -1691,10 +1671,6 @@ const RemoveObject = () => {
                   py-12
                 "
               >
-
-                {/* =====================================
-                    LOADING ICON
-                ===================================== */}
 
                 <div
                   className="
@@ -1725,11 +1701,6 @@ const RemoveObject = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    LOADING TITLE
-                ===================================== */}
-
                 <h3
                   className="
                     text-lg
@@ -1757,11 +1728,6 @@ const RemoveObject = () => {
 
                 </p>
 
-
-                {/* =====================================
-                    LOADING PROGRESS
-                ===================================== */}
-
                 <div
                   className="
                     w-48
@@ -1788,10 +1754,6 @@ const RemoveObject = () => {
                 </div>
 
 
-                {/* =====================================
-                    PROCESSING STEPS
-                ===================================== */}
-
                 <div
                   className="
                     flex
@@ -1801,7 +1763,6 @@ const RemoveObject = () => {
                   "
                 >
 
-                  {/* ANALYZING */}
 
                   <div
                     className="
@@ -1830,8 +1791,6 @@ const RemoveObject = () => {
                   </div>
 
 
-                  {/* PROCESSING */}
-
                   <div
                     className="
                       text-center
@@ -1858,9 +1817,6 @@ const RemoveObject = () => {
                     </span>
 
                   </div>
-
-
-                  {/* FINALIZING */}
 
                   <div
                     className="
@@ -1891,16 +1847,6 @@ const RemoveObject = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    CREDIT MESSAGE
-
-                    Do NOT decrement here.
-
-                    Usage changes only after the backend
-                    successfully processes the image.
-                ===================================== */}
-
                 {!isPro && (
 
                   <p
@@ -1921,10 +1867,6 @@ const RemoveObject = () => {
               </div>
 
             ) : !content ? (
-
-              /* =======================================
-                 EMPTY STATE
-              ======================================= */
 
               <div
                 className="
@@ -1988,10 +1930,6 @@ const RemoveObject = () => {
 
                 </p>
 
-
-                {/* =====================================
-                    CURRENT ACCESS
-                ===================================== */}
 
                 <div
                   className="
@@ -2066,10 +2004,6 @@ const RemoveObject = () => {
                 </div>
 
 
-                {/* =====================================
-                    ZERO CREDIT MESSAGE
-                ===================================== */}
-
                 {!isPro &&
                   objectRemaining <= 0 && (
 
@@ -2091,19 +2025,11 @@ const RemoveObject = () => {
 
             ) : (
 
-              /* =======================================
-                 SUCCESSFUL RESULT
-              ======================================= */
-
               <div
                 className="
                   space-y-4
                 "
               >
-
-                {/* =====================================
-                    SUCCESS STATUS
-                ===================================== */}
 
                 <div
                   className="
