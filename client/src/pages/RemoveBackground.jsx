@@ -1475,27 +1475,7 @@ const RemoveBackground = () => {
 
             </div>
 
-
-            {/* =========================================
-                PART 3 CONTINUES DIRECTLY HERE
-
-                NEXT:
-
-                - Removing Background loading state
-                - No Image Processed state
-                - Before / After comparison
-                - Full processed image
-                - Result status
-                - Updated 4/5 display
-            ========================================= */}            {/* =========================================
-                RESULT CONTENT
-            ========================================= */}
-
             {loading ? (
-
-              /* =======================================
-                 LOADING STATE
-              ======================================= */
 
               <div
                 className="
@@ -1561,11 +1541,6 @@ const RemoveBackground = () => {
 
                 </p>
 
-
-                {/* =====================================
-                    LOADING PROGRESS
-                ===================================== */}
-
                 <div
                   className="
                     w-48
@@ -1590,11 +1565,6 @@ const RemoveBackground = () => {
                   />
 
                 </div>
-
-
-                {/* =====================================
-                    PROCESSING STEPS
-                ===================================== */}
 
                 <div
                   className="
@@ -1681,19 +1651,6 @@ const RemoveBackground = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    CREDIT MESSAGE
-
-                    IMPORTANT:
-
-                    Do NOT reduce usage here.
-
-                    Credit changes only after the
-                    backend successfully completes
-                    background removal.
-                ===================================== */}
-
                 {!isPro && (
 
                   <p
@@ -1715,10 +1672,6 @@ const RemoveBackground = () => {
               </div>
 
             ) : !content ? (
-
-              /* =======================================
-                 EMPTY STATE
-              ======================================= */
 
               <div
                 className="
@@ -1781,11 +1734,6 @@ const RemoveBackground = () => {
                   Upload an image to remove its background
 
                 </p>
-
-
-                {/* =====================================
-                    CURRENT ACCESS
-                ===================================== */}
 
                 <div
                   className="
@@ -1857,11 +1805,6 @@ const RemoveBackground = () => {
 
                 </div>
 
-
-                {/* =====================================
-                    ZERO CREDIT MESSAGE
-                ===================================== */}
-
                 {!isPro &&
                   backgroundRemaining <= 0 && (
 
@@ -1883,19 +1826,11 @@ const RemoveBackground = () => {
 
             ) : (
 
-              /* =======================================
-                 SUCCESS RESULT
-              ======================================= */
-
               <div
                 className="
                   space-y-4
                 "
               >
-
-                {/* =====================================
-                    SUCCESS STATUS
-                ===================================== */}
 
                 <div
                   className="
@@ -1978,11 +1913,6 @@ const RemoveBackground = () => {
 
                   </div>
 
-
-                  {/* ===================================
-                      UPDATED USAGE BADGE
-                  =================================== */}
-
                   {isPro ? (
 
                     <div
@@ -2049,11 +1979,6 @@ const RemoveBackground = () => {
                   )}
 
                 </div>
-
-
-                {/* =====================================
-                    BEFORE / AFTER COMPARISON
-                ===================================== */}
 
                 {imagePreview && (
 
