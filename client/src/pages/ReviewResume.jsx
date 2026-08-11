@@ -27,24 +27,12 @@ import {
 } from '../context/UsageContext.jsx';
 
 
-/* =====================================================
-   AXIOS BASE URL
-===================================================== */
 
 axios.defaults.baseURL =
   import.meta.env.VITE_BASE_URL;
 
 
-/* =====================================================
-   REVIEW RESUME
-===================================================== */
-
 const ReviewResume = () => {
-
-
-  /* =================================================
-     STATE
-  ================================================= */
 
   const [
     input,
@@ -70,41 +58,10 @@ const ReviewResume = () => {
   ] = useState('');
 
 
-  /* =================================================
-     CLERK AUTHENTICATION
-
-     Clerk is ONLY responsible for:
-
-     - Authentication
-     - Auth token
-
-     Clerk Billing is NOT used.
-  ================================================= */
-
   const {
     getToken,
   } = useAuth();
 
-
-  /* =================================================
-     Tivion PLAN + RESUME REVIEW USAGE
-
-     Source of truth:
-
-     Neon
-       ↓
-     GET /api/user/usage
-       ↓
-     UsageContext
-       ↓
-     ReviewResume
-
-     FREE:
-     5 successful resume analyses
-
-     PRO:
-     Unlimited / quota bypass
-  ================================================= */
 
   const {
     isPro,
@@ -116,16 +73,6 @@ const ReviewResume = () => {
     hasCredits,
   } = useUsage();
 
-
-  /* =================================================
-     RESUME REVIEW USAGE
-
-     New FREE account:
-
-     used      = 0
-     remaining = 5
-     limit     = 5
-  ================================================= */
 
   const resumeUsage =
     usage?.resumeReview || {
@@ -157,17 +104,6 @@ const ReviewResume = () => {
     );
 
 
-  /* =================================================
-     RESUME USAGE PERCENTAGE
-
-     5/5 → 100%
-     4/5 → 80%
-     3/5 → 60%
-     2/5 → 40%
-     1/5 → 20%
-     0/5 → 0%
-  ================================================= */
-
   const resumeUsagePercentage =
     resumeLimit > 0
 
@@ -187,10 +123,6 @@ const ReviewResume = () => {
       : 0;
 
 
-  /* =================================================
-     HANDLE RESUME FILE
-  ================================================= */
-
   const handleFileChange =
     (e) => {
 
@@ -204,10 +136,6 @@ const ReviewResume = () => {
 
       }
 
-
-      /* ===============================================
-         PDF VALIDATION
-      =============================================== */
 
       if (
         file.type !==
@@ -224,11 +152,6 @@ const ReviewResume = () => {
 
       }
 
-
-      /* ===============================================
-         CLEAN PREVIOUS PREVIEW
-      =============================================== */
-
       if (resumePreview) {
 
         URL.revokeObjectURL(
@@ -237,19 +160,10 @@ const ReviewResume = () => {
 
       }
 
-
-      /* ===============================================
-         SAVE FILE
-      =============================================== */
-
       setInput(
         file
       );
 
-
-      /* ===============================================
-         CREATE PDF PREVIEW URL
-      =============================================== */
 
       const previewUrl =
         URL.createObjectURL(
@@ -261,22 +175,10 @@ const ReviewResume = () => {
         previewUrl
       );
 
-
-      /* ===============================================
-         CLEAR PREVIOUS ANALYSIS
-
-         When a new resume is selected,
-         old analysis should disappear.
-      =============================================== */
-
       setContent('');
 
     };
 
-
-  /* =================================================
-     REVIEW / ANALYZE RESUME
-  ================================================= */
 
   const onSubmitHandler =
     async (e) => {
