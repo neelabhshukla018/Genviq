@@ -2956,29 +2956,6 @@ Requirements:
         )}
 
 
-        {/* =============================================
-            IMPORTANT ARCHITECTURE NOTE
-
-            Actual quota security happens on backend:
-
-            POST /api/ai/generate-article
-
-            Frontend:
-            - Shows remaining quota
-            - Disables button at 0/5
-            - Updates UI after success
-
-            Backend:
-            - Checks Neon plan
-            - Checks actual quota
-            - Blocks requests at limit
-            - Generates article
-            - Increments usage after success
-
-            This prevents users from bypassing the
-            frontend by directly calling the API.
-        ============================================= */}
-
       </div>
 
     </div>
@@ -2987,9 +2964,5 @@ Requirements:
 
 };
 
-
-/* =====================================================
-   EXPORT
-===================================================== */
 
 export default WriteArticle;
