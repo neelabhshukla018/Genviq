@@ -26,24 +26,11 @@ import {
 } from '../context/UsageContext.jsx';
 
 
-/* =====================================================
-   AXIOS BASE URL
-===================================================== */
-
 axios.defaults.baseURL =
   import.meta.env.VITE_BASE_URL;
 
 
-/* =====================================================
-   REMOVE OBJECT
-===================================================== */
-
 const RemoveObject = () => {
-
-
-  /* =================================================
-     STATE
-  ================================================= */
 
   const [
     input,
@@ -81,42 +68,10 @@ const RemoveObject = () => {
   ] = useState('');
 
 
-  /* =================================================
-     CLERK AUTHENTICATION ONLY
-
-     Clerk handles:
-
-     - Sign in
-     - User authentication
-     - JWT/Auth token
-
-     Clerk Billing is NOT used.
-  ================================================= */
-
   const {
     getToken,
   } = useAuth();
 
-
-  /* =================================================
-     Tivion PLAN + OBJECT REMOVAL USAGE
-
-     Source:
-
-     Neon Database
-          ↓
-     GET /api/user/usage
-          ↓
-     UsageContext
-          ↓
-     RemoveObject.jsx
-
-     FREE:
-     5 successful object removals
-
-     PRO:
-     Unlimited / quota bypass
-  ================================================= */
 
   const {
     isPro,
@@ -128,30 +83,6 @@ const RemoveObject = () => {
     hasCredits,
   } = useUsage();
 
-
-  /* =================================================
-     OBJECT REMOVAL USAGE
-
-     New FREE user:
-
-     used      = 0
-     remaining = 5
-     limit     = 5
-
-     UI:
-
-     5/5
-       ↓ successful removal
-     4/5
-       ↓
-     3/5
-       ↓
-     2/5
-       ↓
-     1/5
-       ↓
-     0/5
-  ================================================= */
 
   const objectUsage =
     usage?.objectRemoval || {
@@ -183,19 +114,6 @@ const RemoveObject = () => {
     );
 
 
-  /* =================================================
-     USAGE PERCENTAGE
-
-     Used for progress UI:
-
-     5/5 = 100%
-     4/5 = 80%
-     3/5 = 60%
-     2/5 = 40%
-     1/5 = 20%
-     0/5 = 0%
-  ================================================= */
-
   const objectUsagePercentage =
     objectLimit > 0
 
@@ -218,11 +136,6 @@ const RemoveObject = () => {
 
       : 0;
 
-
-  /* =================================================
-     HANDLE IMAGE FILE
-  ================================================= */
-
   const handleFileChange =
     (e) => {
 
@@ -236,10 +149,6 @@ const RemoveObject = () => {
 
       }
 
-
-      /* ===============================================
-         IMAGE VALIDATION
-      =============================================== */
 
       if (
         !file.type.startsWith(
@@ -258,10 +167,6 @@ const RemoveObject = () => {
       }
 
 
-      /* ===============================================
-         CLEAN OLD PREVIEW URL
-      =============================================== */
-
       if (imagePreview) {
 
         URL.revokeObjectURL(
@@ -270,19 +175,10 @@ const RemoveObject = () => {
 
       }
 
-
-      /* ===============================================
-         SAVE IMAGE
-      =============================================== */
-
       setInput(
         file
       );
 
-
-      /* ===============================================
-         CREATE LOCAL PREVIEW
-      =============================================== */
 
       const previewUrl =
         URL.createObjectURL(
@@ -294,11 +190,6 @@ const RemoveObject = () => {
         previewUrl
       );
 
-
-      /* ===============================================
-         CLEAR PREVIOUS RESULT
-      =============================================== */
-
       setContent('');
 
 
@@ -308,10 +199,6 @@ const RemoveObject = () => {
 
     };
 
-
-  /* =================================================
-     REMOVE OBJECT
-  ================================================= */
 
   const onSubmitHandler =
     async (e) => {
