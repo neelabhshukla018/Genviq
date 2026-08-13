@@ -227,3 +227,5 @@ export default Aitools;
 //i am adding the comments to understand your topic
 
 //changes where it is define you 
+
+///come is hojg
