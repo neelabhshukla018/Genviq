@@ -225,3 +225,5 @@ export default Aitools;
 //but what about that han
 
 //i am adding the comments to understand your topic
+
+//changes where it is define you 
