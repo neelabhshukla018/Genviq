@@ -217,15 +217,3 @@ const Aitools = () => {
 };
 
 export default Aitools;
-
-//understand ai tools everywhwere okkk
-
-//okk do i get your pointtt
-
-//but what about that han
-
-//i am adding the comments to understand your topic
-
-//changes where it is define you 
-
-///come is hojg
