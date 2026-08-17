@@ -15,6 +15,7 @@ export const auth = async (req, res, next) => {
       });
     }
 
+
     console.log("👤 Clerk User ID:", userId);
 
 
