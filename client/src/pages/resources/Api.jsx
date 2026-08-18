@@ -593,3 +593,9 @@ export default Api;
 //have to add documentation for this api
 
 //see that have to add for some others api
+
+//have to add an things or page for Get API key
+
+//have to add documentation for this api
+
+//see that have to add for some others api
