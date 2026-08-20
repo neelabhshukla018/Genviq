@@ -194,3 +194,4 @@ const Documentation = () => {
 export default Documentation;
 
 //have to work on this
+//what to check what to not
