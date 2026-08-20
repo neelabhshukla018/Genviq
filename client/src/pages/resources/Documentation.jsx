@@ -197,3 +197,5 @@ export default Documentation;
 //what to check what to not
 
 //have to add every minute details regarding to it
+
+//have to add every minute details regarding to it
