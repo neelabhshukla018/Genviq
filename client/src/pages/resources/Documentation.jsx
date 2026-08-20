@@ -195,3 +195,5 @@ export default Documentation;
 
 //have to work on this
 //what to check what to not
+
+//have to add every minute details regarding to it
