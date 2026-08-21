@@ -208,3 +208,5 @@ export default About;
 //have to add every minute details regarding to it
 
 //have to tell them about our api
+
+//Rest API are used there -GET /POST /Graph ql
