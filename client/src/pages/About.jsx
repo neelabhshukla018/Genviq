@@ -210,3 +210,5 @@ export default About;
 //have to tell them about our api
 
 //Rest API are used there -GET /POST /Graph ql
+
+//WEb api uses to maintain the speed of graphql api
