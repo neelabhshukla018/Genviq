@@ -214,3 +214,5 @@ export default About;
 //WEb api uses to maintain the speed of graphql api
 
 //graphql is used
+
+//in home web api are used
