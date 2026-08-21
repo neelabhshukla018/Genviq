@@ -204,3 +204,5 @@ const About = () => {
 };
 
 export default About;
+
+//have to add every minute details regarding to it
