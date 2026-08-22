@@ -619,3 +619,5 @@ export default Api;
 //tell me okk you are adding teh api key but which
 
 //what to add on what to not
+
+//have to delete all the old version of its api
