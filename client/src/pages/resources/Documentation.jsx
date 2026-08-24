@@ -207,3 +207,5 @@ export default Documentation;
 //chnages in about us page there is
 
 //have to work on this very fast
+
+//feedback is something what we have to study
