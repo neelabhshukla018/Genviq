@@ -205,3 +205,5 @@ export default Documentation;
 //behind the documentation there is a lot of possibilites 
 
 //chnages in about us page there is
+
+//have to work on this very fast
