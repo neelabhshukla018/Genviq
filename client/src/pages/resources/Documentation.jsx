@@ -207,3 +207,10 @@ export default Documentation;
 //chnages in about us page there is
 
 
+//have to add in details about the all apis
+
+//in details about the how rest api is working
+
+//have to give the detail how each and every api is working
+
+//like GET POST PUT
