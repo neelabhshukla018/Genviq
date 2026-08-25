@@ -593,3 +593,5 @@ export default Api;
 //in details about the how rest api is working
 
 //have to give the detail how each and every api is working
+
+//like GET POST PUT
