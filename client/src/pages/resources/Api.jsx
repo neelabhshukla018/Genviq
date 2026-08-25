@@ -589,3 +589,5 @@ const Api = () => {
 export default Api;
 
 //have to add in details about the all apis
+
+//in details about the how rest api is working
