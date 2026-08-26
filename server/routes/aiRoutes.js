@@ -27,3 +27,5 @@ export default aiRouter;
 //tell me what to change what to not
 
 //what is ai routes we have to tell clearly them
+
+//there is a lot of changes in the terminal we are trying to do
