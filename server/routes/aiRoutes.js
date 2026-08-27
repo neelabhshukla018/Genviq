@@ -31,3 +31,5 @@ export default aiRouter;
 //there is a lot of changes in the terminal we are trying to do
 
 //what is the output
+
+//what logic did you put there
