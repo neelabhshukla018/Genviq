@@ -214,3 +214,5 @@ export default Documentation;
 //have to give the detail how each and every api is working
 
 //like GET POST PUT
+
+//have to add a detailed pdf where all the details about the webiste is mentioned
