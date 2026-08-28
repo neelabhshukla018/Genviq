@@ -230,3 +230,5 @@ export default About;
 //there is a lot of changes
 
 //what about all other changes
+
+//for now render is currentl being stopped due to some reasons
