@@ -54,3 +54,6 @@ export default userRouter;
 //   auth,
 //   chatbotController.handleChatbotRequest
 // );
+
+
+//if you decide to create a separate route file for the chatbot, you could create a new file called chatbotRoutes.js and define the routes there. Then, you would import and use that router in your main server file (e.g., app.js or server.js).
