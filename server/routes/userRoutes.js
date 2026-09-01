@@ -40,3 +40,6 @@ userRouter.get(
 );
 
 export default userRouter;
+
+
+//have to add chatbot route here too, but not sure if it should be in userRoutes or a separate route file.
