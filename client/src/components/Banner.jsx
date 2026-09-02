@@ -86,3 +86,5 @@ export default Banner;
 //banner have to add it a subscription route
 
 //helpbutton is what to add you as 
+
+//they need to add a number
