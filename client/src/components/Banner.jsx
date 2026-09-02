@@ -81,3 +81,6 @@ const Banner = () => {
 };
 
 export default Banner;
+
+
+//banner have to add it a subscription route
