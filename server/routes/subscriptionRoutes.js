@@ -32,3 +32,5 @@ export default subscriptionRouter;
 //have to add a subscription router
 
 //subscribe it but get to access the subscription route.
+
+//controllers is have to add subscription controller
