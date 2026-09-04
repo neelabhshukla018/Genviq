@@ -183,3 +183,9 @@ const Faqs = () => {
 export default Faqs;
 
 //use of this code in the faq.jsx 
+
+
+// The Faqs component is a React functional
+
+// component that displays a list of frequently 
+
