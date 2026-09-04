@@ -181,3 +181,5 @@ const Faqs = () => {
 };
 
 export default Faqs;
+
+//use of this code in the faq.jsx 
