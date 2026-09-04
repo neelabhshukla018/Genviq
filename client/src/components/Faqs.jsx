@@ -189,3 +189,5 @@ export default Faqs;
 
 // component that displays a list of frequently 
 
+// asked questions (FAQs) with an interactive UI. 
+
